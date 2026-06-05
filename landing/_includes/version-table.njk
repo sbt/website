@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th>sbt version</th>
+      <th>.zip</th>
+      <th>.zip.sha256</th>
+      <th>.tgz</th>
+      <th>.tgz.sha256</th>
+      <th>.msi</th>
+      <th>.msi.sha256</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in versions.VersionList %}
+    <tr>
+      <td>sbt {{ item.v }}</td>
+      <td><a href="{{ versions.downloadUrl(item.v, item.v, '.zip') }}">.zip</a></td>
+      <td><a href="{{ versions.downloadUrl(item.v, item.v, '.zip.sha256') }}">.zip.sha256</a></td>
+      <td><a href="{{ versions.downloadUrl(item.v, item.v, '.tgz') }}">.tgz</a></td>
+      <td><a href="{{ versions.downloadUrl(item.v, item.v, '.tgz.sha256') }}">.tgz.sha256</a></td>
+      <td><a href="{{ versions.downloadUrl(item.v, item.v, '.msi') }}">.msi</a></td>
+      <td><a href="{{ versions.downloadUrl(item.v, item.v, '.msi.sha256') }}">.msi.sha256</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

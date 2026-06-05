@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if title %}{{ title }} | {% endif %}sbt</title>
+    {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/assets/docsearch.css">
+    <script defer data-domain="scala-sbt.org" src="https://plausible.scala-lang.org/js/script.js"></script>
+  </head>
+  <body>
+    {% include "header.njk" %}
+    <main>
+      {{ content | safe }}
+    </main>
+    {% include "footer.njk" %}
+    <script src="/assets/docsearch.js"></script>
+    <script>
+      docsearch({
+        container: "#docsearch",
+        appId: "U55AU5GMCN",
+        apiKey: "45ef8a0285275e68a1c09ecdfff2be0f",
+        indexName: "scala-sbt",
+      });
+    </script>
+    <script src="/js/tabs.js"></script>
+  </body>
+</html>

@@ -272,7 +272,7 @@ object Docs {
       val s = streams.value
       val output = target.value / RedirectLanding.name
       generateRedirect(
-        "community.html",
+        "/community/",
         output / "support.html",
         s.log
       )
@@ -375,6 +375,7 @@ object Docs {
   val DocsPath = "docs"
   val VersionPattern = """(\d+)\.(\d+)\.(\d+)(-.+)?""".r.pattern
   val LandingPage = """(\w+)\.(html|xml|xml\.gz)""".r
+  val LandingPageDir = """(\w[\w-]*)/index\.html""".r
   val Zero13 = "0.13"
   val OneX = "1.x"
   val OneXStar = """1\.x(/.*)?""".r
@@ -398,6 +399,7 @@ object Docs {
     relPath match {
       case OneXStar(_)              => Some(Entry("daily", 0.9))
       case LandingPage(_, _)        => Some(Entry("weekly", 1.0))
+      case LandingPageDir(_)        => Some(Entry("weekly", 1.0))
       case Docs(ReleasePath)        => Some(Entry("weekly", 0.9))
       case Docs(OneX)               => Some(Entry("daily", 0.8))
       case Docs(Zero13)             => Some(Entry("weekly", 0.7))

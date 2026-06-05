@@ -1,0 +1,160 @@
+---
+layout: page.njk
+title: Download
+permalink: /download/
+---
+
+<h1>Download</h1>
+
+    <h2>Universal packages</h2>
+    <p>The most reliable way to install sbt is to use SDKMAN or manually install from the universal packages.</p>
+    <ul>
+      <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.sbtVersion, '.zip') }}">sbt-{{ versions.sbtVersion }}.zip</a></li>
+      <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.sbtVersion, '.zip.sha256') }}">sbt-{{ versions.sbtVersion }}.zip.sha256</a></li>
+      <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.sbtVersion, '.zip.asc') }}">sbt-{{ versions.sbtVersion }}.zip.asc</a></li>
+      <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.sbtVersion, '.tgz') }}">sbt-{{ versions.sbtVersion }}.tgz</a></li>
+      <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.sbtVersion, '.tgz.sha256') }}">sbt-{{ versions.sbtVersion }}.tgz.sha256</a></li>
+      <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.sbtVersion, '.tgz.asc') }}">sbt-{{ versions.sbtVersion }}.tgz.asc</a></li>
+    </ul>
+
+    <div class="tabs" data-tabs>
+      <div class="tab-list" role="tablist">
+        <button class="tab-button" role="tab" aria-selected="true" data-tab="mac">macOS</button>
+        <button class="tab-button" role="tab" aria-selected="false" data-tab="win">Windows</button>
+        <button class="tab-button" role="tab" aria-selected="false" data-tab="linux">Linux</button>
+      </div>
+
+      <div class="tab-panel" id="tab-mac" role="tabpanel" aria-hidden="false">
+        <h3>SDKMAN!</h3>
+        <pre><code>$ sdk install sbt</code></pre>
+
+        <h3>Homebrew</h3>
+        <pre><code>$ brew install sbt</code></pre>
+
+        <div class="admonition admonition--warning">
+          <div class="admonition__title">Warning</div>
+          <p>Homebrew maintainers have added a dependency to JDK 13 because they want to use more brew dependencies (<a href="https://github.com/Homebrew/homebrew-core/issues/50649">brew#50649</a>). This causes sbt to use JDK 13 even when <code>java</code> available on PATH is JDK 8 or 11. To prevent <code>sbt</code> from running on JDK 13, install <a href="https://www.jenv.be/">jEnv</a> or switch to using <a href="https://sdkman.io/">SDKMAN</a>.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-win" role="tabpanel" aria-hidden="true">
+        <ul>
+          <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.windowsBuild, '.msi') }}">sbt-{{ versions.windowsBuild }}.msi</a></li>
+          <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.windowsBuild, '.msi.sha256') }}">sbt-{{ versions.windowsBuild }}.msi.sha256</a></li>
+          <li><a href="{{ versions.downloadUrl(versions.sbtVersion, versions.windowsBuild, '.msi.asc') }}">sbt-{{ versions.windowsBuild }}.msi.asc</a></li>
+        </ul>
+
+        <h3><a href="https://chocolatey.org/packages/sbt">Chocolatey</a></h3>
+        <pre><code>&gt; choco install sbt</code></pre>
+
+        <h3><a href="https://scoop.sh/">Scoop</a></h3>
+        <pre><code>&gt; scoop install sbt</code></pre>
+      </div>
+
+      <div class="tab-panel" id="tab-linux" role="tabpanel" aria-hidden="true">
+        <h3>Linux (deb)</h3>
+        <div class="admonition">
+          <div class="admonition__title">Note</div>
+          <p>Please redownload the PGP key if you have not after February 2026, or if you see the "SHA1 is not considered secure" error.</p>
+        </div>
+        <pre><code>curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&amp;search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo gpg --dearmor -o /etc/apt/keyrings/scalasbt.gpg
+echo "deb [signed-by=/etc/apt/keyrings/scalasbt.gpg] https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+sudo apt-get update
+sudo apt-get install sbt</code></pre>
+
+        <h3>Linux (rpm)</h3>
+        <pre><code># remove old Bintray repo file
+sudo rm -f /etc/yum.repos.d/bintray-rpm.repo || true
+curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo
+sudo mv sbt-rpm.repo /etc/yum.repos.d/
+sudo yum install sbt</code></pre>
+      </div>
+    </div>
+
+    <h3>Previous releases</h3>
+    <h4>1.x</h4>
+    {% include "version-table.njk" %}
+
+    <h4>0.13</h4>
+    <ul>
+      <li>
+        sbt 0.13.18
+        (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.zip">.zip</a>)
+        (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.tgz">.tgz</a>)
+        (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.msi">.msi</a>)
+      </li>
+    </ul>
+
+    <h2>Release Timeline</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>sbt series</th>
+          <th>Initial Release</th>
+          <th>Current Release</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1.x</td>
+          <td><a href="https://web.archive.org/web/20220624215309/https://www.lightbend.com/blog/scala-sbt-100-release">2017-08-11</a></td>
+          <td>✅</td>
+          <td>On-going for 9 years and more</td>
+        </tr>
+        <tr>
+          <td>0.13.x</td>
+          <td><a href="https://groups.google.com/g/simple-build-tool/c/0AGST5qPbzw/m/s75DMBYanwoJ">2013-08-26</a></td>
+          <td>No</td>
+          <td><a href="https://web.archive.org/web/20210918065807/https://www.lightbend.com/blog/scala-sbt-127-patchnotes">End of Life on 2018-11-30</a> after 5 years</td>
+        </tr>
+        <tr>
+          <td>0.12.x</td>
+          <td><a href="https://groups.google.com/g/simple-build-tool/c/XDTrQL-PcYo/m/DK74LZeqr14J">2012-08-01</a></td>
+          <td>No</td>
+          <td>Last released on <a href="https://groups.google.com/g/simple-build-tool/c/UHlEuuIg0Xo/m/RzRYphp3lDwJ">2013-06-27</a></td>
+        </tr>
+        <tr>
+          <td>0.11.x</td>
+          <td><a href="https://groups.google.com/g/simple-build-tool/c/PiRxuWiuyic/m/vAt18ooouNsJ">2011-09-24</a></td>
+          <td>No</td>
+          <td>Last released on <a href="https://groups.google.com/g/simple-build-tool/c/6QyKHMczG3I/m/PnhiJVZSlloJ">2012-05-06</a></td>
+        </tr>
+        <tr>
+          <td>0.10.x</td>
+          <td><a href="https://github.com/sbt/sbt/releases/tag/v0.10.0">2011-06-02</a></td>
+          <td>No</td>
+          <td>Last released on <a href="https://github.com/sbt/sbt/releases/tag/v0.10.1">2011-07-14</a></td>
+        </tr>
+        <tr>
+          <td>0.9.x</td>
+          <td><a href="https://vimeo.com/20263617">2011-02-17</a></td>
+          <td>No</td>
+          <td>Last released on <a href="https://github.com/sbt/sbt/releases/tag/v0.9.10">2011-06-01</a></td>
+        </tr>
+        <tr>
+          <td>0.7.x</td>
+          <td><a href="https://groups.google.com/g/simple-build-tool/c/zgegHD8zJzY/m/tyWIALFGiSQJ">2010-02-15</a></td>
+          <td>No</td>
+          <td>Last released on <a href="https://groups.google.com/g/simple-build-tool/c/HBCDjeV1JzA/m/JcOrutMlClAJ">2011-05-12</a></td>
+        </tr>
+        <tr>
+          <td>0.5.x</td>
+          <td><a href="https://groups.google.com/g/simple-build-tool/c/oN5vhhDigqI/m/Zzb0Vmq5xiYJ">2009-07-01</a></td>
+          <td>No</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>0.4.x</td>
+          <td><a href="https://groups.google.com/g/simple-build-tool/c/MkJPTm60OvU/m/bDhV1u2I1BIJ">2009-03-27</a></td>
+          <td>No</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>0.3.x</td>
+          <td><a href="https://groups.google.com/g/simple-build-tool/c/lZqxMItxap8/m/dZiVsgNW3EwJ">2008-12-17</a></td>
+          <td>No</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
