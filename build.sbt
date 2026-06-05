@@ -10,7 +10,7 @@ ThisBuild / scalafmtOnCompile := true
 
 lazy val root = (project in file("."))
   .enablePlugins(
-    (if (isDevelopBranch) Seq(DocusaurusSitePlugin) else Seq()) ++
+    (if (!is1xBranch && !isBetaBranch) Seq(LandingSitePlugin) else Seq()) ++
       Seq(MdBookSitePlugin, ScriptedPlugin, SitePreviewPlugin): _*
   )
   .settings(

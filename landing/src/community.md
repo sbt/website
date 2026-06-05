@@ -1,26 +1,10 @@
 ---
+layout: page.njk
 title: Get Involved
-slug: /community
+permalink: /community/
 ---
 
-  [so]: https://stackoverflow.com/questions/tagged/sbt
-  [ml]: https://groups.google.com/d/forum/sbt-dev
-  [github]: https://github.com/sbt/sbt
-  [twitter]: https://twitter.com/scala_sbt
-  [Community-Plugins]: release/docs/Community-Plugins.html
-  [issues]: https://github.com/sbt/sbt/issues
-  [website]: https://github.com/sbt/website
-  [github-discussions]: https://github.com/sbt/sbt/discussions
-  [waffle]: https://waffle.io/sbt/sbt
-  [help-wanted-label]: https://github.com/sbt/sbt/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22
-  [good-first]: https://github.com/sbt/sbt/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
-  [327]: https://github.com/sbt/sbt/issues/327
-  [831]: https://github.com/sbt/sbt/issues/831
-  [scala-discord]: https://discord.com/invite/scala
-  [discord-channel]: https://discord.com/channels/632150470000902164/922600050989875282
-
-Get Involved
-============
+# Get Involved
 
 <h2 id="how-can-I-get-help">How can I get help? <a href="#how-can-I-get-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
@@ -97,3 +81,19 @@ You are welcome to work on any feature you like, but if you'd like some good ide
 
 - look for issues tagged with the ["help wanted"][help-wanted-label] or the ["good first issue"][good-first] label
 - talk to us on [GitHub Discussions][github-discussions]
+
+[so]: https://stackoverflow.com/questions/tagged/sbt
+[ml]: https://groups.google.com/d/forum/sbt-dev
+[github]: https://github.com/sbt/sbt
+[twitter]: https://twitter.com/scala_sbt
+[Community-Plugins]: release/docs/Community-Plugins.html
+[issues]: https://github.com/sbt/sbt/issues
+[website]: https://github.com/sbt/website
+[github-discussions]: https://github.com/sbt/sbt/discussions
+[waffle]: https://waffle.io/sbt/sbt
+[help-wanted-label]: https://github.com/sbt/sbt/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22
+[good-first]: https://github.com/sbt/sbt/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+[327]: https://github.com/sbt/sbt/issues/327
+[831]: https://github.com/sbt/sbt/issues/831
+[scala-discord]: https://discord.com/invite/scala
+[discord-channel]: https://discord.com/channels/632150470000902164/922600050989875282

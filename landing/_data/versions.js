@@ -111,10 +111,9 @@ function downloadUrl(tagVersion, version, ext) {
 }
 
 module.exports = {
-  sbtVersion: sbtVersion,
+  sbtVersion,
   windowsBuild: sbtVersion,
-  sbtVersionForScalaDoc: sbtVersion,
-  downloadUrl: downloadUrl,
-  scala3ExampleVersion: scala3ExampleVersion,
-  VersionList: VersionList,
+  scala3ExampleVersion,
+  VersionList,
+  downloadUrl,
 };

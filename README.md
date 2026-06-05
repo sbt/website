@@ -27,32 +27,26 @@ The Book of sbt is written using [mdBook](https://rust-lang.github.io/mdBook/ind
 $ mdbook serve
 ```
 
-## Docusaurus (Landing Page)
+## Landing Page
 
-The landing page is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
-
-### Bump dependencies
-
-```bash
-$ yarn outdated
-$ yarn upgrade
-```
+The landing page is built using [Eleventy](https://www.11ty.dev/) in the `landing/` directory.
 
 ### Local Development
 
 ```bash
-$ yarn start
+$ cd landing
+$ npx @11ty/eleventy --serve
 ```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
 ### Build
 
 ```bash
-$ yarn run build
+$ cd landing
+$ npm ci
+$ npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+This generates static content into `landing/_site/`.
 
 ### Full setup
 

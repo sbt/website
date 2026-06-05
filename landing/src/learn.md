@@ -1,22 +1,18 @@
 ---
+layout: page.njk
 title: Learn
-slug: /learn
+permalink: /learn/
 ---
 
-import { sbtVersion } from '@site/variables';
+# Learn
 
-Learn
-=====
-
-Documentation
--------------
+## Documentation
 
 - [sbt by Example](https://www.scala-sbt.org/1.x/docs/sbt-by-example.html) inspired by William Narmontas's tutorial
 - [sbt documentation](https://www.scala-sbt.org/1.x/docs/) ([pdf](https://www.scala-sbt.org/1.x/docs/sbt-reference.pdf))
-- <a href={ "https://www.scala-sbt.org/" + sbtVersion + "/api/sbt/index.html" }>sbt API</a>
+- <a href="https://www.scala-sbt.org/{{ versions.sbtVersion }}/api/sbt/index.html">sbt API</a>
 
-Talks
------
+## Talks
 
 - [sbt core concepts](https://www.youtube.com/watch?v=-shamsTC7rQ), Scala Days 2019, Eugene Yokota
 
@@ -36,18 +32,15 @@ Talks
 - [Better Living Through sbt](https://www.youtube.com/watch?v=y-_h_m4GjVo), nescala 2014, Luke Amdor
 - [sbt 0.9: Why, what, how?](https://vimeo.com/20263617), nescala 2011, Mark Harrah
 
-Screencast(s)
--------------
+## Screencast(s)
 
 - [Essential sbt for Scala](https://www.youtube.com/watch?v=JI0i7f2byPY&t=251s), 2016, William Narmontas
 
-Book(s)
--------
+## Book(s)
 
 - [sbt in Action](https://www.manning.com/books/sbt-in-action), 2015, Joshua Suereth and Matthew Farwell
 
-Blog posts
-----------
+## Blog posts
 
 - [Awesome sbt plugins for everyone](https://tech.ovoenergy.com/awesome-sbt-plugins-for-everyone/), 2017, Michael Wizner
 - [parallel cross building using sbt-projectmatrix](https://eed3si9n.com/parallel-cross-building-using-sbt-projectmatrix), 2019, Eugene Yokota
@@ -62,8 +55,7 @@ Blog posts
 - [testing sbt plugins](https://eed3si9n.com/testing-sbt-plugins), 2011, Eugene Yokota
 - [How I SBT](https://blog.rhetoricalmusings.com/posts/how-i-sbt1/), 2024, Higher-Kinded Type (Vivek Ragunathan)
 
-Old documentation
------------------
+## Old documentation
 
 ### sbt 0.13 (obsolete)
 
