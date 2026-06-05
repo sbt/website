@@ -20,7 +20,7 @@ msgid ""
 "This page covers cross building setup. See [Cross building](../concepts/"
 "cross-building.html) for general explanation."
 msgstr ""
-"本页介绍交叉构建设置。有关一般说明，请参阅[交叉构建](../concepts/cross-"
+"本页介绍交叉构建设置。有关一般说明，请参阅 [交叉构建](../concepts/cross-"
 "building.html)。"
 
 #: src/reference/reference/cross-building-setup.md:8
@@ -191,11 +191,11 @@ msgid "Project matrix"
 msgstr "项目矩阵"
 
 #: src/reference/reference/cross-building-setup.md:86
-#, fuzzy
 msgid ""
 "sbt 2.x introduces project matrix, which enables cross building to happen in "
 "parallel by representing cross build using subprojects."
-msgstr "sbt 2.x 引入了项目矩阵，使交叉构建可以并行进行。"
+msgstr ""
+"sbt 2.x 引入了项目矩阵，通过以子项目表示交叉构建，使交叉构建可以并行进行。"
 
 #: src/reference/reference/cross-building-setup.md:88
 msgid ""
@@ -234,25 +234,28 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:117
 msgid "Generated subprojects"
-msgstr ""
+msgstr "生成的子项目"
 
 #: src/reference/reference/cross-building-setup.md:119
 msgid ""
 "At the loading time, project matrices expand into subproject by combining "
 "the platform and Scala versions:"
 msgstr ""
+"在加载时，项目矩阵会通过组合平台与 Scala 版本展开为子项目："
 
 #: src/reference/reference/cross-building-setup.md:130
 msgid ""
 "By convention, the JVM Scala 3 variant of the matrix is given the name "
 "without any suffix, for example `core`."
 msgstr ""
+"按惯例，矩阵的 JVM Scala 3 变体将使用不带任何后缀的名称，例如 `core`。"
 
 #: src/reference/reference/cross-building-setup.md:139
 msgid ""
 "To reference the subprojects inside `build.sbt`, you can call `jvm(...)`, "
 "`js(...)`, or `native(...)`:"
 msgstr ""
+"要在 `build.sbt` 内引用子项目，可调用 `jvm(...)`、`js(...)` 或 `native(...)`："
 
 #: src/reference/reference/cross-building-setup.md:142
 msgid "// For Scala"
@@ -264,13 +267,14 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:149
 msgid "Virtual axis"
-msgstr ""
+msgstr "虚拟轴"
 
 #: src/reference/reference/cross-building-setup.md:151
 msgid ""
 "Each combination in a matrix is called a `ProjectRow`; and a ProjectRow is "
 "represented as a sequence of `VirtualAxis`."
 msgstr ""
+"矩阵中的每个组合称为 `ProjectRow`；`ProjectRow` 表示为 `VirtualAxis` 的序列。"
 
 #: src/reference/reference/cross-building-setup.md:162
 msgid ""
@@ -294,10 +298,13 @@ msgid ""
 "strong axis where a row can depend on another only if the platform matches "
 "exactly."
 msgstr ""
+"`VirtualAxis` 分为 `WeakAxis` 和 `StrongAxis`。Scala 版本是弱轴的一例：带 "
+"Scala 版本的行可依赖不带 Scala 版本的 Java 行。同时，平台是强轴：一行只能依赖"
+"平台完全匹配的另一行。"
 
 #: src/reference/reference/cross-building-setup.md:175
 msgid "For example, we can define SparkAxis as follows:"
-msgstr ""
+msgstr "例如，可按以下方式定义 `SparkAxis`："
 
 #: src/reference/reference/cross-building-setup.md:177
 msgid ""
@@ -316,6 +323,8 @@ msgid ""
 "See [Cross building on a virtual axis](../recipes/virtual-axis.md) recipe "
 "for the details on how to use `SparkAxis`."
 msgstr ""
+"有关如何使用 `SparkAxis` 的详情，请参阅 [在虚拟轴上交叉构建](../recipes/"
+"virtual-axis.md) 食谱。"
 
 #: src/reference/reference/cross-building-setup.md:188
 msgid "Publishing convention"
