@@ -35,8 +35,7 @@ The landing page is built using [Eleventy](https://www.11ty.dev/) in the `landin
 
 ```bash
 $ cd landing
-$ npm install
-$ npm start
+$ npx @11ty/eleventy --serve
 ```
 
 ### Build
