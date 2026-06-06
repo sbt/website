@@ -3,7 +3,7 @@ Installing sbt runner
 
 To build an sbt project, you'll need to take these steps:
 
-- Install JDK (We recommend Eclipse Adoptium Temurin JDK 8, 11, or 17, or Zulu JDK 8 for macOS with ARM chips).
+- Install JDK (We recommend Eclipse Adoptium Temurin JDK 17).
 - Install sbt runner.
 
 sbt runner is a script that invokes a declared version of sbt, downloading it beforehand if necessary. This allows build authors to precisely control
