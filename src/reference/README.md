@@ -1,10 +1,6 @@
 The Book of sbt (Draft)
 =======================
 
-```admonish note
-This is a draft documentation of sbt 2.x that is yet to be released.
-```
-
 **Languages**:
 - [English](https://www.scala-sbt.org/2.x/docs/en/)
 - [中文 (简体)](https://www.scala-sbt.org/2.x/docs/zh-cn/)
