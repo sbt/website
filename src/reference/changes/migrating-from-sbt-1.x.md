@@ -4,7 +4,7 @@ Migrating from sbt 1.x
 Changing `build.sbt` DSL to Scala 3.x
 -------------------------------------
 
-As a reminder, users can build either Scala 2.x or Scala 3.x programs using either sbt 1.x or sbt 2.x. However, the Scala that underlies the `build.sbt` DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala 3.7.x.
+As a reminder, users can build either Scala 2.x or Scala 3.x programs using either sbt 1.x or sbt 2.x. However, the Scala that underlies the `build.sbt` DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala 3.8.x.
 
 This means that if you implement custom tasks or sbt plugins for sbt 2.x, it must be done using Scala 3.x. Consult [Scala 3.x incompatibility table][scala-incompatibility-table] and [Scala 2 with -Xsource:3][tooling-scala2-xsource3] for details about Scala 3.x.
 
@@ -135,7 +135,7 @@ lazy val plugin = (projectMatrix in file("plugin"))
   .settings(
     name := "sbt-vimquit",
   )
-  .jvmPlatform(scalaVersions = Seq("3.6.2", "2.12.20"))
+  .jvmPlatform(scalaVersions = Seq("3.8.4", "2.12.20"))
 ```
 
 If you use `projectMatrix`, make sure to move the plugin to a subdirectory like `plugin/`. Otherwise, the synthetic root project will also pick up the `src/`.
@@ -147,7 +147,7 @@ Use sbt 1.10.2 or later, if you want to cross build using sbt 1.x.
 ```scala
 // using sbt 1.x
 lazy val scala212 = "2.12.20"
-lazy val scala3 = "3.6.2"
+lazy val scala3 = "3.8.4"
 ThisBuild / crossScalaVersions := Seq(scala212, scala3)
 
 lazy val plugin = (project in file("plugin"))
