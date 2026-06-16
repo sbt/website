@@ -314,3 +314,14 @@ sbt "clean ; compile ; test ; shutdown"
 
 Note that this applies whether you run `sbt` directly or through a third-party action
 such as `sbt-dependency-submission` that invokes `sbt` internally.
+
+### Test artifacts
+
+Output artifacts such as test results are now stored in subdirectories beneath
+`target/out` so you may need to update the paths used for test publishing and
+artifact archival:
+
+
+```yaml
+path: target/out/**/test-reports/*.xml
+```
