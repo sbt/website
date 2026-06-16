@@ -279,3 +279,49 @@ This pattern is compatible with `sbt2-compat` and can be used alongside it to ab
   [scala-incompatibility-table]: https://docs.scala-lang.org/scala3/guides/migration/incompatibility-table.html
   [syntactic-scalafix-rule-for-unified-slash-syntax]: https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-syntax/
   [tooling-scala2-xsource3]: https://docs.scala-lang.org/scala3/guides/migration/tooling-scala2-xsource3.html
+
+Migrating CI pipelines
+----------------------
+
+There are some behavior changes that may affect CI pipelines.
+
+### Running a sequence of commands
+
+A sequence of commands must now be supplied as a quoted string separated by
+semicolons:
+
+```bash
+sbt "clean ; compile ; test"
+```
+
+Previously, you could write `sbt clean compile test`. That now produces the
+error "Expected whitespace character".
+
+### Persistent sbt server with multiple steps
+
+If a CI pipeline contains multiple steps that run `sbt`, later steps reuse the
+persistent server started by the first invocation instead of starting a new `sbt`
+process each time. As a result, these later steps continue to use the environment
+variables passed to the first session.
+
+If your pipeline relies on passing different environment variables (such as `JAVA_OPTS`)
+to each session, you must either provide all variables at the job level so they are
+identical for all `sbt` invocations, or shut down `sbt` after each step or between steps.
+
+```bash
+sbt "clean ; compile ; test ; shutdown"
+```
+
+Note that this applies whether you run `sbt` directly or through a third-party action
+such as `sbt-dependency-submission` that invokes `sbt` internally.
+
+### Test artifacts
+
+Output artifacts such as test results are now stored in subdirectories beneath
+`target/out` so you may need to update the paths used for test publishing and
+artifact archival:
+
+
+```yaml
+path: target/out/**/test-reports/*.xml
+```
