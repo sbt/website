@@ -284,7 +284,7 @@ val newYorkLatitude: Double = 40.7143
 val newYorkLongitude: Double = -74.006
 val response: Response[String] = quickRequest
   .get(
-    uri"https://api.open-meteo.com/v1/forecast?latitude=\$newYorkLatitude&longitude=\$newYorkLongitude&current_weather=true"
+    uri"https://api.open-meteo.com/v1/forecast?latitude=$newYorkLatitude&longitude=$newYorkLongitude&current_weather=true"
   )
   .send()
 
