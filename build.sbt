@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
   )
   .settings(
     name := "website",
-    scalaVersion := "3.8.2",
+    scalaVersion := "3.8.4",
     siteEmail := "eed3si9n" + "@gmail.com",
     // Reference
     MdBook / siteSubdirName := s"""$targetSbtBinaryVersion/docs/""",
