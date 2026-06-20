@@ -21,7 +21,7 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - sbt 2.x adds `platform` setting so `ModuleID`'s `%%` operator can cross build on JVM as well as JS and Native, as opposed to `%%%` operator that was created in a plugin to workaround this issue, by [@eed3si9n][@eed3si9n] in [#6746][6746]
 - Dropped `useCoursier` setting so Coursier cannot be opted out, by [@eed3si9n][@eed3si9n] in [#7712][7712]
 - `Key.Classpath` is changed to be an alias of the `Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of `Seq[Attributed[File]]`. Similarly, some task keys that used to return `File` have changed to return `HashedVirtualFileRef` instead. See [Caching Files].
-- In sbt 2.x `target` defaults to `target/out/jvm/scala-3.8.2/<subproject>/`, as opposed to `<subproject>/target/`.
+- In sbt 2.x `target` defaults to `target/out/jvm/scala-3.8.4/<subproject>/`, as opposed to `<subproject>/target/`.
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
 - sbt 2.x disables the delegation of scoped tasks in the sbt shell by [@eed3si9n][@eed3si9n] in [#8539][8539]
 - sbt 2.x enforces eviction error in `Test` configuration by [@calm329][@calm329] and [@zainab-ali][@zainab-ali] in [#8451](https://github.com/sbt/sbt/pull/8451) + [#9102](https://github.com/sbt/sbt/pull/9102)
