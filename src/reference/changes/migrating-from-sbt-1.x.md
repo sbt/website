@@ -1,8 +1,6 @@
-Migrating from sbt 1.x
-======================
+# Migrating from sbt 1.x
 
-Changing `build.sbt` DSL to Scala 3.x
--------------------------------------
+## Changing `build.sbt` DSL to Scala 3.x
 
 As a reminder, users can build either Scala 2.x or Scala 3.x programs using either sbt 1.x or sbt 2.x. However, the Scala that underlies the `build.sbt` DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala 3.8.x.
 
@@ -51,8 +49,7 @@ libraryDependencies +=
   ("com.github.sbt" % "junit-interface" % "0.13.2").withSources().withJavadoc()
 ```
 
-Bare settings changes
----------------------
+## Bare settings changes
 
 ```scala
 version := "0.1.0"
@@ -81,13 +78,11 @@ LocalRootProject / publish / skip := true
 
 In sbt 2.x, bare settings settings should no longer be scoped to `ThisBuild`. One benefit of the new _common settings_ over `ThisBuild` is that it would act in a more predictable delegation. These settings are inserted between plugins settings and those defined in `settings(...)`, meaning they can be used to define settings like `Compile / scalacOptions`, which was not possible with `ThisBuild`.
 
-Changes to `exportJars`
------------------------
+## Changes to `exportJars`
 
 `exportJars` defaults to `true`, was `false`. This might break `getResource("/")` and `resource.toURI`. Set `exportJars := false` if this logic is broken in your build, producing `NullPointerException`s and `FileSystemNotFoundException`s. Set `exportJars := false` in your build if you want to keep the old behavior. The change was introduced by [sbt/sbt#7464](https://github.com/sbt/sbt/pull/7464), see also [blog](https://eed3si9n.com/sbt-remote-cache/).
 
-Migrating to cached tasks
--------------------------
+## Migrating to cached tasks
 
 In sbt 2.x, all tasks are cached by default. To participate in caching, the task result type must provide a given for `sjsonnew.JsonFormat`. Any task whose result type lacks `JsonFormat` (e.g. complex objects like `ParadoxProcessor`, `ClassLoader`, `Seq[PathMapping]`, or function types) will fail at build load time in sbt 2.
 
@@ -103,13 +98,11 @@ When considering caching for a task, watch out for side-effecting tasks. When sb
 
 The [sbt2-compat](https://github.com/sbt/sbt2-compat) plugin provides `Def.uncached` as a compatibility shim on sbt 1.x (where it is a no-op). See [Cached task](../reference/cached-task.md) reference for details, including build-wide and per-task opt-out options.
 
-Migration away from IntegrationTest
------------------------------------
+## Migration away from IntegrationTest
 
 To migrate away from the `IntegrationTest` configuration, create a separate subproject and implement it as normal test.
 
-Migrating to slash syntax
--------------------------
+## Migrating to slash syntax
 
 sbt 1.x supported both the sbt 0.13 style syntax and the slash syntax. sbt 2.x removes the support for the sbt 0.13 syntax, so use the slash syntax for both sbt shell and in `build.sbt`:
 
@@ -123,8 +116,7 @@ For example, `test:compile` will no longer work on the shell. Use `Test/compile`
 scalafix --rules=https://gist.githubusercontent.com/eed3si9n/57e83f5330592d968ce49f0d5030d4d5/raw/7f576f16a90e432baa49911c9a66204c354947bb/Sbt0_13BuildSyntax.scala *.sbt project/*.scala
 ```
 
-Cross building sbt plugins
---------------------------
+## Cross building sbt plugins
 
 In sbt 2.x, if you cross build an sbt plugin with Scala 3.x and 2.12.x, it will automatically cross build against sbt 1.x and sbt 2.x:
 
@@ -163,8 +155,7 @@ lazy val plugin = (project in file("plugin"))
   )
 ```
 
-Changes to `%%`
----------------
+## Changes to `%%`
 
 In sbt 2.x, `ModuleID`'s `%%` operator has become platform-aware. For JVM subprojects, `%%` works as before, encoding Scala suffix (for example `_3`) on Maven repositories.
 
@@ -178,8 +169,7 @@ libraryDependencies += "org.scala-js" %% "scalajs-dom" % "2.8.0"
 
 Use `.platform(Platform.jvm)` in case where JVM libraries are needed.
 
-Changes to `target`
--------------------
+## Changes to `target`
 
 In sbt 2.x, the `target` directory is unified to be a single `target/` directory in the working directory, and each subproject creates a subdirectory encoding platform, Scala version, and the subproject id. To absorb this change in scripted tests, `exists`, `absent`, and `delete` now supports glob expression `**`, as well as `||`.
 
@@ -198,8 +188,7 @@ $ exists target/**/proj/src_managed/bar.txt || proj/target/**/src_managed/bar.tx
 
 In sbt 1.x, `target.value` resolves to the project root `target/` directory. In sbt 2.x, it resolves to `target/out/jvm/scala-<ver>/<project-name>` instead. Plugins should be aware of this change during migration.
 
-Migrating CI pipelines
-----------------------
+## Migrating CI pipelines
 
 There are some behavior changes that may affect CI pipelines.
 
@@ -215,10 +204,10 @@ sbt "clean ; compile ; test"
 Previously, you could write `sbt clean compile test`. That now produces the
 error "Expected whitespace character".
 
-### Persistent sbt server with multiple steps
+### sbt server with multiple steps
 
 If a CI pipeline contains multiple steps that run `sbt`, later steps reuse the
-persistent server started by the first invocation instead of starting a new `sbt`
+sbt server started by the first invocation instead of starting a new `sbt`
 process each time. As a result, these later steps continue to use the environment
 variables passed to the first session.
 
@@ -239,18 +228,15 @@ Output artifacts such as test results are now stored in subdirectories beneath
 `target/out` so you may need to update the paths used for test publishing and
 artifact archival:
 
-
 ```yaml
 path: target/out/**/test-reports/*.xml
 ```
 
-Change of global base directory
--------------------------------
+### Change of global base directory
 
 In sbt 2.x, the global base directory follows directory standard. The default value on Windows is `%LOCALAPPDATA%/sbt/2`. Otherwise, it is `$XDG_CONFIG_HOME/sbt/2` or `$HOME/.config/sbt/2`. See [sbt reference](../reference/sbt.md#global-base-directory) for details.
 
-The PluginCompat technique
---------------------------
+## The PluginCompat technique
 
 To use the same `*.scala` source but target both sbt 1.x and 2.x, we can create a shim, for example an object named `PluginCompat` in both `src/main/scala-2.12/` and `src/main/scala-3/`. APIs commonly encountered during migrations are abstracted into the [sbt2-compat](https://github.com/sbt/sbt2-compat) plugin that can be used to avoid creating the shims manually. To use it in your sbt plugin, you can add it to your sbt plugin's `build.sbt`:
 
@@ -327,6 +313,6 @@ myTask := {
 
 This pattern is compatible with `sbt2-compat` and can be used alongside it to absorb the differences between sbt 1.x and 2.x.
 
-  [scala-incompatibility-table]: https://docs.scala-lang.org/scala3/guides/migration/incompatibility-table.html
-  [syntactic-scalafix-rule-for-unified-slash-syntax]: https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-syntax/
-  [tooling-scala2-xsource3]: https://docs.scala-lang.org/scala3/guides/migration/tooling-scala2-xsource3.html
+[scala-incompatibility-table]: https://docs.scala-lang.org/scala3/guides/migration/incompatibility-table.html
+[syntactic-scalafix-rule-for-unified-slash-syntax]: https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-syntax/
+[tooling-scala2-xsource3]: https://docs.scala-lang.org/scala3/guides/migration/tooling-scala2-xsource3.html

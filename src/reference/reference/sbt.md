@@ -274,7 +274,7 @@ following uses the pre-0.11 style of putting the boot directory in
 sbt -Dsbt.boot.directory=project/boot/
 ```
 
-#### Global base directory
+### Global base directory
 
 Global base directory contains machine-wide settings and plugins.
 This is determined by:
