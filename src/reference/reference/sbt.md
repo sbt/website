@@ -261,7 +261,7 @@ sbt -J-Xmx2048M -J-Xss2M
 
 `sbt` runner is just a bootstrap, the actual sbt server,
 Scala compiler and standard library are by default downloaded to
-the shared directory  `\$HOME/.sbt/boot/`.
+the shared directory  `$HOME/.sbt/boot/`.
 
 To change the location of this directory, set the `sbt.boot.directory`
 system property. A relative path will be resolved
@@ -273,6 +273,19 @@ following uses the pre-0.11 style of putting the boot directory in
 ```bash
 sbt -Dsbt.boot.directory=project/boot/
 ```
+
+### Global base directory
+
+Global base directory contains machine-wide settings and plugins.
+This is determined by:
+
+1. `-Dsbt.boot.directory` system property
+2. `$SBT_CONFIG_HOME` environment variable.
+3. `%LOCALAPPDATA%/sbt` on Windows
+4. `$XDG_CONFIG_HOME/sbt` on non-Windows
+5. `$HOME/.config/sbt`
+
+Then a subdirectory named `2`, for example, `$HOME/.config/sbt/2`.
 
 ### Terminal encoding
 
@@ -338,10 +351,6 @@ Location of the Coursier artifact cache, where the default is defined by [Coursi
 #### `-Dsbt.genbuildprops=true`
 
 Generate `build.properties` if missing. If unset, this defers to `sbt.skip.version.write`.
-
-#### `-Dsbt.global.base=$HOME/.sbt/`
-
-The directory containing global settings and plugins.
 
 #### `-Dsbt.override.build.repos=true`
 
