@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-03-20T23:32:20-04:00\n"
+"POT-Creation-Date: 2026-06-28T03:39:42-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -528,10 +528,11 @@ msgid "Boot directory"
 msgstr "ブートディレクトリ"
 
 #: src/reference/reference/sbt.md:262
+#, fuzzy
 msgid ""
 "`sbt` runner is just a bootstrap, the actual sbt server, Scala compiler and "
-"standard library are by default downloaded to the shared directory  `\\"
-"$HOME/.sbt/boot/`."
+"standard library are by default downloaded to the shared directory  "
+"`$HOME/.sbt/boot/`."
 msgstr ""
 "`sbt` runner はただの起動スクリプトであり、実際の sbt server、Scala コンパイ"
 "ラ、標準ライブラリはデフォルトで共有ディレクトリ `$HOME/.sbt/boot/` にダウン"
@@ -551,10 +552,46 @@ msgstr ""
 "は 0.11 以前のスタイルで `project/boot/` にブートディレクトリを配置する:"
 
 #: src/reference/reference/sbt.md:277
+#, fuzzy
+msgid "Global base directory"
+msgstr "ブートディレクトリ"
+
+#: src/reference/reference/sbt.md:279
+#, fuzzy
+msgid ""
+"Global base directory contains machine-wide settings and plugins. This is "
+"determined by:"
+msgstr "グローバルセッティングとプラグインを含むディレクトリ。"
+
+#: src/reference/reference/sbt.md:282
+msgid "`-Dsbt.boot.directory` system property"
+msgstr ""
+
+#: src/reference/reference/sbt.md:283
+msgid "`$SBT_CONFIG_HOME` environment variable."
+msgstr ""
+
+#: src/reference/reference/sbt.md:284
+msgid "`%LOCALAPPDATA%/sbt` on Windows"
+msgstr ""
+
+#: src/reference/reference/sbt.md:285
+msgid "`$XDG_CONFIG_HOME/sbt` on non-Windows"
+msgstr ""
+
+#: src/reference/reference/sbt.md:286
+msgid "`$HOME/.config/sbt`"
+msgstr ""
+
+#: src/reference/reference/sbt.md:288
+msgid "Then a subdirectory named `2`, for example, `$HOME/.config/sbt/2`."
+msgstr ""
+
+#: src/reference/reference/sbt.md:290
 msgid "Terminal encoding"
 msgstr "ターミナルエンコーディング"
 
-#: src/reference/reference/sbt.md:279
+#: src/reference/reference/sbt.md:292
 msgid ""
 "The character encoding used by your terminal may differ from Java's default "
 "encoding for your platform. In this case, you will need to specify the "
@@ -564,15 +601,15 @@ msgstr ""
 "トエンコーディングと異なる場合がある。その場合、`file.encoding=<encoding>` シ"
 "ステムプロパティを指定する必要がある。例:"
 
-#: src/reference/reference/sbt.md:284
+#: src/reference/reference/sbt.md:297
 msgid "\"-Dfile.encoding=Cp1252\""
 msgstr ""
 
-#: src/reference/reference/sbt.md:288
+#: src/reference/reference/sbt.md:301
 msgid "HTTP/HTTPS/FTP Proxy"
 msgstr "HTTP/HTTPS/FTP プロキシ"
 
-#: src/reference/reference/sbt.md:290
+#: src/reference/reference/sbt.md:303
 msgid ""
 "On Unix, sbt will pick up any HTTP, HTTPS, or FTP proxy settings from the "
 "standard `http_proxy`, `https_proxy`, and `ftp_proxy` environment variables. "
@@ -587,11 +624,11 @@ msgstr ""
 "テムプロパティ](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/"
 "java/net/doc-files/net-properties.html)を参照。"
 
-#: src/reference/reference/sbt.md:296
+#: src/reference/reference/sbt.md:309
 msgid "For example:"
 msgstr "例:"
 
-#: src/reference/reference/sbt.md:302
+#: src/reference/reference/sbt.md:315
 msgid ""
 "On Windows, your script should set properties for proxy host, port, and if "
 "applicable, username and password. For example, for HTTP:"
@@ -599,7 +636,7 @@ msgstr ""
 "Windows では、スクリプトでプロキシホスト、ポート、必要に応じてユーザー名とパ"
 "スワードのプロパティを設定する。例えば HTTP の場合:"
 
-#: src/reference/reference/sbt.md:309
+#: src/reference/reference/sbt.md:322
 msgid ""
 "Replace `http` with `https` or `ftp` in the above command line to configure "
 "HTTPS or FTP."
@@ -607,27 +644,27 @@ msgstr ""
 "上記のコマンドラインで `http` を `https` または `ftp` に置き換えて HTTPS また"
 "は FTP を設定する。"
 
-#: src/reference/reference/sbt.md:312
+#: src/reference/reference/sbt.md:325
 msgid "Other system properties"
 msgstr "その他のシステムプロパティ"
 
-#: src/reference/reference/sbt.md:314
+#: src/reference/reference/sbt.md:327
 msgid "The following system properties can also be passed to `sbt` runner:"
 msgstr "以下のシステムプロパティも `sbt` runner に渡すことができる:"
 
-#: src/reference/reference/sbt.md:316
+#: src/reference/reference/sbt.md:329
 msgid "`-Dsbt.banner=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:318
+#: src/reference/reference/sbt.md:331
 msgid "Show a welcome banner advertising new features."
 msgstr "新機能を宣伝するウェルカムバナーを表示する。"
 
-#: src/reference/reference/sbt.md:320
+#: src/reference/reference/sbt.md:333
 msgid "`-Dsbt.ci=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:322
+#: src/reference/reference/sbt.md:335
 msgid ""
 "Default `false` (unless then env var `BUILD_NUMBER` is set). For continuous "
 "integration environments. Suppress supershell and color."
@@ -635,27 +672,27 @@ msgstr ""
 "デフォルトは `false`（環境変数 `BUILD_NUMBER` が設定されている場合を除く）。"
 "CI 環境用。supershell とカラー出力を抑制する。"
 
-#: src/reference/reference/sbt.md:324
+#: src/reference/reference/sbt.md:337
 msgid "`-Dsbt.client=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:326
+#: src/reference/reference/sbt.md:339
 msgid "Run the sbt client."
 msgstr "sbt クライアントを実行する。"
 
-#: src/reference/reference/sbt.md:328
+#: src/reference/reference/sbt.md:341
 msgid "`-Dsbt.color=auto`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:330
+#: src/reference/reference/sbt.md:343
 msgid "To turn on color, use `always` or `true`."
 msgstr "カラーを有効にするには `always` または `true` を使用する。"
 
-#: src/reference/reference/sbt.md:331
+#: src/reference/reference/sbt.md:344
 msgid "To turn off color, use `never` or `false`."
 msgstr "カラーを無効にするには `never` または `false` を使用する。"
 
-#: src/reference/reference/sbt.md:332
+#: src/reference/reference/sbt.md:345
 msgid ""
 "To use color if the output is a terminal (not a pipe) that supports color, "
 "use `auto`."
@@ -663,11 +700,11 @@ msgstr ""
 "出力がカラーをサポートするターミナル（パイプではない）の場合にカラーを使用す"
 "るには `auto` を使用する。"
 
-#: src/reference/reference/sbt.md:334
+#: src/reference/reference/sbt.md:347
 msgid "`-Dsbt.coursier.home=$HOME/.cache/coursier/v1`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:336
+#: src/reference/reference/sbt.md:349
 msgid ""
 "Location of the Coursier artifact cache, where the default is defined by "
 "[Coursier cache resolution logic](https://get-coursier.io/docs/"
@@ -678,11 +715,11 @@ msgstr ""
 "決ロジック](https://get-coursier.io/docs/cache.html#default-location)で定義さ"
 "れる。値は `csrCacheDirectory` コマンドで確認できる。"
 
-#: src/reference/reference/sbt.md:338
+#: src/reference/reference/sbt.md:351
 msgid "`-Dsbt.genbuildprops=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:340
+#: src/reference/reference/sbt.md:353
 msgid ""
 "Generate `build.properties` if missing. If unset, this defers to "
 "`sbt.skip.version.write`."
@@ -690,19 +727,11 @@ msgstr ""
 "存在しない場合に `build.properties` を生成する。未設定の場合、"
 "`sbt.skip.version.write` に委譲される。"
 
-#: src/reference/reference/sbt.md:342
-msgid "`-Dsbt.global.base=$HOME/.sbt/`"
-msgstr ""
-
-#: src/reference/reference/sbt.md:344
-msgid "The directory containing global settings and plugins."
-msgstr "グローバルセッティングとプラグインを含むディレクトリ。"
-
-#: src/reference/reference/sbt.md:346
+#: src/reference/reference/sbt.md:355
 msgid "`-Dsbt.override.build.repos=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:348
+#: src/reference/reference/sbt.md:357
 msgid ""
 "If true, repositories configured in a build definition are ignored and the "
 "repositories configured for the launcher are used instead."
@@ -710,11 +739,11 @@ msgstr ""
 "true の場合、ビルド定義で設定されたリポジトリは無視され、ランチャー用に設定さ"
 "れたリポジトリが代わりに使用される。"
 
-#: src/reference/reference/sbt.md:352
+#: src/reference/reference/sbt.md:361
 msgid "`-Dsbt.repository.config=$HOME/.sbt/repositories`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:354
+#: src/reference/reference/sbt.md:363
 msgid ""
 "A file containing the repositories to use for the launcher. The format is "
 "the same as a `[repositories]` section for a sbt launcher configuration "

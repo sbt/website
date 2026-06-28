@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-06-14T19:18:03-04:00\n"
+"POT-Creation-Date: 2026-06-28T03:39:42-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -86,7 +86,7 @@ msgstr ""
 #: src/reference/changes/migrating-from-sbt-1.x.md:32
 #: src/reference/changes/migrating-from-sbt-1.x.md:39
 #: src/reference/changes/migrating-from-sbt-1.x.md:51
-#: src/reference/changes/migrating-from-sbt-1.x.md:207
+#: src/reference/changes/migrating-from-sbt-1.x.md:258
 msgid "\"com.github.sbt\""
 msgstr ""
 
@@ -124,6 +124,8 @@ msgid "\"0.1.0\""
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:59
+#: src/reference/changes/migrating-from-sbt-1.x.md:138
+#: src/reference/changes/migrating-from-sbt-1.x.md:150
 msgid "\"3.8.4\""
 msgstr ""
 
@@ -313,11 +315,6 @@ msgid "\"sbt-vimquit\""
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:138
-#: src/reference/changes/migrating-from-sbt-1.x.md:150
-msgid "\"3.8.4\""
-msgstr ""
-
-#: src/reference/changes/migrating-from-sbt-1.x.md:138
 #: src/reference/changes/migrating-from-sbt-1.x.md:149
 msgid "\"2.12.20\""
 msgstr ""
@@ -439,10 +436,101 @@ msgid ""
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:201
+#, fuzzy
+msgid "Migrating CI pipelines"
+msgstr "Classpath 型のマイグレーション"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:204
+msgid "There are some behavior changes that may affect CI pipelines."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:206
+msgid "Running a sequence of commands"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:208
+msgid ""
+"A sequence of commands must now be supplied as a quoted string separated by "
+"semicolons:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:212
+msgid "\"clean ; compile ; test\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:215
+msgid ""
+"Previously, you could write `sbt clean compile test`. That now produces the "
+"error \"Expected whitespace character\"."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:218
+msgid "Persistent sbt server with multiple steps"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:220
+msgid ""
+"If a CI pipeline contains multiple steps that run `sbt`, later steps reuse "
+"the persistent server started by the first invocation instead of starting a "
+"new `sbt` process each time. As a result, these later steps continue to use "
+"the environment variables passed to the first session."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:225
+msgid ""
+"If your pipeline relies on passing different environment variables (such as "
+"`JAVA_OPTS`) to each session, you must either provide all variables at the "
+"job level so they are identical for all `sbt` invocations, or shut down "
+"`sbt` after each step or between steps."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:230
+msgid "\"clean ; compile ; test ; shutdown\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:233
+msgid ""
+"Note that this applies whether you run `sbt` directly or through a third-"
+"party action such as `sbt-dependency-submission` that invokes `sbt` "
+"internally."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:236
+msgid "Test artifacts"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:238
+msgid ""
+"Output artifacts such as test results are now stored in subdirectories "
+"beneath `target/out` so you may need to update the paths used for test "
+"publishing and artifact archival:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:244
+msgid "path"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:244
+msgid "target/out/**/test-reports/*.xml"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:247
+msgid "Change of global base directory"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:250
+msgid ""
+"In sbt 2.x, the global base directory follows directory standard. The "
+"default value on Windows is `%LOCALAPPDATA%/sbt/2`. Otherwise, it is "
+"`$XDG_CONFIG_HOME/sbt/2` or `$HOME/.config/sbt/2`. See [sbt reference](../"
+"reference/sbt.md#global-base-directory) for details."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:252
 msgid "The PluginCompat technique"
 msgstr "PluginCompat 技法"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:204
+#: src/reference/changes/migrating-from-sbt-1.x.md:255
 msgid ""
 "To use the same `*.scala` source but target both sbt 1.x and 2.x, we can "
 "create a shim, for example an object named `PluginCompat` in both `src/main/"
@@ -452,23 +540,23 @@ msgid ""
 "it in your sbt plugin, you can add it to your sbt plugin's `build.sbt`:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:207
+#: src/reference/changes/migrating-from-sbt-1.x.md:258
 msgid "\"sbt2-compat\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:207
+#: src/reference/changes/migrating-from-sbt-1.x.md:258
 msgid "\"<version>\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:210
+#: src/reference/changes/migrating-from-sbt-1.x.md:261
 msgid "And import and use the conversion methods in your shared source:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:214
+#: src/reference/changes/migrating-from-sbt-1.x.md:265
 msgid "// Use the conversion methods here"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:218
+#: src/reference/changes/migrating-from-sbt-1.x.md:269
 msgid ""
 "You can read more about `sbt2-compat`, the `PluginCompat` pattern and how to "
 "use them the following blog article: [Migrating sbt plugins to sbt 2 with "
@@ -476,11 +564,11 @@ msgid ""
 "compat.html)."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:220
+#: src/reference/changes/migrating-from-sbt-1.x.md:271
 msgid "Migrating Classpath type"
 msgstr "Classpath 型のマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:222
+#: src/reference/changes/migrating-from-sbt-1.x.md:273
 msgid ""
 "sbt 2.x changed the `Classpath` type to be an alias of "
 "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` instead of "
@@ -490,11 +578,11 @@ msgid ""
 "`toFiles`, for example:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:231
+#: src/reference/changes/migrating-from-sbt-1.x.md:282
 msgid "// ..."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:235
+#: src/reference/changes/migrating-from-sbt-1.x.md:286
 msgid ""
 "`sbt2-compat` also provides `toNioPath`, `toFile`, `toFileRefsMapping`, "
 "`Def.uncached` and other convenience methods to be used in the shared "
@@ -502,11 +590,11 @@ msgid ""
 "for the up-to-date documentation on the API provided by the plugin."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:237
+#: src/reference/changes/migrating-from-sbt-1.x.md:288
 msgid "Defining your own PluginCompat shims"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:239
+#: src/reference/changes/migrating-from-sbt-1.x.md:290
 msgid ""
 "For the APIs broken between sbt 1.x and 2.x that are not covered by `sbt2-"
 "compat`, you can define your own `PluginCompat` shims by creating separate "
@@ -514,59 +602,20 @@ msgid ""
 "scala-3/PluginCompat.scala`. For example:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:242
+#: src/reference/changes/migrating-from-sbt-1.x.md:293
 msgid "// src/main/scala-2.12/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:255
+#: src/reference/changes/migrating-from-sbt-1.x.md:306
 msgid "// src/main/scala-3/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:267
+#: src/reference/changes/migrating-from-sbt-1.x.md:318
 msgid "Then use your own `PluginCompat` shims in your sbt plugin:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:277
+#: src/reference/changes/migrating-from-sbt-1.x.md:328
 msgid ""
 "This pattern is compatible with `sbt2-compat` and can be used alongside it "
 "to absorb the differences between sbt 1.x and 2.x."
 msgstr ""
-
-#~ msgid ""
-#~ "See [Cached task](../reference/cached-task.md) reference for details, "
-#~ "including the way to opt out of caching."
-#~ msgstr ""
-#~ "キャッシュ化のオプトアウトを含め[キャッシュ・タスク](../reference/cached-"
-#~ "task.md)参照。"
-
-#~ msgid ""
-#~ "To use the same `*.scala` source but target both sbt 1.x and 2.x, we can "
-#~ "create a shim, for example an object named `PluginCompat` in both `src/"
-#~ "main/scala-2.12/` and `src/main/scala-3/`."
-#~ msgstr ""
-#~ "同じ `*.scala` ソースから sbt 1.x と 2.x 向けのプラグインを作るには「詰め"
-#~ "木」的なコードとして `PluginCompat` という名前のオブジェクトを`src/main/"
-#~ "scala-2.12/` と `src/main/scala-3/` の両方に入れて違いを吸収することができ"
-#~ "る。"
-
-#~ msgid ""
-#~ "sbt 2.x changed the `Classpath` type to be an alias of the "
-#~ "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type. The following is a "
-#~ "shim created to work with classpaths from both sbt 1.x and 2.x."
-#~ msgstr ""
-#~ "sbt 2.x からは `Classpath` 型が"
-#~ "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` 型のエイリアスとなった。以下"
-#~ "は、sbt 1.x と 2.x の両方のクラスパスに対応するための詰め木だ。"
-
-#~ msgid "and here's for sbt 1.x:"
-#~ msgstr "これが sbt 1.x 用だ:"
-
-#~ msgid ""
-#~ "Now we can import `PluginCompat.*` and use `toNioPaths(...)` etc to "
-#~ "absorb the differences between sbt 1.x and 2.x. The above demonstrates "
-#~ "how we can absorb the classpath type change, and convert it into a vector "
-#~ "of NIO Paths."
-#~ msgstr ""
-#~ "これで `PluginCompat.*` を import して `toNioPaths(...)` などを使って sbt "
-#~ "1.x と 2.x の違いを吸収できる。特にこれは、クラスパス型の違いを吸収して "
-#~ "NIO Path ベクトルに変換できることを示している。"
