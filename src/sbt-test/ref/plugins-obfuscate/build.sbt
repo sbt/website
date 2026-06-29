@@ -8,6 +8,6 @@ lazy val root = rootProject
     name := "sbt-obfuscate",
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match
-        case "3" => "2.0.0-RC10" // set minimum sbt version
+        case "3" => "2.0.1" // set minimum sbt version
     }
   )
