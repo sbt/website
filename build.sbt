@@ -43,3 +43,5 @@ lazy val root = (project in file("."))
     scriptedBufferLog := false,
     isGenerateSiteMap := true
   )
+
+//
