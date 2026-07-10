@@ -333,11 +333,18 @@ object Docs {
       gitRemoveFiles(
         repo,
         List(
-          repo / "assets" / "favicon.ico",
-          repo / "assets" / "stylesheet.css",
-          repo / "assets" / "set-versions.js",
-          repo / "assets" / "versions.js",
-        ),
+          "learn",
+          "download",
+          "community",
+          "cookie",
+          "thank-you"
+        ).map(x => repo / x / "index.html") :::
+          List(
+            repo / "assets" / "favicon.ico",
+            repo / "assets" / "stylesheet.css",
+            repo / "assets" / "set-versions.js",
+            repo / "assets" / "versions.js",
+          ),
         git,
         s
       )
