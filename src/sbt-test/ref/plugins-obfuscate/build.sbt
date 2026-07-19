@@ -1,6 +1,6 @@
 version := "0.1.0-SNAPSHOT"
 organization := "com.example"
-homepage := Some(url("https://github.com/sbt/sbt-obfuscate"))
+homepage := Some(uri("https://github.com/sbt/sbt-obfuscate"))
 
 lazy val root = rootProject
   .enablePlugins(SbtPlugin)

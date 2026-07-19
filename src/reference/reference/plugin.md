@@ -38,7 +38,7 @@ To make an auto plugin, create a project and enable `SbtPlugin`.
 ```scala
 version := "0.1.0-SNAPSHOT"
 organization := "com.example"
-homepage := Some(url("https://github.com/sbt/sbt-hello"))
+homepage := Some(uri("https://github.com/sbt/sbt-hello"))
 
 lazy val root = rootProject
   .enablePlugins(SbtPlugin)
