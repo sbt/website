@@ -1,33 +1,30 @@
-  
-  [Coursier]: https://get-coursier.io/
-  [Setup]: Setup.html
-  [Basic-Def]: Basic-Def.html
-  [Full-Def]: Full-Def.html
-  [Library-Dependencies]: ../guide/library-dependency-basics.md
-  [Update-Report]: Update-Report.html
-  [Paths]: Paths.html
-  [Resolvers]: Resolvers.html
-  [Publishing]: Publishing.html
-  [Cross-Build]: ../concepts/cross-building.md
-  [Cached-Resolution]: Cached-Resolution.html
+[Coursier]: https://get-coursier.io/
+[Setup]: Setup.html
+[Basic-Def]: Basic-Def.html
+[Full-Def]: Full-Def.html
+[Library-Dependencies]: ../guide/library-dependency-basics.md
+[Update-Report]: Update-Report.html
+[Paths]: Paths.html
+[Resolvers]: Resolvers.html
+[Publishing]: Publishing.html
+[Cross-Build]: ../concepts/cross-building.md
+[Cached-Resolution]: Cached-Resolution.html
 
-sbt update
-==========
+# sbt update
 
 See [library depdency basics][Library-Dependencies] in the Getting Started guide to learn about the basics.
 
-Synopsis
---------
+## Synopsis
 
 `sbt` \[_query_ / \] `update`
 
-Description
------------
+## Description
 
 sbt uses [Coursier][Coursier] to implement library management,
 also known as a package manager in other ecosystems.
 The general idea of library management is that you can specify external libraries you would
 like to use in your subprojects, and the library management system would:
+
 - Check if such versions exists in the listed repositories
 - Look for the transitive dependencies (i.e. the libraries used by the libraries)
 - Attempt to resolve version conflicts, if any
@@ -143,6 +140,22 @@ To ignore all eviction errors:
 evictionErrorLevel := Level.Info
 ```
 
+### Maven BOM (Bill of Materials) usage
+
+sbt 2 supports Maven BOM (Bill of Materials) usage. Subprojects can depend on published BOM artifacts using `.pomOnly()`:
+
+```scala
+libraryDependencies += ("com.fasterxml.jackson" % "jackson-bom" % "2.21.0").pomOnly()
+```
+
+These bill of materials are forwarded to Coursier, which should introduce version constraints for specific libraries (such as Jackson). You can use `"*"` to declare versionless dependency:
+
+```scala
+libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "*"
+```
+
+This will let Coursier automatically fill in the version based on the bill of material constraints (in this case `"2.21.0"`).
+
 ### Resolvers
 
 sbt uses the standard Maven Central repository by default. Declare additional repositories with the form:
@@ -226,7 +239,7 @@ repositories for dependency resolution and retrieval.
 
 In certain cases a transitive dependency should be excluded from
 all dependencies. This can be achieved by setting up `ExclusionRules`
-in `excludeDependencies`. 
+in `excludeDependencies`.
 
 ```scala
 excludeDependencies ++= Seq(
@@ -241,7 +254,7 @@ when a pom will be published for the project. It requires the
 organization and module name to exclude. For example,
 
 ```scala
-libraryDependencies += 
+libraryDependencies +=
   ("log4j" % "log4j" % "1.2.15").exclude("javax.jms", "jms")
 ```
 
@@ -300,7 +313,7 @@ libraryDependencies += ("org.testng" % "testng" % "5.7").classifier("jdk15")
 For multiple classifiers, use multiple `classifier` calls:
 
 ```scala
-libraryDependencies += 
+libraryDependencies +=
   "org.lwjgl.lwjgl" % "lwjgl-platform" % lwjglVersion classifier "natives-windows" classifier "natives-linux" classifier "natives-osx"
 ```
 
@@ -326,7 +339,7 @@ plugin, add `withSources()` to the dependency definition. For API jars,
 add `withJavadoc()`. For example:
 
 ```scala
-libraryDependencies += 
+libraryDependencies +=
   ("org.apache.felix" % "org.apache.felix.framework" % "1.8.0").withSources().withJavadoc()
 ```
 
