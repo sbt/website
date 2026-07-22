@@ -50,5 +50,6 @@
   - [GitHub Actions setup](recipes/github-actions-setup.md)
   - [Source dependency plugin](recipes/source-dependency-plugin.md)
   - [Cross building on a virtual axis](recipes/virtual-axis.md)
+  - [Getting user inputs](recipes/console-interaction.md)
 - [Appendix: Glossary](appendix/glossary.md)
 - [Appendix: Setup notes](appendix/setup-notes.md)

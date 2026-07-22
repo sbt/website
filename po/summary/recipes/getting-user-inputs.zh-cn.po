@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-07-22T18:13:52-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/reference/recipes/console-interaction.md:1
+msgid "Getting user inputs"
+msgstr "获取用户输入"
+
+#: src/reference/recipes/console-interaction.md:3
+msgid ""
+"```admonish note\n"
+"The recipe section of the documentation focuses on the objectives\n"
+"with minimal explanations about the basics.\n"
+"\n"
+"Generally, we recommend the use of [input task](../reference/input-task.md) "
+"rather than making a task or a command interactive.\n"
+"```"
+msgstr ""
+"```admonish note\n"
+"文档的配方部分以目标为中心，对基础知识仅作最简要的说明。\n"
+"\n"
+"通常建议使用[输入任务](../reference/input-task.md)，而非将任务或命令设计为交互式。\n"
+"```"
+
+#: src/reference/recipes/console-interaction.md:10
+msgid "Objective"
+msgstr "目标"
+
+#: src/reference/recipes/console-interaction.md:12
+msgid "I want to read user input from the console in a task or a command."
+msgstr "我想在任务或命令中从控制台读取用户输入。"
+
+#: src/reference/recipes/console-interaction.md:14
+msgid "Steps"
+msgstr "步骤"
+
+#: src/reference/recipes/console-interaction.md:16
+msgid "Use the `interactionService` key to acquire `sbt.InteractionService`:"
+msgstr "使用 `interactionService` 键获取 `sbt.InteractionService`："
+
+#: src/reference/recipes/console-interaction.md:19
+msgid "\"demo1\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:21
+msgid "\"3.8.4\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:25
+#: src/reference/recipes/console-interaction.md:36
+#: src/reference/recipes/console-interaction.md:74
+msgid "\"enter a number: \""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:27
+#: src/reference/recipes/console-interaction.md:38
+#: src/reference/recipes/console-interaction.md:76
+msgid "\"error getting an input!\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:31
+msgid "For commands, use `CommandLineUIService` directly:"
+msgstr "对于命令，直接使用 `CommandLineUIService`："
+
+#: src/reference/recipes/console-interaction.md:34
+msgid "\"demo2\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:44
+msgid "Test"
+msgstr "测试"
+
+#: src/reference/recipes/console-interaction.md:66
+msgid "Alternative"
+msgstr "替代方案"
+
+#: src/reference/recipes/console-interaction.md:68
+msgid "You can also use `scala.io.StdIn.readLine` function."
+msgstr "也可以使用 `scala.io.StdIn.readLine` 函数。"
+
+#: src/reference/recipes/console-interaction.md:71
+msgid "\"demo3\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:80
+msgid "Explanation"
+msgstr "说明"
+
+#: src/reference/recipes/console-interaction.md:82
+msgid ""
+"sbt 2 runs in client-server mode by default, involving sbtn and the sbt "
+"server process. This means that when a task prompts the user for input, the "
+"prompting happens on the client (sbtn) while the task executes on the "
+"server. This client-server separation also existed in sbt 0.13 when "
+"Activator provided a web-based frontend to sbt. To abstract over simple user "
+"interactions, sbt provides `interactionService`, initialized to "
+"`CommandLineUIService`. This key is also supported in both sbt 1.x and 2.x, "
+"where it enables sbtn terminal virtualization."
+msgstr ""
+"sbt 2 默认以客户端-服务器模式运行，涉及 sbtn 和 sbt 服务器进程。"
+"这意味着当任务提示用户输入时，提示在客户端（sbtn）侧发生，而任务在服务器侧执行。"
+"这种客户端-服务器分离在 sbt 0.13 中也存在，当时 Activator 为 sbt 提供了基于 Web 的前端。"
+"为了抽象化简单的用户交互，sbt 提供了 `interactionService`，并初始化为 `CommandLineUIService`。"
+"该键在 sbt 1.x 和 2.x 中均受支持，可实现 sbtn 的终端虚拟化。"
+
+#: src/reference/recipes/console-interaction.md:85
+msgid ""
+"Alternatively, you can use `scala.io.StdIn.readLine` inside a task or "
+"command definition. Note that this relies on the sbt server proxying "
+"terminal interactions to sbtn over the wire."
+msgstr ""
+"也可以在任务或命令定义中使用 `scala.io.StdIn.readLine`。"
+"请注意，这依赖于 sbt 服务器经由 IPC 套接字将终端交互代理到 sbtn。"
