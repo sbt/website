@@ -1,0 +1,129 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-07-22T18:13:47-04:00\n"
+"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/reference/recipes/console-interaction.md:1
+msgid "Getting user inputs"
+msgstr "ユーザー入力の取得"
+
+#: src/reference/recipes/console-interaction.md:3
+msgid ""
+"```admonish note\n"
+"The recipe section of the documentation focuses on the objectives\n"
+"with minimal explanations about the basics.\n"
+"\n"
+"Generally, we recommend the use of [input task](../reference/input-task.md) "
+"rather than making a task or a command interactive.\n"
+"```"
+msgstr ""
+"```admonish note\n"
+"ドキュメントのレシピセクションは、基本的な説明を最小限にとどめ、\n"
+"目的に絞って解説する。\n"
+"\n"
+"一般的に、タスクやコマンドをインタラクティブにするよりも、[インプットタスク]"
+"(../reference/input-task.md)の使用を推奨する。\n"
+"```"
+
+#: src/reference/recipes/console-interaction.md:10
+msgid "Objective"
+msgstr "目的"
+
+#: src/reference/recipes/console-interaction.md:12
+msgid "I want to read user input from the console in a task or a command."
+msgstr "タスクまたはコマンドでコンソールからユーザー入力を読み込みたい。"
+
+#: src/reference/recipes/console-interaction.md:14
+msgid "Steps"
+msgstr "手順"
+
+#: src/reference/recipes/console-interaction.md:16
+msgid "Use the `interactionService` key to acquire `sbt.InteractionService`:"
+msgstr ""
+"`interactionService` キーを使って `sbt.InteractionService` を取得する："
+
+#: src/reference/recipes/console-interaction.md:19
+msgid "\"demo1\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:21
+msgid "\"3.8.4\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:25
+#: src/reference/recipes/console-interaction.md:36
+#: src/reference/recipes/console-interaction.md:74
+msgid "\"enter a number: \""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:27
+#: src/reference/recipes/console-interaction.md:38
+#: src/reference/recipes/console-interaction.md:76
+msgid "\"error getting an input!\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:31
+msgid "For commands, use `CommandLineUIService` directly:"
+msgstr "コマンドの場合は、`CommandLineUIService` を直接使う："
+
+#: src/reference/recipes/console-interaction.md:34
+msgid "\"demo2\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:44
+msgid "Test"
+msgstr "テスト"
+
+#: src/reference/recipes/console-interaction.md:66
+msgid "Alternative"
+msgstr "代替手段"
+
+#: src/reference/recipes/console-interaction.md:68
+msgid "You can also use `scala.io.StdIn.readLine` function."
+msgstr "`scala.io.StdIn.readLine` 関数を使うこともできる。"
+
+#: src/reference/recipes/console-interaction.md:71
+msgid "\"demo3\""
+msgstr ""
+
+#: src/reference/recipes/console-interaction.md:80
+msgid "Explanation"
+msgstr "解説"
+
+#: src/reference/recipes/console-interaction.md:82
+msgid ""
+"sbt 2 runs in client-server mode by default, involving sbtn and the sbt "
+"server process. This means that when a task prompts the user for input, the "
+"prompting happens on the client (sbtn) while the task executes on the "
+"server. This client-server separation also existed in sbt 0.13 when "
+"Activator provided a web-based frontend to sbt. To abstract over simple user "
+"interactions, sbt provides `interactionService`, initialized to "
+"`CommandLineUIService`. This key is also supported in both sbt 1.x and 2.x, "
+"where it enables sbtn terminal virtualization."
+msgstr ""
+"sbt 2 はデフォルトでクライアント・サーバーモードで動作し、sbtn と sbt サー"
+"バープロセスが関与する。そのため、タスクがユーザーに入力を求めるとき、"
+"実際のプロンプトはクライアント（sbtn）側で行われるが、タスク実行はサーバー側で行われる。"
+"このクライアント・サーバーの分離は、Activator が sbt に Web ベースのフ"
+"ロントエンドを提供していた sbt 0.13 にも存在していた。簡単なユーザーイン"
+"タラクションを抽象化するため、sbt は `interactionService` を提供しており、"
+"`CommandLineUIService` に初期化されている。このキーは sbt 1.x および 2.x の両方で"
+"サポートされており、現在は sbtn のターミナル仮想化を可能にする。"
+
+#: src/reference/recipes/console-interaction.md:85
+msgid ""
+"Alternatively, you can use `scala.io.StdIn.readLine` inside a task or "
+"command definition. Note that this relies on the sbt server proxying "
+"terminal interactions to sbtn over the wire."
+msgstr ""
+"代替案として、タスクまたはコマンド定義の内部で `scala.io.StdIn.readLine` を使うこ"
+"ともできる。ただし、これも sbt サーバーが IPC ソケット越しにターミナルのやり取り"
+"を sbtn にプロキシすることで成り立っていることに注意。"
