@@ -17,7 +17,7 @@ The basic idea is treat as if the build process is a pure function that takes in
 
 ### Hermetic build
 
-As a mental model of the _build as a pure function_, build engineers sometimes use the term _hermetic build_, which is a build that takes place in a shipping container in a dessert with no clocks or the Internet. If we can produce a JAR file from that state, then the JAR file should be safe to be shared by any machine. Why did I mention the clock? It's because a JAR file could capture the timestamp, and thus produce slightly different JARs each time. To avoid this, hermetic build tools overwrite the timestamp to a fixed date 2010-01-01 regardless of when the build took place.
+As a mental model of the _build as a pure function_, build engineers sometimes use the term _hermetic build_, which is a build that takes place in a shipping container in a desert with no clocks or the Internet. If we can produce a JAR file from that state, then the JAR file should be safe to be shared by any machine. Why did I mention the clock? It's because a JAR file could capture the timestamp, and thus produce slightly different JARs each time. To avoid this, hermetic build tools overwrite the timestamp to a fixed date 2010-01-01 regardless of when the build took place.
 
 A build that ends up capturing ephemeral inputs, are said to _break the hermeticity_ or _non-hermetic_. Another common way the hermeticity is broken is capturing absolute paths as either input or output. Sometimes the path gets embedded into the JAR via a macro, you might not know until you inspect the bytecode.
 
