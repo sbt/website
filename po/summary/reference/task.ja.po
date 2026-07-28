@@ -1,0 +1,838 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2026-03-06T23:51:28-05:00\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+
+#: src/reference/reference/task.md:8
+msgid "Task"
+msgstr "タスク"
+
+#: src/reference/reference/task.md:11
+msgid "Description"
+msgstr "説明"
+
+#: src/reference/reference/task.md:14
+msgid ""
+"A task is a unit of work in an sbt build. Tasks `compile` your code, run "
+"`test`s incrementally, `package` JAR files, or do anything else a build "
+"needs to do."
+msgstr ""
+"タスクは sbt ビルドにおける作業の単位だ。タスクはコードを `compile` し、"
+"`test` を差分実行し、JAR ファイルを `package` するなど、"
+"ビルドに必要なことを何でも行う。"
+
+#: src/reference/reference/task.md:18
+msgid ""
+"An interesting aspect of tasks is that they enable parallel programming, "
+"similar to `Future[A]` and `IO[A]`. While `Future` and `IO` are often "
+"composed via `for` comprehension, sbt provides _structured concurrency_ of "
+"tasks via the direct-style `build.sbt` DSL."
+msgstr ""
+"タスクの興味深い点は、`Future[A]` や `IO[A]` と同様に並列プログラミングを可能にすることだ。"
+"`Future` や `IO` はしばしば `for` 内包表記で合成されるが、sbt はダイレクトスタイルの "
+"`build.sbt` DSL によってタスクの _structured concurrency_（構造化並行性）を提供する。"
+
+#: src/reference/reference/task.md:24 src/reference/reference/task.md:25
+#: src/reference/reference/task.md:26 src/reference/reference/task.md:466
+msgid "\"\""
+msgstr ""
+
+#: src/reference/reference/task.md:30
+msgid "// intTaskA and intTaskB will run in parallel"
+msgstr "// intTaskA と intTaskB は並列で実行される"
+
+#: src/reference/reference/task.md:39
+msgid "Def.Initialized\\[Task\\[A\\]\\]"
+msgstr ""
+
+#: src/reference/reference/task.md:41
+msgid ""
+"Under the hood, all tasks including task keys are typed as "
+"`Def.Initialized[Task[A]]`."
+msgstr "内部的には、タスクキーを含むすべてのタスクは `Def.Initialized[Task[A]]` として型付けられている。"
+
+#: src/reference/reference/task.md:43
+msgid ""
+"`Def.Initialized[A]`. This is the same type as a setting, and used to "
+"construct the setting/task graph at load time. It is so named because it "
+"represents an initialized value of `A`."
+msgstr ""
+"`Def.Initialized[A]`。これはセッティングと同じ型であり、ロード時にセッティング/タスクグラフを構築するために使われる。"
+"`A` の初期化済みの値を表すためにこう命名されている。"
+
+#: src/reference/reference/task.md:46
+msgid ""
+"`sbt.Task[A]`. This a datatype that represents repeatable asynchronous "
+"computation. This is the part that gets executed by sbt's task engine."
+msgstr ""
+"`sbt.Task[A]`。これは繰り返し実行可能な非同期計算を表すデータ型だ。"
+"sbt のタスクエンジンによって実行される部分だ。"
+
+#: src/reference/reference/task.md:50
+msgid ""
+"By nesting these together, a task can be read as a node in a setting/task "
+"graph that produces an asynchronous computation of `A`."
+msgstr "これらを入れ子にすることで、タスクは `A` の非同期計算を生成するセッティング/タスクグラフのノードだと解釈できる。"
+
+#: src/reference/reference/task.md:53
+msgid "Settings vs tasks"
+msgstr "セッティングとタスク"
+
+#: src/reference/reference/task.md:55
+msgid ""
+"Both settings and tasks produce values, but there is a major difference "
+"between them:"
+msgstr "セッティングとタスクはどちらも値を生成するが、両者には大きな違いがある："
+
+#: src/reference/reference/task.md:58
+msgid ""
+"Settings are evaluated at build load time. Tasks are executed on demand, "
+"often in response to the user invoking them from the shell."
+msgstr ""
+"セッティングはビルドのロード時に評価される。タスクは必要に応じて実行され、"
+"多くの場合ユーザーがシェルから呼び出したときに応答する。"
+
+#: src/reference/reference/task.md:61
+msgid "Features"
+msgstr "機能"
+
+#: src/reference/reference/task.md:63
+msgid "There are several features of the task system:"
+msgstr "タスクシステムにはいくつかの機能がある："
+
+#: src/reference/reference/task.md:65
+msgid ""
+"By integrating with the settings system, tasks can be added, removed, and "
+"modified as easily as settings."
+msgstr "セッティングシステムと統合することで、タスクをセッティングと同じくらい簡単に追加、削除、変更できる。"
+
+#: src/reference/reference/task.md:67
+msgid ""
+"Tasks produce values. Other tasks can access a task's value by calling "
+"`value` on it within a task definition."
+msgstr ""
+"タスクは値を生成する。他のタスクはタスク定義内でそのタスクに `.value` を"
+"呼び出すことで値にアクセスできる。"
+
+#: src/reference/reference/task.md:69
+msgid ""
+"Task values are cached automatically based on its inputs. See [cached task]"
+"(cached-task.md) for details."
+msgstr ""
+"タスクの値はその入力に基づいて自動的にキャッシュ化される。"
+"詳細は[キャッシュ化タスク](cached-task.md) を参照。"
+
+#: src/reference/reference/task.md:71
+msgid ""
+"[Input tasks](input-task.md) use [parser combinators](tab-completion-"
+"parser.md) to define the syntax for their arguments. This allows flexible "
+"syntax and tab-completions in the same way as [commands](command.md)."
+msgstr ""
+"[インプットタスク](input-task.md)は[パーサーコンビネーター](tab-completion-parser.md) を"
+"使用して引数の構文を定義する。これにより[コマンド](command.md) と同様に"
+"柔軟な構文とタブ補完が可能になる。"
+
+#: src/reference/reference/task.md:75
+msgid ""
+"Dynamically changing the structure of the task graph is possible. Tasks can "
+"be injected into the execution graph based on the result of another task."
+msgstr ""
+"タスクグラフの構造を動的に変更できる。"
+"別のタスクの結果に基づいて、タスクを実行グラフに挿入できる。"
+
+#: src/reference/reference/task.md:78
+msgid "There are ways to handle task failure, similar to `try/catch/finally`."
+msgstr "`try/catch/finally` と同様に、タスクの失敗を処理する方法がある。"
+
+#: src/reference/reference/task.md:80
+msgid ""
+"Each task has access to its own Logger that by default persists the logging "
+"for that task at a more verbose level than is initially printed to the "
+"screen."
+msgstr ""
+"各タスクは独自のロガーにアクセスできる。デフォルトでは、そのタスクのログを"
+"最初に画面に出力されるより詳細なレベルで保持する。"
+
+#: src/reference/reference/task.md:84
+msgid "These features are discussed in detail in the following sections."
+msgstr "これらの機能については、以下のセクションで詳しく説明する。"
+
+#: src/reference/reference/task.md:86
+msgid "Defining a task"
+msgstr "タスクの定義"
+
+#: src/reference/reference/task.md:89
+msgid "Hello world example"
+msgstr "Hello world の例"
+
+#: src/reference/reference/task.md:91
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val hello = taskKey[Unit](\"prints 'hello world'\")\n"
+"\n"
+"hello := println(\"hello world!\")\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:99
+msgid ""
+"Run `sbt hello` from command line to invoke the task. Run `sbt tasks` to see "
+"this task listed."
+msgstr ""
+"コマンドラインから `sbt hello` を実行してタスクを呼び出す。"
+"`sbt tasks` を実行するとこのタスクが一覧に表示される。"
+
+#: src/reference/reference/task.md:102
+msgid "Define the key"
+msgstr "キーを定義する"
+
+#: src/reference/reference/task.md:104
+msgid "To declare a new task, define a lazy val of type `TaskKey`:"
+msgstr "新しいタスクを宣言するには、`TaskKey` 型の lazy val を定義する："
+
+#: src/reference/reference/task.md:107
+msgid "\"A sample task.\""
+msgstr ""
+
+#: src/reference/reference/task.md:110
+msgid ""
+"The name of the `val` is used when referring to the task in `build.sbt` and "
+"at the command line. The string passed to the `taskKey` method is a "
+"description of the task. The type parameter passed to `taskKey` (here, "
+"`Int`) is the type of value produced by the task."
+msgstr ""
+"`val` の名前は `build.sbt` やコマンドラインでタスクを参照するときに使われる。"
+"`taskKey` メソッドに渡す文字列はタスクの説明だ。"
+"`taskKey` に渡す型パラメーター（ここでは `Int`）はタスクが生成する値の型だ。"
+
+#: src/reference/reference/task.md:115
+msgid "We'll define a couple of other keys for the examples:"
+msgstr "例として他にいくつかのキーを定義する："
+
+#: src/reference/reference/task.md:117
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:124
+msgid "The examples themselves are valid entries in a `build.sbt`."
+msgstr "これらの例はそのまま `build.sbt` の有効なエントリーだ。"
+
+#: src/reference/reference/task.md:126
+msgid "Implement the task"
+msgstr "タスクの実装"
+
+#: src/reference/reference/task.md:128
+msgid ""
+"There are three main parts to implementing a task once its key is defined:"
+msgstr "キーを定義した後にタスクを実装する主な部分は 3 つある："
+
+#: src/reference/reference/task.md:131
+msgid ""
+"Determine the settings and other tasks needed by the task. They are the "
+"task's inputs."
+msgstr "タスクに必要なセッティングや他のタスクを決める。これらはタスクの入力となる。"
+
+#: src/reference/reference/task.md:133
+msgid "Define the code that implements the task in terms of these inputs."
+msgstr "これらの入力を基にタスクを実装するコードを定義する。"
+
+#: src/reference/reference/task.md:134
+msgid "Determine the scope the task will go in."
+msgstr "タスクが属するスコープを決める。"
+
+#: src/reference/reference/task.md:136
+msgid ""
+"These parts are then combined just like the parts of a setting are combined."
+msgstr "これらの部分は、セッティングの各部分を組み合わせるのと同じように組み合わせる。"
+
+#: src/reference/reference/task.md:139
+msgid "Defining a basic task"
+msgstr "基本的なタスクの定義"
+
+#: src/reference/reference/task.md:141
+msgid "A task is defined using `:=`"
+msgstr "タスクは `:=` を使って定義する"
+
+#: src/reference/reference/task.md:143
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"\n"
+"intTask := 1 + 2\n"
+"\n"
+"stringTask := Def.uncached {\n"
+"  sys.props(\"user.name\")\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:156
+msgid "Tasks with inputs"
+msgstr "入力を持つタスク"
+
+#: src/reference/reference/task.md:158
+msgid ""
+"Tasks with other tasks or settings as inputs are also defined using `:=`. "
+"The values of the inputs are referenced by the `value` method. This method "
+"is a special syntax and can only be called when defining a task, such as in "
+"the argument to `:=`. The following defines a task that adds one to the "
+"value produced by `intTask` and returns the result."
+msgstr ""
+"他のタスクやセッティングを入力として持つタスクも `:=` を使って定義する。"
+"入力の値は `value` メソッドで参照する。このメソッドは特殊な構文であり、"
+"`:=` の引数の中など、タスクを定義するときにのみ呼び出せる。"
+"以下は `intTask` が生成する値に 1 を加えて結果を返すタスクを定義する例だ。"
+
+#: src/reference/reference/task.md:168
+msgid "Multiple settings are handled similarly:"
+msgstr "複数のセッティングも同様に扱う："
+
+#: src/reference/reference/task.md:174
+msgid "s\"sample: $x, int: $i\""
+msgstr ""
+
+#: src/reference/reference/task.md:178
+msgid "Task scope"
+msgstr "タスクのスコープ"
+
+#: src/reference/reference/task.md:180
+msgid ""
+"As with settings, tasks can be defined in a specific scope. For example, "
+"there are separate `compile` tasks for the `Compile` and `Test` scopes."
+msgstr ""
+"セッティングと同様に、タスクも特定のスコープで定義できる。"
+"例えば、`Compile` スコープと `Test` スコープにはそれぞれ別の `compile` タスクがある。"
+
+#: src/reference/reference/task.md:183
+msgid ""
+"In the following example, `Test/sampleTask` uses the result of `Compile/"
+"intTask`:"
+msgstr "次の例では、`Test/sampleTask` は `Compile/intTask` の結果を使う："
+
+#: src/reference/reference/task.md:190
+msgid ""
+"````admonish note title='On operator precedence'\n"
+"As a reminder, infix method precedence is determined by the name of the "
+"method.\n"
+"\n"
+"1.  Assignment methods have the lowest precedence. These are methods\n"
+"    with names ending in `=`, except for `!=`, `<=`, `>=`, and names that\n"
+"    start with `=`.\n"
+"2.  Methods starting with a letter have the next highest precedence.\n"
+"3.  Methods with names that start with a symbol and aren't included in\n"
+"    1 have the highest precedence. (This category is divided further\n"
+"    according to the specific character it starts with. See the Scala\n"
+"    specification for details.)\n"
+"\n"
+"Therefore, the previous example is equivalent to the following:\n"
+"\n"
+"```scala\n"
+"(Test / sampleTask).:=((Compile / intTask).value * 3)\n"
+"```\n"
+"````"
+msgstr ""
+"````admonish note title='演算子の優先順位について'\n"
+"中置メソッドの優先順位はメソッドの名前によって決まる。\n"
+"\n"
+"1.  代入メソッドの優先順位は最も低い。これは `!=`、`<=`、`>=` および\n"
+"    `=` で始まる名前を除き、名前が `=` で終わるメソッドだ。\n"
+"2.  文字で始まるメソッドは次に高い優先順位を持つ。\n"
+"3.  記号で始まり 1 に含まれないメソッドは最も高い優先順位を持つ。\n"
+"    （このカテゴリーは先頭文字に応じてさらに細分化される。詳細は\n"
+"    Scala 仕様を参照。）\n"
+"\n"
+"したがって、前の例は以下と等価だ：\n"
+"\n"
+"```scala\n"
+"(Test / sampleTask).:=((Compile / intTask).value * 3)\n"
+"```\n"
+"````"
+
+#: src/reference/reference/task.md:209
+msgid "Separating implementations"
+msgstr "実装の分離"
+
+#: src/reference/reference/task.md:211
+msgid ""
+"The implementation of a task can be separated from the binding. For example, "
+"a basic separate definition looks like:"
+msgstr ""
+"タスクの実装をバインディングから分離できる。"
+"例えば、基本的な分離定義は次のようになる："
+
+#: src/reference/reference/task.md:215
+msgid "// Define a new, standalone task implemention"
+msgstr "// 独立したタスクの実装を新規定義する"
+
+#: src/reference/reference/task.md:218
+msgid "// Bind the implementation to a specific key"
+msgstr "// 実装を特定のキーにバインドする"
+
+#: src/reference/reference/task.md:223
+msgid ""
+"Note that whenever `.value` is used, it must be within a task definition, "
+"such as within `Def.task` above or as an argument to `:=`."
+msgstr ""
+"`.value` はタスク定義内、たとえば上記の `Def.task` の中や `:=` の引数の中でのみ"
+"使える点に注意。"
+
+#: src/reference/reference/task.md:226
+msgid "Modifying an existing task"
+msgstr "既存タスクの変更"
+
+#: src/reference/reference/task.md:228
+msgid ""
+"In the general case, modify a task by declaring the previous task as an "
+"input."
+msgstr "一般的には、以前のタスクを入力として宣言することでタスクを変更する。"
+
+#: src/reference/reference/task.md:232
+msgid "// initial definition"
+msgstr "// 初期定義"
+
+#: src/reference/reference/task.md:234
+msgid "// overriding definition that references the previous definition"
+msgstr "// 前の定義を参照するオーバーライド定義"
+
+#: src/reference/reference/task.md:239
+msgid ""
+"Completely override a task by not declaring the previous task as an input. "
+"Each of the definitions in the following example completely overrides the "
+"previous one. That is, when `intTask` is run, it will only print `#3`."
+msgstr ""
+"以前のタスクを入力として宣言しないことで、タスクを完全にオーバーライドできる。"
+"次の例の各定義は前の定義を完全にオーバーライドする。"
+"つまり、`intTask` を実行すると `#3` だけが出力される。"
+
+#: src/reference/reference/task.md:246
+msgid "\"#1\""
+msgstr ""
+
+#: src/reference/reference/task.md:251
+msgid "\"#2\""
+msgstr ""
+
+#: src/reference/reference/task.md:256
+msgid "\"#3\""
+msgstr ""
+
+#: src/reference/reference/task.md:261
+msgid "Error handling"
+msgstr "エラー処理"
+
+#: src/reference/reference/task.md:264
+msgid "Errors in a task"
+msgstr "タスク内のエラー"
+
+#: src/reference/reference/task.md:266
+msgid "To express an error state in a task, throw an exception. For example:"
+msgstr "タスク内でエラー状態を表現するには、例外をスローする。例えば："
+
+#: src/reference/reference/task.md:269
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"\n"
+"intTask := sys.error(\"failed\")\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:277
+msgid ""
+"sbt's task engine will catch and handling the error without crashing sbt:"
+msgstr "sbt のタスクエンジンは sbt をクラッシュさせることなくエラーをキャッチして処理する："
+
+#: src/reference/reference/task.md:286
+msgid "The stacktrace can be shown using `last intTask`."
+msgstr "スタックトレースは `last intTask` を使って表示できる。"
+
+#: src/reference/reference/task.md:288
+msgid "`result`"
+msgstr "`result`"
+
+#: src/reference/reference/task.md:290
+msgid ""
+"The `result` method creates a new task that returns the full `Result[A1]` "
+"value for the original task. `Result` has the same structure as "
+"`Either[Incomplete, A1]` for a task result of type `A1`. That is, it has two "
+"subtypes:"
+msgstr ""
+"`result` メソッドは元のタスクの完全な `Result[A1]` 値を返す新しいタスクを作る。"
+"`Result` は型 `A1` のタスク結果に対して `Either[Incomplete, A1]` と同じ構造を持つ。"
+"つまり、2 つのサブタイプがある："
+
+#: src/reference/reference/task.md:295
+msgid "`Result.Inc`, which wraps `Incomplete` in case of failure"
+msgstr "`Result.Inc`：失敗時に `Incomplete` をラップする"
+
+#: src/reference/reference/task.md:296
+msgid "`Result.Value`, which wraps a task's result in case of success."
+msgstr "`Result.Value`：成功時にタスクの結果をラップする。"
+
+#: src/reference/reference/task.md:298
+msgid ""
+"Thus, the task created by `result` executes whether or not the original task "
+"succeeds or fails."
+msgstr "したがって、`result` によって作られたタスクは元のタスクが成功しても失敗しても実行される。"
+
+#: src/reference/reference/task.md:301
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"\n"
+"intTask := sys.error(\"boom\")\n"
+"\n"
+"intTask := Def.uncached {\n"
+"  intTask.result.value match\n"
+"    case Result.Inc(inc: Incomplete) =>\n"
+"      println(\"Ignoring failure: \" + inc)\n"
+"      3\n"
+"    case Result.Value(v) =>\n"
+"      println(\"Using successful result: \" + v)\n"
+"      v\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:319
+msgid ""
+"This rewires the original `intTask` definition so that if the original task "
+"fails, the exception is printed and the constant `3` is returned. If it "
+"succeeds, the value is printed and returned."
+msgstr ""
+"これは元の `intTask` 定義を書き換え、元のタスクが失敗した場合は例外を出力して"
+"定数 `3` を返し、成功した場合は値を出力して返すようにする。"
+
+#: src/reference/reference/task.md:323
+msgid "`failure`"
+msgstr "`failure`"
+
+#: src/reference/reference/task.md:325
+msgid ""
+"The `failure` method creates a new task that returns the `Incomplete` value "
+"when the original task fails to complete normally. If the original task "
+"succeeds, the new task fails."
+msgstr ""
+"`failure` メソッドは元のタスクが正常に完了しなかったときに `Incomplete` 値を返す"
+"新しいタスクを作る。元のタスクが成功した場合、新しいタスクは失敗する。"
+
+#: src/reference/reference/task.md:329
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"\n"
+"intTask := sys.error(\"boom\")\n"
+"\n"
+"intTask := Def.uncached {\n"
+"  println(\"Ignoring failure: \" + intTask.failure.value)\n"
+"  3\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:342
+msgid ""
+"This rewires the `intTask` so that the original exception is printed and the "
+"constant `3` is returned."
+msgstr "これは `intTask` を書き換え、元の例外を出力して定数 `3` を返すようにする。"
+
+#: src/reference/reference/task.md:345
+msgid "Advanced task operations"
+msgstr "タスクの応用機能"
+
+#: src/reference/reference/task.md:348
+msgid "Streams: Per-task logging"
+msgstr "Streams：タスクごとのログ記録"
+
+#: src/reference/reference/task.md:350
+msgid ""
+"Per-task loggers are part of a more general system for task-specific data "
+"called Streams."
+msgstr ""
+"タスクごとのロガーは、Streams と呼ばれるタスク固有データのより一般的な"
+"システムの一部だ。"
+
+#: src/reference/reference/task.md:353
+msgid ""
+"To use Streams, get the value of the `streams` task. A logger can be "
+"obtained by the `log` method:"
+msgstr ""
+"Streams を使うには、`streams` タスクの値を取得する。"
+"ロガーは `log` メソッドで取得できる："
+
+#: src/reference/reference/task.md:359
+msgid "\"Saying hi...\""
+msgstr ""
+
+#: src/reference/reference/task.md:360
+msgid "\"Hello!\""
+msgstr ""
+
+#: src/reference/reference/task.md:364
+msgid "You can scope logging settings by the specific task's scope:"
+msgstr "特定のタスクのスコープでログセッティングをスコープ化できる："
+
+#: src/reference/reference/task.md:371
+msgid "To obtain the last logging output from a task, use the `last` command:"
+msgstr "タスクの最後のログ出力を取得するには、`last` コマンドを使う："
+
+#: src/reference/reference/task.md:379
+msgid ""
+"The verbosity with which logging is persisted is controlled using the "
+"`persistLogLevel` and `persistTraceLevel` settings. The `last` command "
+"displays what was logged according to these levels. The levels do not affect "
+"already logged information."
+msgstr ""
+"ログの保持レベルは `persistLogLevel` と `persistTraceLevel` セッティングで制御する。"
+"`last` コマンドはこれらのレベルに従ってログに記録された内容を表示する。"
+"これらのレベルはすでに記録されたログには影響しない。"
+
+#: src/reference/reference/task.md:384
+msgid "Conditional task"
+msgstr "条件付きタスク"
+
+#: src/reference/reference/task.md:386
+msgid ""
+"When a task consists of an `if`\\-expression at the top-level, a conditional "
+"task is automatically created:"
+msgstr ""
+"タスクがトップレベルで `if` 式で構成されている場合、"
+"条件付きタスクが自動的に作られる："
+
+#: src/reference/reference/task.md:396
+msgid ""
+"Unlike the regular (Applicative) task composition, conditional tasks delays "
+"the evaluation of then-clause and else-clause as naturally expected of an "
+"`if`\\-expression. This is already possible with `Def.taskDyn { ... }`, but "
+"unlike dynamic tasks, conditional task works with `inspect` command."
+msgstr ""
+"通常の（アプリカティブな）タスク合成とは異なり、条件付きタスクは `if` 式として"
+"自然に期待されるように then 節と else 節の評価を遅延する。"
+"これは `Def.taskDyn { ... }` でも可能だが、ダイナミックタスクとは異なり、"
+"条件付きタスクは `inspect` コマンドで動作する。"
+
+#: src/reference/reference/task.md:398
+msgid "<a name=\"dynamic\"></a>"
+msgstr ""
+
+#: src/reference/reference/task.md:399
+msgid "Dynamic Computations with `Def.taskDyn`"
+msgstr "`Def.taskDyn` による動的計算"
+
+#: src/reference/reference/task.md:401
+msgid ""
+"It can be useful to use the result of a task to determine the next tasks to "
+"evaluate. This is done using `Def.taskDyn`."
+msgstr ""
+"タスクの結果を使って次に評価するタスクを決定することが有用な場合がある。"
+"これは `Def.taskDyn` を使って行う。"
+
+#: src/reference/reference/task.md:404
+msgid ""
+"The result of `taskDyn` is called a dynamic task because it introduces "
+"dependencies at runtime. The `taskDyn` method supports the same syntax as "
+"`Def.task` and `:=` except that you return a task instead of a plain value."
+msgstr ""
+"`taskDyn` の結果はランタイムに依存関係を導入するため、ダイナミックタスクと呼ばれる。"
+"`taskDyn` メソッドは `Def.task` や `:=` と同じ構文をサポートするが、"
+"プレーンな値の代わりにタスクを返す点が異なる。"
+
+#: src/reference/reference/task.md:409
+msgid "For example,"
+msgstr "例えば、"
+
+#: src/reference/reference/task.md:411
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val foo = taskKey[Int](\"foo\")\n"
+"\n"
+"val dynamic = Def.taskDyn {\n"
+"  // decide what to evaluate based on the value of `stringTask`\n"
+"  if stringTask.value == \"dev\" then\n"
+"    // create the dev-mode task: this is only evaluated if the\n"
+"    //   value of stringTask is \"dev\"\n"
+"    Def.task {\n"
+"      3\n"
+"    }\n"
+"  else\n"
+"    // create the production task: only evaluated if the value\n"
+"    //    of the stringTask is not \"dev\"\n"
+"    Def.task {\n"
+"      intTask.value + 5\n"
+"    }\n"
+"}\n"
+"\n"
+"stringTask := \"test\"\n"
+"intTask := 1\n"
+"\n"
+"foo := Def.uncached {\n"
+"  val num = dynamic.value\n"
+"  println(s\"number selected was $num\")\n"
+"  num\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val foo = taskKey[Int](\"foo\")\n"
+"\n"
+"val dynamic = Def.taskDyn {\n"
+"  // `stringTask` の値に基づいて評価するものを決める\n"
+"  if stringTask.value == \"dev\" then\n"
+"    // dev モードのタスクを作る：stringTask の値が \"dev\" の場合にのみ評価される\n"
+"    Def.task {\n"
+"      3\n"
+"    }\n"
+"  else\n"
+"    // 本番タスクを作る：stringTask の値が \"dev\" でない場合にのみ評価される\n"
+"    Def.task {\n"
+"      intTask.value + 5\n"
+"    }\n"
+"}\n"
+"\n"
+"stringTask := \"test\"\n"
+"intTask := 1\n"
+"\n"
+"foo := Def.uncached {\n"
+"  val num = dynamic.value\n"
+"  println(s\"number selected was $num\")\n"
+"  num\n"
+"}\n"
+"```\n"
+"````"
+
+#: src/reference/reference/task.md:444
+msgid ""
+"The only static dependency of `foo` is `stringTask`. The dependency on "
+"`intTask` is only introduced in non-dev mode."
+msgstr ""
+"`foo` の唯一の静的な依存関係は `stringTask` だ。"
+"`intTask` への依存関係は非 dev モードでのみ導入される。"
+
+#: src/reference/reference/task.md:447
+msgid ""
+"```admonish warning\n"
+"A dynamic task cannot refer to itself or a circular dependency will\n"
+"result. In the example above, there would be a circular dependency if\n"
+"the code passed to taskDyn referenced `foo`.\n"
+"```"
+msgstr ""
+"```admonish warning\n"
+"ダイナミックタスクは自分自身を参照できない。そうすると循環依存が発生する。\n"
+"上の例では、taskDyn に渡されたコードが `foo` を参照すると循環依存になる。\n"
+"```"
+
+#: src/reference/reference/task.md:453
+msgid "Using `Def.sequential`"
+msgstr "`Def.sequential` の使用"
+
+#: src/reference/reference/task.md:455
+msgid ""
+"`Def.sequential` is a helper function to define a semi-sequential task. This "
+"is similar to the dynamic task, but easier to define. To demonstrate the "
+"sequential task, let's create a custom task called `compilecheck` that runs "
+"`Compile / compile` and then `Compile / scalastyle` task."
+msgstr ""
+"`Def.sequential` はセミシーケンシャルなタスクを定義するヘルパー関数だ。"
+"ダイナミックタスクに似ているが、より簡単に定義できる。"
+"シーケンシャルタスクを説明するために、`Compile / compile` を実行した後に "
+"`Compile / scalastyle` タスクを実行する `compilecheck` というカスタムタスクを作ろう。"
+
+#: src/reference/reference/task.md:460
+msgid "\"compile and then scalastyle\""
+msgstr ""
+
+#: src/reference/reference/task.md:462
+msgid "\".\""
+msgstr ""
+
+#: src/reference/reference/task.md:471
+msgid ""
+"For a completely sequential execution, use [commands](command.md) instead."
+msgstr "完全にシーケンシャルな実行には、代わりに [コマンド](command.md) を使う。"
+
+#: src/reference/reference/task.md:473
+msgid "<a name=\"multiple-scopes\"></a>"
+msgstr ""
+
+#: src/reference/reference/task.md:474
+msgid "Getting values from multiple scopes"
+msgstr "複数のスコープから値を取得する"
+
+#: src/reference/reference/task.md:476
+msgid ""
+"The general form of an expression that gets values from multiple scopes is:"
+msgstr "複数のスコープから値を取得する式の一般的な形式は次のとおりだ："
+
+#: src/reference/reference/task.md:483
+msgid ""
+"```admonish warning\n"
+"Make sure to assign the `ScopeFilter` as a `val`! This is an\n"
+"implementation detail requirement of the `.all` macro.\n"
+"```"
+msgstr ""
+"```admonish warning\n"
+"`ScopeFilter` は必ず `val` として代入すること！これは `.all` マクロの\n"
+"実装上の要件だ。\n"
+"```"
+
+#: src/reference/reference/task.md:488
+msgid ""
+"The `all` method is implicitly added to tasks and settings. It accepts a "
+"`ScopeFilter` that will select the `Scopes`. The result has type `Seq[A]`, "
+"where `A` is the key's underlying type."
+msgstr ""
+"`all` メソッドはタスクとセッティングに暗黙的に追加される。"
+"`Scopes` を選択する `ScopeFilter` を受け取る。"
+"結果の型は `Seq[A]` で、`A` はキーの基底型だ。"
+
+#: src/reference/reference/task.md:492
+msgid ""
+"A common scenario is getting the sources for all subprojects for processing "
+"all at once, such as passing them to scaladoc. The task that we want to "
+"obtain values for is `sources` and we want to get the values in all non-root "
+"projects and in the `Compile` configuration. This looks like:"
+msgstr ""
+"よくあるシナリオは、scaladoc に渡すなど、すべてのサブプロジェクトのソースを"
+"一括処理するために取得することだ。値を取得したいタスクは `sources` であり、"
+"すべての非ルートプロジェクトの `Compile` コンフィギュレーションから値を取得する。"
+"これは次のようになる："
+
+#: src/reference/reference/task.md:508
+msgid "// each sources definition is of type Seq[File],"
+msgstr "// sources の各定義は Seq[File] 型であり、"
+
+#: src/reference/reference/task.md:509
+msgid "//   giving us a Seq[Seq[File]] that we then flatten to Seq[File]"
+msgstr "//   Seq[Seq[File]] が得られ、それを Seq[File] にフラット化する"
