@@ -33,6 +33,7 @@
   - [sbt inspect](reference/sbt-inspect.md)
   - [sbt publish](reference/sbt-publish.md)
   - [Watch command](reference/watch.md)
+  - [Task](reference/task.md)
   - [Cached task](reference/cached-task.md)
   - [Cross building setup](reference/cross-building-setup.md)
   - [Remote cache setup](reference/remote-cache-setup.md)
