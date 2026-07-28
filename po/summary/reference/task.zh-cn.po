@@ -1,0 +1,814 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-10T01:28:50-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/reference/reference/task.md:8
+msgid "Task"
+msgstr "任务"
+
+#: src/reference/reference/task.md:11
+msgid "Description"
+msgstr "描述"
+
+#: src/reference/reference/task.md:14
+msgid ""
+"A task is a unit of work in an sbt build. Tasks `compile` your code, run "
+"`test`s incrementally, `package` JAR files, or do anything else a build "
+"needs to do."
+msgstr ""
+"任务是 sbt 构建中的工作单元。任务可以 `compile` 代码、增量运行 `test`、"
+"`package` JAR 文件，或执行构建所需的任何其他操作。"
+
+#: src/reference/reference/task.md:18
+msgid ""
+"An interesting aspect of tasks is that they enable parallel programming, "
+"similar to `Future[A]` and `IO[A]`. While `Future` and `IO` are often "
+"composed via `for` comprehension, sbt provides _structured concurrency_ of "
+"tasks via the direct-style `build.sbt` DSL."
+msgstr ""
+"任务的一个有趣之处在于，它们支持并行编程，类似于 `Future[A]` 和 `IO[A]`。"
+"`Future` 和 `IO` 通常通过 `for` 推导式组合，而 sbt 通过直接风格的 `build.sbt` "
+"DSL 提供任务的 _结构化并发_（_structured concurrency_）。"
+
+#: src/reference/reference/task.md:24 src/reference/reference/task.md:25
+#: src/reference/reference/task.md:26 src/reference/reference/task.md:466
+msgid "\"\""
+msgstr ""
+
+#: src/reference/reference/task.md:30
+msgid "// intTaskA and intTaskB will run in parallel"
+msgstr "// intTaskA 和 intTaskB 将并行运行"
+
+#: src/reference/reference/task.md:39
+msgid "Def.Initialized\\[Task\\[A\\]\\]"
+msgstr ""
+
+#: src/reference/reference/task.md:41
+msgid ""
+"Under the hood, all tasks including task keys are typed as "
+"`Def.Initialized[Task[A]]`."
+msgstr "在底层，包括任务键在内的所有任务都被类型化为 `Def.Initialized[Task[A]]`。"
+
+#: src/reference/reference/task.md:43
+msgid ""
+"`Def.Initialized[A]`. This is the same type as a setting, and used to "
+"construct the setting/task graph at load time. It is so named because it "
+"represents an initialized value of `A`."
+msgstr ""
+"`Def.Initialized[A]`。这与设置的类型相同，用于在加载时构建设置/任务图。"
+"之所以如此命名，是因为它表示 `A` 的已初始化值。"
+
+#: src/reference/reference/task.md:46
+msgid ""
+"`sbt.Task[A]`. This a datatype that represents repeatable asynchronous "
+"computation. This is the part that gets executed by sbt's task engine."
+msgstr ""
+"`sbt.Task[A]`。这是一个表示可重复异步计算的数据类型，"
+"是由 sbt 任务引擎执行的部分。"
+
+#: src/reference/reference/task.md:50
+msgid ""
+"By nesting these together, a task can be read as a node in a setting/task "
+"graph that produces an asynchronous computation of `A`."
+msgstr "将这两者嵌套在一起，任务可被视为设置/任务图中的一个节点，用于产生 `A` 的异步计算。"
+
+#: src/reference/reference/task.md:53
+msgid "Settings vs tasks"
+msgstr "设置与任务"
+
+#: src/reference/reference/task.md:55
+msgid ""
+"Both settings and tasks produce values, but there is a major difference "
+"between them:"
+msgstr "设置和任务都会产生值，但两者之间有一个重大区别："
+
+#: src/reference/reference/task.md:58
+msgid ""
+"Settings are evaluated at build load time. Tasks are executed on demand, "
+"often in response to the user invoking them from the shell."
+msgstr "设置在构建加载时求值。任务按需执行，通常是响应用户从 shell 中调用。"
+
+#: src/reference/reference/task.md:61
+msgid "Features"
+msgstr "功能"
+
+#: src/reference/reference/task.md:63
+msgid "There are several features of the task system:"
+msgstr "任务系统具有以下几个特点："
+
+#: src/reference/reference/task.md:65
+msgid ""
+"By integrating with the settings system, tasks can be added, removed, and "
+"modified as easily as settings."
+msgstr "通过与设置系统集成，任务可以像设置一样方便地添加、删除和修改。"
+
+#: src/reference/reference/task.md:67
+msgid ""
+"Tasks produce values. Other tasks can access a task's value by calling "
+"`value` on it within a task definition."
+msgstr ""
+"任务会产生值。其他任务可以在任务定义中对其调用 `value` 来访问该任务的值。"
+
+#: src/reference/reference/task.md:69
+msgid ""
+"Task values are cached automatically based on its inputs. See [cached task]"
+"(cached-task.md) for details."
+msgstr "任务的值会根据其输入自动缓存。详情参见[缓存任务](cached-task.md)。"
+
+#: src/reference/reference/task.md:71
+msgid ""
+"[Input tasks](input-task.md) use [parser combinators](tab-completion-"
+"parser.md) to define the syntax for their arguments. This allows flexible "
+"syntax and tab-completions in the same way as [commands](command.md)."
+msgstr ""
+"[输入任务](input-task.md)使用[解析器组合子](tab-completion-parser.md)定义参数语法，"
+"从而与[命令](command.md)一样支持灵活的语法和 Tab 补全。"
+
+#: src/reference/reference/task.md:75
+msgid ""
+"Dynamically changing the structure of the task graph is possible. Tasks can "
+"be injected into the execution graph based on the result of another task."
+msgstr ""
+"可以动态更改任务图的结构。"
+"任务可以根据另一个任务的结果注入执行图。"
+
+#: src/reference/reference/task.md:78
+msgid "There are ways to handle task failure, similar to `try/catch/finally`."
+msgstr "有多种方式处理任务失败，类似于 `try/catch/finally`。"
+
+#: src/reference/reference/task.md:80
+msgid ""
+"Each task has access to its own Logger that by default persists the logging "
+"for that task at a more verbose level than is initially printed to the "
+"screen."
+msgstr ""
+"每个任务都可以访问自己的 Logger，默认情况下，该 Logger 会以比最初打印到"
+"屏幕更详细的级别保留该任务的日志。"
+
+#: src/reference/reference/task.md:84
+msgid "These features are discussed in detail in the following sections."
+msgstr "以下各节将详细讨论这些功能。"
+
+#: src/reference/reference/task.md:86
+msgid "Defining a task"
+msgstr "定义任务"
+
+#: src/reference/reference/task.md:89
+msgid "Hello world example"
+msgstr "Hello world 示例"
+
+#: src/reference/reference/task.md:91
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val hello = taskKey[Unit](\"prints 'hello world'\")\n"
+"\n"
+"hello := println(\"hello world!\")\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:99
+msgid ""
+"Run `sbt hello` from command line to invoke the task. Run `sbt tasks` to see "
+"this task listed."
+msgstr "从命令行运行 `sbt hello` 来调用该任务。运行 `sbt tasks` 可查看此任务列表。"
+
+#: src/reference/reference/task.md:102
+msgid "Define the key"
+msgstr "定义键"
+
+#: src/reference/reference/task.md:104
+msgid "To declare a new task, define a lazy val of type `TaskKey`:"
+msgstr "要声明一个新任务，需定义一个 `TaskKey` 类型的 lazy val："
+
+#: src/reference/reference/task.md:107
+msgid "\"A sample task.\""
+msgstr ""
+
+#: src/reference/reference/task.md:110
+msgid ""
+"The name of the `val` is used when referring to the task in `build.sbt` and "
+"at the command line. The string passed to the `taskKey` method is a "
+"description of the task. The type parameter passed to `taskKey` (here, "
+"`Int`) is the type of value produced by the task."
+msgstr ""
+"`val` 的名称用于在 `build.sbt` 和命令行中引用该任务。"
+"传递给 `taskKey` 方法的字符串是任务的描述。"
+"传递给 `taskKey` 的类型参数（此处为 `Int`）是任务产生的值的类型。"
+
+#: src/reference/reference/task.md:115
+msgid "We'll define a couple of other keys for the examples:"
+msgstr "我们为示例再定义几个键："
+
+#: src/reference/reference/task.md:117
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:124
+msgid "The examples themselves are valid entries in a `build.sbt`."
+msgstr "这些示例本身就是 `build.sbt` 中的有效条目。"
+
+#: src/reference/reference/task.md:126
+msgid "Implement the task"
+msgstr "实现任务"
+
+#: src/reference/reference/task.md:128
+msgid ""
+"There are three main parts to implementing a task once its key is defined:"
+msgstr "定义键之后，实现任务主要分为三个部分："
+
+#: src/reference/reference/task.md:131
+msgid ""
+"Determine the settings and other tasks needed by the task. They are the "
+"task's inputs."
+msgstr "确定任务所需的设置和其他任务，它们是任务的输入。"
+
+#: src/reference/reference/task.md:133
+msgid "Define the code that implements the task in terms of these inputs."
+msgstr "根据这些输入定义实现任务的代码。"
+
+#: src/reference/reference/task.md:134
+msgid "Determine the scope the task will go in."
+msgstr "确定任务所在的作用域。"
+
+#: src/reference/reference/task.md:136
+msgid ""
+"These parts are then combined just like the parts of a setting are combined."
+msgstr "这些部分的组合方式与设置的各部分组合方式相同。"
+
+#: src/reference/reference/task.md:139
+msgid "Defining a basic task"
+msgstr "定义基本任务"
+
+#: src/reference/reference/task.md:141
+msgid "A task is defined using `:=`"
+msgstr "任务使用 `:=` 定义"
+
+#: src/reference/reference/task.md:143
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"\n"
+"intTask := 1 + 2\n"
+"\n"
+"stringTask := Def.uncached {\n"
+"  sys.props(\"user.name\")\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:156
+msgid "Tasks with inputs"
+msgstr "带输入的任务"
+
+#: src/reference/reference/task.md:158
+msgid ""
+"Tasks with other tasks or settings as inputs are also defined using `:=`. "
+"The values of the inputs are referenced by the `value` method. This method "
+"is a special syntax and can only be called when defining a task, such as in "
+"the argument to `:=`. The following defines a task that adds one to the "
+"value produced by `intTask` and returns the result."
+msgstr ""
+"以其他任务或设置为输入的任务同样使用 `:=` 定义。输入的值通过 `value` 方法引用。"
+"该方法是一种特殊语法，只能在定义任务时调用，例如作为 `:=` 的参数。"
+"以下示例定义了一个将 `intTask` 的结果加一并返回的任务。"
+
+#: src/reference/reference/task.md:168
+msgid "Multiple settings are handled similarly:"
+msgstr "多个设置的处理方式类似："
+
+#: src/reference/reference/task.md:174
+msgid "s\"sample: $x, int: $i\""
+msgstr ""
+
+#: src/reference/reference/task.md:178
+msgid "Task scope"
+msgstr "任务作用域"
+
+#: src/reference/reference/task.md:180
+msgid ""
+"As with settings, tasks can be defined in a specific scope. For example, "
+"there are separate `compile` tasks for the `Compile` and `Test` scopes."
+msgstr ""
+"与设置一样，任务也可以在特定作用域中定义。"
+"例如，`Compile` 和 `Test` 作用域各有单独的 `compile` 任务。"
+
+#: src/reference/reference/task.md:183
+msgid ""
+"In the following example, `Test/sampleTask` uses the result of `Compile/"
+"intTask`:"
+msgstr "在以下示例中，`Test/sampleTask` 使用了 `Compile/intTask` 的结果："
+
+#: src/reference/reference/task.md:190
+msgid ""
+"````admonish note title='On operator precedence'\n"
+"As a reminder, infix method precedence is determined by the name of the "
+"method.\n"
+"\n"
+"1.  Assignment methods have the lowest precedence. These are methods\n"
+"    with names ending in `=`, except for `!=`, `<=`, `>=`, and names that\n"
+"    start with `=`.\n"
+"2.  Methods starting with a letter have the next highest precedence.\n"
+"3.  Methods with names that start with a symbol and aren't included in\n"
+"    1 have the highest precedence. (This category is divided further\n"
+"    according to the specific character it starts with. See the Scala\n"
+"    specification for details.)\n"
+"\n"
+"Therefore, the previous example is equivalent to the following:\n"
+"\n"
+"```scala\n"
+"(Test / sampleTask).:=((Compile / intTask).value * 3)\n"
+"```\n"
+"````"
+msgstr ""
+"````admonish note title='关于运算符优先级'\n"
+"提醒一下，中缀方法的优先级由方法名决定。\n"
+"\n"
+"1.  赋值方法的优先级最低。这些方法的名称以 `=` 结尾，\n"
+"    但 `!=`、`<=`、`>=` 以及以 `=` 开头的名称除外。\n"
+"2.  以字母开头的方法优先级次之。\n"
+"3.  以符号开头且不属于第 1 类的方法优先级最高。\n"
+"    （该类别根据具体的首字符进一步细分，详见 Scala 规范。）\n"
+"\n"
+"因此，前面的示例等价于以下写法：\n"
+"\n"
+"```scala\n"
+"(Test / sampleTask).:=((Compile / intTask).value * 3)\n"
+"```\n"
+"````"
+
+#: src/reference/reference/task.md:209
+msgid "Separating implementations"
+msgstr "分离实现"
+
+#: src/reference/reference/task.md:211
+msgid ""
+"The implementation of a task can be separated from the binding. For example, "
+"a basic separate definition looks like:"
+msgstr "任务的实现可以与绑定分离。例如，基本的分离定义如下："
+
+#: src/reference/reference/task.md:215
+msgid "// Define a new, standalone task implemention"
+msgstr "// 定义一个新的独立任务实现"
+
+#: src/reference/reference/task.md:218
+msgid "// Bind the implementation to a specific key"
+msgstr "// 将实现绑定到特定键"
+
+#: src/reference/reference/task.md:223
+msgid ""
+"Note that whenever `.value` is used, it must be within a task definition, "
+"such as within `Def.task` above or as an argument to `:=`."
+msgstr ""
+"请注意，无论何时使用 `.value`，都必须在任务定义内部，"
+"例如在上述 `Def.task` 中或作为 `:=` 的参数。"
+
+#: src/reference/reference/task.md:226
+msgid "Modifying an existing task"
+msgstr "修改现有任务"
+
+#: src/reference/reference/task.md:228
+msgid ""
+"In the general case, modify a task by declaring the previous task as an "
+"input."
+msgstr "一般情况下，通过将前一个任务声明为输入来修改任务。"
+
+#: src/reference/reference/task.md:232
+msgid "// initial definition"
+msgstr "// 初始定义"
+
+#: src/reference/reference/task.md:234
+msgid "// overriding definition that references the previous definition"
+msgstr "// 引用前一个定义的覆盖定义"
+
+#: src/reference/reference/task.md:239
+msgid ""
+"Completely override a task by not declaring the previous task as an input. "
+"Each of the definitions in the following example completely overrides the "
+"previous one. That is, when `intTask` is run, it will only print `#3`."
+msgstr ""
+"通过不将前一个任务声明为输入来完全覆盖任务。"
+"以下示例中的每个定义都完全覆盖前一个定义。"
+"即运行 `intTask` 时只会打印 `#3`。"
+
+#: src/reference/reference/task.md:246
+msgid "\"#1\""
+msgstr ""
+
+#: src/reference/reference/task.md:251
+msgid "\"#2\""
+msgstr ""
+
+#: src/reference/reference/task.md:256
+msgid "\"#3\""
+msgstr ""
+
+#: src/reference/reference/task.md:261
+msgid "Error handling"
+msgstr "错误处理"
+
+#: src/reference/reference/task.md:264
+msgid "Errors in a task"
+msgstr "任务中的错误"
+
+#: src/reference/reference/task.md:266
+msgid "To express an error state in a task, throw an exception. For example:"
+msgstr "要在任务中表示错误状态，请抛出异常。例如："
+
+#: src/reference/reference/task.md:269
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"\n"
+"intTask := sys.error(\"failed\")\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:277
+msgid ""
+"sbt's task engine will catch and handling the error without crashing sbt:"
+msgstr "sbt 的任务引擎会捕获并处理该错误，而不会导致 sbt 崩溃："
+
+#: src/reference/reference/task.md:286
+msgid "The stacktrace can be shown using `last intTask`."
+msgstr "可以使用 `last intTask` 查看堆栈跟踪。"
+
+#: src/reference/reference/task.md:288
+msgid "`result`"
+msgstr "`result`"
+
+#: src/reference/reference/task.md:290
+msgid ""
+"The `result` method creates a new task that returns the full `Result[A1]` "
+"value for the original task. `Result` has the same structure as "
+"`Either[Incomplete, A1]` for a task result of type `A1`. That is, it has two "
+"subtypes:"
+msgstr ""
+"`result` 方法创建一个新任务，返回原任务的完整 `Result[A1]` 值。"
+"`Result` 的结构与类型为 `A1` 的任务结果的 `Either[Incomplete, A1]` 相同，"
+"即有两个子类型："
+
+#: src/reference/reference/task.md:295
+msgid "`Result.Inc`, which wraps `Incomplete` in case of failure"
+msgstr "`Result.Inc`：在失败时包装 `Incomplete`"
+
+#: src/reference/reference/task.md:296
+msgid "`Result.Value`, which wraps a task's result in case of success."
+msgstr "`Result.Value`：在成功时包装任务的结果。"
+
+#: src/reference/reference/task.md:298
+msgid ""
+"Thus, the task created by `result` executes whether or not the original task "
+"succeeds or fails."
+msgstr "因此，由 `result` 创建的任务无论原始任务成功还是失败都会执行。"
+
+#: src/reference/reference/task.md:301
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"\n"
+"intTask := sys.error(\"boom\")\n"
+"\n"
+"intTask := Def.uncached {\n"
+"  intTask.result.value match\n"
+"    case Result.Inc(inc: Incomplete) =>\n"
+"      println(\"Ignoring failure: \" + inc)\n"
+"      3\n"
+"    case Result.Value(v) =>\n"
+"      println(\"Using successful result: \" + v)\n"
+"      v\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:319
+msgid ""
+"This rewires the original `intTask` definition so that if the original task "
+"fails, the exception is printed and the constant `3` is returned. If it "
+"succeeds, the value is printed and returned."
+msgstr ""
+"这将重新连接原始 `intTask` 定义，使得原始任务失败时打印异常并返回常量 `3`，"
+"成功时打印并返回其值。"
+
+#: src/reference/reference/task.md:323
+msgid "`failure`"
+msgstr "`failure`"
+
+#: src/reference/reference/task.md:325
+msgid ""
+"The `failure` method creates a new task that returns the `Incomplete` value "
+"when the original task fails to complete normally. If the original task "
+"succeeds, the new task fails."
+msgstr ""
+"`failure` 方法创建一个新任务，当原始任务未能正常完成时返回 `Incomplete` 值。"
+"如果原始任务成功，则新任务失败。"
+
+#: src/reference/reference/task.md:329
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"\n"
+"intTask := sys.error(\"boom\")\n"
+"\n"
+"intTask := Def.uncached {\n"
+"  println(\"Ignoring failure: \" + intTask.failure.value)\n"
+"  3\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/task.md:342
+msgid ""
+"This rewires the `intTask` so that the original exception is printed and the "
+"constant `3` is returned."
+msgstr "这将重新连接 `intTask`，使其打印原始异常并返回常量 `3`。"
+
+#: src/reference/reference/task.md:345
+msgid "Advanced task operations"
+msgstr "任务的进阶功能"
+
+#: src/reference/reference/task.md:348
+msgid "Streams: Per-task logging"
+msgstr "Streams：按任务记录日志"
+
+#: src/reference/reference/task.md:350
+msgid ""
+"Per-task loggers are part of a more general system for task-specific data "
+"called Streams."
+msgstr "按任务记录日志是名为 Streams 的任务特定数据通用系统的一部分。"
+
+#: src/reference/reference/task.md:353
+msgid ""
+"To use Streams, get the value of the `streams` task. A logger can be "
+"obtained by the `log` method:"
+msgstr ""
+"要使用 Streams，获取 `streams` 任务的值。"
+"可以通过 `log` 方法获取 Logger："
+
+#: src/reference/reference/task.md:359
+msgid "\"Saying hi...\""
+msgstr ""
+
+#: src/reference/reference/task.md:360
+msgid "\"Hello!\""
+msgstr ""
+
+#: src/reference/reference/task.md:364
+msgid "You can scope logging settings by the specific task's scope:"
+msgstr "可以按特定任务的作用域来限定日志设置的范围："
+
+#: src/reference/reference/task.md:371
+msgid "To obtain the last logging output from a task, use the `last` command:"
+msgstr "要获取任务的最后一次日志输出，使用 `last` 命令："
+
+#: src/reference/reference/task.md:379
+msgid ""
+"The verbosity with which logging is persisted is controlled using the "
+"`persistLogLevel` and `persistTraceLevel` settings. The `last` command "
+"displays what was logged according to these levels. The levels do not affect "
+"already logged information."
+msgstr ""
+"日志的保存详细程度由 `persistLogLevel` 和 `persistTraceLevel` 设置控制。"
+"`last` 命令根据这些级别显示已记录的内容。"
+"这些级别不影响已记录的信息。"
+
+#: src/reference/reference/task.md:384
+msgid "Conditional task"
+msgstr "条件任务"
+
+#: src/reference/reference/task.md:386
+msgid ""
+"When a task consists of an `if`\\-expression at the top-level, a conditional "
+"task is automatically created:"
+msgstr "当任务的顶层由 `if` 表达式构成时，会自动创建条件任务："
+
+#: src/reference/reference/task.md:396
+msgid ""
+"Unlike the regular (Applicative) task composition, conditional tasks delays "
+"the evaluation of then-clause and else-clause as naturally expected of an "
+"`if`\\-expression. This is already possible with `Def.taskDyn { ... }`, but "
+"unlike dynamic tasks, conditional task works with `inspect` command."
+msgstr ""
+"与常规（应用函子式）任务组合不同，条件任务会像 `if` 表达式自然期望的那样"
+"延迟对 then 子句和 else 子句的求值。这在 `Def.taskDyn { ... }` 中已经可以实现，"
+"但与动态任务不同，条件任务可以与 `inspect` 命令配合使用。"
+
+#: src/reference/reference/task.md:398
+msgid "<a name=\"dynamic\"></a>"
+msgstr ""
+
+#: src/reference/reference/task.md:399
+msgid "Dynamic Computations with `Def.taskDyn`"
+msgstr "使用 `Def.taskDyn` 的动态计算"
+
+#: src/reference/reference/task.md:401
+msgid ""
+"It can be useful to use the result of a task to determine the next tasks to "
+"evaluate. This is done using `Def.taskDyn`."
+msgstr ""
+"利用任务的结果来决定下一步要求值的任务有时很有用，"
+"这可以通过 `Def.taskDyn` 实现。"
+
+#: src/reference/reference/task.md:404
+msgid ""
+"The result of `taskDyn` is called a dynamic task because it introduces "
+"dependencies at runtime. The `taskDyn` method supports the same syntax as "
+"`Def.task` and `:=` except that you return a task instead of a plain value."
+msgstr ""
+"`taskDyn` 的结果称为动态任务，因为它在运行时引入依赖关系。"
+"`taskDyn` 方法支持与 `Def.task` 和 `:=` 相同的语法，"
+"区别在于返回的是任务而非普通值。"
+
+#: src/reference/reference/task.md:409
+msgid "For example,"
+msgstr "例如，"
+
+#: src/reference/reference/task.md:411
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val foo = taskKey[Int](\"foo\")\n"
+"\n"
+"val dynamic = Def.taskDyn {\n"
+"  // decide what to evaluate based on the value of `stringTask`\n"
+"  if stringTask.value == \"dev\" then\n"
+"    // create the dev-mode task: this is only evaluated if the\n"
+"    //   value of stringTask is \"dev\"\n"
+"    Def.task {\n"
+"      3\n"
+"    }\n"
+"  else\n"
+"    // create the production task: only evaluated if the value\n"
+"    //    of the stringTask is not \"dev\"\n"
+"    Def.task {\n"
+"      intTask.value + 5\n"
+"    }\n"
+"}\n"
+"\n"
+"stringTask := \"test\"\n"
+"intTask := 1\n"
+"\n"
+"foo := Def.uncached {\n"
+"  val num = dynamic.value\n"
+"  println(s\"number selected was $num\")\n"
+"  num\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val stringTask = taskKey[String](\"A string task\")\n"
+"lazy val intTask = taskKey[Int](\"An int task\")\n"
+"lazy val foo = taskKey[Int](\"foo\")\n"
+"\n"
+"val dynamic = Def.taskDyn {\n"
+"  // 根据 `stringTask` 的值决定要求值的内容\n"
+"  if stringTask.value == \"dev\" then\n"
+"    // 创建 dev 模式任务：仅在 stringTask 的值为 \"dev\" 时求值\n"
+"    Def.task {\n"
+"      3\n"
+"    }\n"
+"  else\n"
+"    // 创建生产任务：仅在 stringTask 的值不为 \"dev\" 时求值\n"
+"    Def.task {\n"
+"      intTask.value + 5\n"
+"    }\n"
+"}\n"
+"\n"
+"stringTask := \"test\"\n"
+"intTask := 1\n"
+"\n"
+"foo := Def.uncached {\n"
+"  val num = dynamic.value\n"
+"  println(s\"number selected was $num\")\n"
+"  num\n"
+"}\n"
+"```\n"
+"````"
+
+#: src/reference/reference/task.md:444
+msgid ""
+"The only static dependency of `foo` is `stringTask`. The dependency on "
+"`intTask` is only introduced in non-dev mode."
+msgstr "`foo` 唯一的静态依赖是 `stringTask`。对 `intTask` 的依赖仅在非 dev 模式下引入。"
+
+#: src/reference/reference/task.md:447
+msgid ""
+"```admonish warning\n"
+"A dynamic task cannot refer to itself or a circular dependency will\n"
+"result. In the example above, there would be a circular dependency if\n"
+"the code passed to taskDyn referenced `foo`.\n"
+"```"
+msgstr ""
+"```admonish warning\n"
+"动态任务不能引用自身，否则会产生循环依赖。在上面的示例中，\n"
+"如果传递给 taskDyn 的代码引用了 `foo`，就会产生循环依赖。\n"
+"```"
+
+#: src/reference/reference/task.md:453
+msgid "Using `Def.sequential`"
+msgstr "使用 `Def.sequential`"
+
+#: src/reference/reference/task.md:455
+msgid ""
+"`Def.sequential` is a helper function to define a semi-sequential task. This "
+"is similar to the dynamic task, but easier to define. To demonstrate the "
+"sequential task, let's create a custom task called `compilecheck` that runs "
+"`Compile / compile` and then `Compile / scalastyle` task."
+msgstr ""
+"`Def.sequential` 是用于定义半顺序任务的辅助函数，与动态任务类似，但更易定义。"
+"为演示顺序任务，我们创建一个名为 `compilecheck` 的自定义任务，"
+"依次运行 `Compile / compile` 和 `Compile / scalastyle`。"
+
+#: src/reference/reference/task.md:460
+msgid "\"compile and then scalastyle\""
+msgstr ""
+
+#: src/reference/reference/task.md:462
+msgid "\".\""
+msgstr ""
+
+#: src/reference/reference/task.md:471
+msgid ""
+"For a completely sequential execution, use [commands](command.md) instead."
+msgstr "若需完全顺序执行，请改用[命令](command.md)。"
+
+#: src/reference/reference/task.md:473
+msgid "<a name=\"multiple-scopes\"></a>"
+msgstr ""
+
+#: src/reference/reference/task.md:474
+msgid "Getting values from multiple scopes"
+msgstr "从多个作用域获取值"
+
+#: src/reference/reference/task.md:476
+msgid ""
+"The general form of an expression that gets values from multiple scopes is:"
+msgstr "从多个作用域获取值的表达式通用形式如下："
+
+#: src/reference/reference/task.md:483
+msgid ""
+"```admonish warning\n"
+"Make sure to assign the `ScopeFilter` as a `val`! This is an\n"
+"implementation detail requirement of the `.all` macro.\n"
+"```"
+msgstr ""
+"```admonish warning\n"
+"务必将 `ScopeFilter` 赋值给一个 `val`！这是 `.all` 宏的实现细节要求。\n"
+"```"
+
+#: src/reference/reference/task.md:488
+msgid ""
+"The `all` method is implicitly added to tasks and settings. It accepts a "
+"`ScopeFilter` that will select the `Scopes`. The result has type `Seq[A]`, "
+"where `A` is the key's underlying type."
+msgstr ""
+"`all` 方法被隐式添加到任务和设置中，接受用于选择 `Scopes` 的 `ScopeFilter`。"
+"结果类型为 `Seq[A]`，其中 `A` 是键的底层类型。"
+
+#: src/reference/reference/task.md:492
+msgid ""
+"A common scenario is getting the sources for all subprojects for processing "
+"all at once, such as passing them to scaladoc. The task that we want to "
+"obtain values for is `sources` and we want to get the values in all non-root "
+"projects and in the `Compile` configuration. This looks like:"
+msgstr ""
+"一个常见场景是获取所有子项目的源文件以便一次性处理，例如将其传递给 scaladoc。"
+"我们想获取值的任务是 `sources`，目标是所有非根项目的 `Compile` 配置中的值，"
+"如下所示："
+
+#: src/reference/reference/task.md:508
+msgid "// each sources definition is of type Seq[File],"
+msgstr "// 每个 sources 定义的类型为 Seq[File]，"
+
+#: src/reference/reference/task.md:509
+msgid "//   giving us a Seq[Seq[File]] that we then flatten to Seq[File]"
+msgstr "//   最终得到 Seq[Seq[File]]，再将其展平为 Seq[File]"

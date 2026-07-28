@@ -48,6 +48,8 @@ Tips for Japanese translation
 - incremental compilation → 差分コンパイル
 - dependencies → ライブラリ依存性 (in library dependency context)
 - recipe → レシピ
+- setting → セッティング
+- advanced (section header) → 応用
 - configuration → コンフィギュレーション (to disambiguate from settings/セッティング)
 - cached task → キャッシュ化タスク
 - equivalent → 等価
@@ -64,6 +66,7 @@ Tips for Chinese translation
 - Leave "sbt server" as is
 - setting → 设置
 - task → 任务
+- advanced (section header) → 进阶
 - requested dependencies → 指定设置依赖 (specified setting dependencies)
 - actual dependencies → 有效设置依赖 (effective setting dependencies)
 - cross building / cross-publishing → 交叉构建 / 交叉发布 (sbt crosses both Scala versions and platforms: JVM, JS, Native)
