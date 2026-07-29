@@ -1,15 +1,12 @@
+[Caching Files]: ../concepts/caching.md#caching-files
 
-  [Caching Files]: ../concepts/caching.md#caching-files
+# sbt 2.0 changes
 
-sbt 2.0 changes
-===============
-
-Changes with compatibility implications
----------------------------------------
+## Changes with compatibility implications
 
 See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
-- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **3.8.4**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
+- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3. (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
 - **Common settings**. Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
 - **Incremental test**. `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
 - **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
@@ -25,14 +22,14 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
 - sbt 2.x disables the delegation of scoped tasks in the sbt shell by [@eed3si9n][@eed3si9n] in [#8539][8539]
 - sbt 2.x enforces eviction error in `Test` configuration by [@calm329][@calm329] and [@zainab-ali][@zainab-ali] in [#8451](https://github.com/sbt/sbt/pull/8451) + [#9102](https://github.com/sbt/sbt/pull/9102)
+- In sbt 2.x, the global base directory follows directory standard. The default value on Windows is `%LOCALAPPDATA%/sbt/2`. Otherwise, it is `$XDG_CONFIG_HOME/sbt/2` or `$HOME/.config/sbt/2`. See [sbt reference](../reference/sbt.md#global-base-directory) for details.
 
 ### Dropped dreprecations
 
 - Removed `IntegrationTest` configuration in [#8184][8184]
 - Removed sbt 0.13 style shell syntax in [#7700][7700]
 
-Features
---------
+## Features
 
 - **Project matrix**. Project matrix, which was available via plugin in sbt 1.x, is in-sourced to provide parallel cross build support.
 - **sbt query**. sbt 2.x extends the unified slash syntax to support query of subprojects. Details below.
@@ -183,13 +180,12 @@ This will let Coursier automatically fill in the version based on the bill of ma
 
 Adrien Piquerez contributed a series of changes to improve performance while he was at Scala Center.
 
-* perf: Reduces number of long-living instances to speed up startup by 20% relative to 2.0.0-M2 by [@adpi2][@adpi2] in [#7866](https://github.com/sbt/sbt/pull/7866)
-* perf: Reduces creation of `Setting` and `Initialize`  by [@adpi2][@adpi2] in [#7880](https://github.com/sbt/sbt/pull/7880)
-* perf: Refactors `Settings` and optimize indexing of aggregate keys by [@adpi2][@adpi2] in [#7879](https://github.com/sbt/sbt/pull/7879)
-* perf: Removes instances of `Info` and `BasicAttributeMap` by [@adpi2][@adpi2] in [#7882](https://github.com/sbt/sbt/pull/7882)
+- perf: Reduces number of long-living instances to speed up startup by 20% relative to 2.0.0-M2 by [@adpi2][@adpi2] in [#7866](https://github.com/sbt/sbt/pull/7866)
+- perf: Reduces creation of `Setting` and `Initialize` by [@adpi2][@adpi2] in [#7880](https://github.com/sbt/sbt/pull/7880)
+- perf: Refactors `Settings` and optimize indexing of aggregate keys by [@adpi2][@adpi2] in [#7879](https://github.com/sbt/sbt/pull/7879)
+- perf: Removes instances of `Info` and `BasicAttributeMap` by [@adpi2][@adpi2] in [#7882](https://github.com/sbt/sbt/pull/7882)
 
-Previously on sbt
------------------
+## Previously on sbt
 
 See also:
 
