@@ -54,19 +54,19 @@ your plugin to the list.
 - [sbt-native-image](https://github.com/scalameta/sbt-native-image): generate GraalVM native-image binaries. <!-- 257 stars -->
 - [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artifacts using PGP/GPG and
   manage signing keys. <!-- 149 stars -->
+- [sbt-pack](https://github.com/xerial/sbt-pack): create runnable distributions
+  for your projects. <!-- 302 stars -->
+- [sbt-osgi](https://github.com/sbt/sbt-osgi): create OSGi bundles.
+  <!-- 32 stars -->
 
 <div style="display: none;">
 
-- [sbt-pack](https://github.com/xerial/sbt-pack): create runnable distributions
-  for your projects. <!-- 302 stars -->
 - [sbt-docker](https://github.com/marcuslonnberg/sbt-docker): create and
   push Docker images. <!-- 72 stars -->
 - [sbt-aether-deploy](https://github.com/arktekk/sbt-aether-deploy): publish
   artefacts using Eclipse Aether. <!-- 59 stars -->
 - [sbt-s3](https://github.com/sbt/sbt-s3): manage objects on Amazon S3.
   <!-- 36 stars -->
-- [sbt-osgi](https://github.com/sbt/sbt-osgi): create OSGi bundles.
-  <!-- 32 stars -->
 - [sbt-github-release](https://github.com/ohnosequences/sbt-github-release): 
   publish Github releases. <!-- 22 stars -->
 - [sbt-hadoop](https://github.com/Tapad/sbt-hadoop-oss): publish artifacts
@@ -105,6 +105,9 @@ your plugin to the list.
 - [snapshot4s](https://siriusxm.github.io/snapshot4s/): snapshot testing <!-- 66 stars -->
 - [sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-interface): test interface for JUnit 5. <!-- 35 stars -->
 - [test-times-reporter](https://github.com/xuwei-k/test-times-reporter): report slow tests. <!-- 3 stars -->
+- [sbt-scalaprops](https://github.com/scalaprops/sbt-scalaprops): scalaprops
+  property-based testing integration. <!-- 10 stars -->
+- [sbt-cached-ci](https://github.com/OlegYch/sbt-cached-ci): Incremental sbt builds for CI environments. <!-- 0 stars -->
 
 <div style="display: none;">
 
@@ -113,13 +116,10 @@ your plugin to the list.
   load-testing using Gatling. <!-- 79 stars -->
 - [sbt-multi-jvm](https://github.com/sbt/sbt-multi-jvm): run tests using
   multiple JVMs. <!-- 36 stars -->
-- [sbt-scalaprops](https://github.com/scalaprops/sbt-scalaprops): scalaprops
-  property-based testing integration. <!-- 10 stars -->
 - [sbt-testng](https://github.com/sbt/sbt-testng): TestNG framework
   integration. <!-- 8 stars -->
 - [sbt-jcstress](https://github.com/ktoso/sbt-jcstress): Java Concurrency
   Stress Test (jcstress) integration. <!-- 8 stars -->
-- [sbt-cached-ci](https://github.com/OlegYch/sbt-cached-ci): Incremental sbt builds for CI environments. <!-- 0 stars -->
 
 </div>
 
@@ -134,17 +134,17 @@ your plugin to the list.
 - [sbt-pekko-version-check](https://github.com/philippus/sbt-pekko-version-check): check if the Apache Pekko modules match. <!-- 5 stars -->
 - [sbt-jackson-version-check](https://github.com/philippus/sbt-jackson-version-check): check if the Jackson modules match. <!-- 3 stars -->
 - [sbt-dependency-rules](https://github.com/evolution-gaming/sbt-dependency-rules-plugin): enforce user-defined rules on project dependencies. <!-- 3 stars -->
+- [sbt-updates](https://github.com/rtimush/sbt-updates): list updated versions
+  of dependencies. <!-- 361 stars -->
+- [sbt-dependency-check](https://github.com/nMoncho/sbt-dependency-check):
+  check dependencies for known vulnerabilities/CVEs. <!-- 25 stars -->
 
 <div style="display: none;">
 
-- [sbt-updates](https://github.com/rtimush/sbt-updates): list updated versions
-  of dependencies. <!-- 361 stars -->
 - [fm-sbt-s3-resolver](https://github.com/frugalmechanic/fm-sbt-s3-resolver):
   resolve and publish artefacts using Amazon S3. <!-- 79 stars -->
 - [sbt-s3-resolver](https://github.com/ohnosequences/sbt-s3-resolver): resolve
   dependencies using Amazon S3. <!-- 73 stars -->
-- [sbt-dependency-check](https://github.com/nMoncho/sbt-dependency-check):
-  check dependencies for known vulnerabilities/CVEs. <!-- 25 stars -->
 - [sbt-duplicates-finder](https://github.com/sbt/sbt-duplicates-finder): detect
   class and resources conflicting in your project's classpath. <!-- 13 stars -->
 - [sbt-google-cloud-storage](https://github.com/lightbend/sbt-google-cloud-storage): resolver and publisher for Google Cloud Storage.
@@ -176,6 +176,8 @@ generate dependency lockfiles and check for changes at build time.
   from GraphQL schemas. <!-- 67 stars -->
 - [sbt-openapi-generator](https://github.com/OpenAPITools/sbt-openapi-generator): OpenAPI generator.
 - [sbt-teavm](https://github.com/sbt-teavm/sbt-teavm): generate JavaScript and WebAssembly from Java bytecode <!-- 11 stars -->
+- [sbt-protoc](https://github.com/thesamet/sbt-protoc): protobuf code generator
+  using protoc. <!-- 35 stars -->
 
 <div style="display: none;">
 
@@ -183,8 +185,6 @@ generate dependency lockfiles and check for changes at build time.
   and protocol generator. <!-- 66 stars -->
 - [sbt-aspectj](https://github.com/sbt/sbt-aspectj): AspectJ weaving for sbt.
   <!-- 62 stars -->
-- [sbt-protoc](https://github.com/thesamet/sbt-protoc): protobuf code generator
-  using protoc. <!-- 35 stars -->
 - [sbt-antlr4](https://github.com/ihji/sbt-antlr4): run ANTLR v4 from sbt.
   <!-- 22 stars -->
 - [sbt-sql](https://github.com/xerial/sbt-sql): generate model classes from
@@ -227,6 +227,12 @@ generate dependency lockfiles and check for changes at build time.
   <!-- 34 stars -->
 - [sbt-coffeescript](https://github.com/sbt/sbt-coffeescript): CoffeeScript support.
   <!-- 14 stars -->
+- [sbt-digest](https://github.com/sbt/sbt-digest): generate checksums of
+  assets. <!-- 18 stars -->
+- [sbt-gzip](https://github.com/sbt/sbt-gzip): gzip compressor for assets.
+  <!-- 15 stars -->
+- [sbt-stylus](https://github.com/sbt/sbt-stylus): Stylus stylesheet compiler.
+  <!-- 2 stars -->
 
 <div style="display: none;">
 
@@ -244,15 +250,9 @@ generate dependency lockfiles and check for changes at build time.
   UglifyJS. <!-- 22 stars -->
 - [sbt-terser](https://github.com/andriimartynov/sbt-terser): JavaScript (ES6+) minifier
   using terser. <!-- 0 stars -->
-- [sbt-digest](https://github.com/sbt/sbt-digest): generate checksums of
-  assets. <!-- 18 stars -->
 - [sbt-scalatra](https://github.com/scalatra/sbt-scalatra): build and run
   Scalatra apps. <!-- 17 stars -->
 - [sbt-scala-js-map](https://github.com/ThoughtWorksInc/sbt-scala-js-map): Configure source mapping for Scala.js projects hosted on Github. <!-- 16 stars -->
-- [sbt-gzip](https://github.com/sbt/sbt-gzip): gzip compressor for assets.
-  <!-- 15 stars -->
-- [sbt-stylus](https://github.com/sbt/sbt-stylus): Stylus stylesheet compiler.
-  <!-- 2 stars -->
 - [sbt-hepek](https://github.com/sake92/sbt-hepek): Render static websites directly from Scala code.
   <!-- 5 stars -->
 - [sbt-puresass](https://chiselapp.com/user/twenstar/repository/sbt-puresass): [sbt-web](https://github.com/sbt/sbt-web) plugin for Sass styles compilation.
@@ -319,13 +319,13 @@ generate dependency lockfiles and check for changes at build time.
   <!-- 10 stars -->
 - [sbt-config](https://github.com/matejcerny/sbt-config): configures subproject via HOCON.
 - [sbt-vimquit](https://github.com/sbt/sbt-vimquit): adds `:q` command. <!-- 6 stars -->
+- [sbt-conscript](https://github.com/foundweekends/conscript)
+  ([docs](https://www.foundweekends.org/conscript/)): distribute apps using
+  GitHub and Maven Central. <!-- 467 stars -->
 
 <div style="display: none;">
 - [sbt-revolver](https://github.com/spray/sbt-revolver): auto-restart forked
   JVMs on update. <!-- 563 stars -->
-- [sbt-conscript](https://github.com/foundweekends/conscript)
-  ([docs](https://www.foundweekends.org/conscript/)): distribute apps using
-  GitHub and Maven Central. <!-- 467 stars -->
 - [sbt-errors-summary](https://github.com/Duhemm/sbt-errors-summary): show a
   summary of compilation errors. <!-- 145 stars -->
 - [sbt-groll](https://github.com/sbt/sbt-groll): navigate git history inside
@@ -365,6 +365,8 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-class-diagram](https://github.com/xuwei-k/sbt-class-diagram): generate
   class diagrams from Scala source code. <!-- 100 stars -->
 - [sbt-plantuml](https://github.com/cheleb/sbt-plantuml): generate PlantUML diagram.
+- [sbt-api-mappings](https://github.com/ThoughtWorksInc/sbt-api-mappings):
+  generate Scaladoc `apiMappings` for common Scala libraries. <!-- 49 stars -->
 
 <div style="display: none;">
 
@@ -379,8 +381,6 @@ generate dependency lockfiles and check for changes at build time.
   and publish microsites using Jekyll. <!-- 125 stars -->
 - [sbt-ghpages](https://github.com/sbt/sbt-ghpages): publish generated
   sites to GitHub pages. <!-- 71 stars -->
-- [sbt-api-mappings](https://github.com/ThoughtWorksInc/sbt-api-mappings):
-  generate Scaladoc `apiMappings` for common Scala libraries. <!-- 49 stars -->
 - [literator](https://github.com/laughedelic/literator):
   generate literate-style markdown docs from your sources. <!-- 33 stars -->
 - [sbt-example](https://github.com/ThoughtWorksInc/sbt-example): generate ScalaTest test suites from examples in Scaladoc. <!-- 17 stars -->
