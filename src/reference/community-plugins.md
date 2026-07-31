@@ -1,9 +1,7 @@
+[Bintray-For-Plugins]: Bintray-For-Plugins.html
+[Cross-Build-Plugins]: Cross-Build-Plugins.html
 
-  [Bintray-For-Plugins]: Bintray-For-Plugins.html
-  [Cross-Build-Plugins]: Cross-Build-Plugins.html
-
-Community Plugins
-=================
+# Community Plugins
 
 ### The GitHub sbt Organization
 
@@ -21,11 +19,11 @@ is a good place to start. This sets up a new sbt plugin project appropriately.
 The generated `README` includes a summary of the steps for publishing a new
 community plugin.
 
-~~~admonish note title="Plugins available for sbt 2.x"
+```admonish note title="Plugins available for sbt 2.x"
 [[Edit]](https://github.com/sbt/website/edit/develop/src/reference/community-plugins.md) this page to
 submit a pull request that adds
 your plugin to the list.
-~~~
+```
 
 ### Code formatter plugins
 
@@ -51,13 +49,14 @@ your plugin to the list.
 - [sbt-release](https://github.com/sbt/sbt-release): create a customizable
   release process. <!-- 652 stars -->
 - [sbt-ci-release](https://github.com/sbt/sbt-ci-release): automate Central Repo releases from GitHub Actions. <!-- 302 stars -->
+- [sbt-pack](https://github.com/xerial/sbt-pack): create runnable distributions
+  for your projects. <!-- 302 stars -->
 - [sbt-native-image](https://github.com/scalameta/sbt-native-image): generate GraalVM native-image binaries. <!-- 257 stars -->
 - [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artifacts using PGP/GPG and
   manage signing keys. <!-- 149 stars -->
-- [sbt-pack](https://github.com/xerial/sbt-pack): create runnable distributions
-  for your projects. <!-- 302 stars -->
 - [sbt-osgi](https://github.com/sbt/sbt-osgi): create OSGi bundles.
   <!-- 32 stars -->
+- [sbt-salad-days](https://github.com/sbt/sbt-salad-days): reduce Scaladoc JAR file size. <!-- 4 stars -->
 
 <div style="display: none;">
 
@@ -67,7 +66,7 @@ your plugin to the list.
   artefacts using Eclipse Aether. <!-- 59 stars -->
 - [sbt-s3](https://github.com/sbt/sbt-s3): manage objects on Amazon S3.
   <!-- 36 stars -->
-- [sbt-github-release](https://github.com/ohnosequences/sbt-github-release): 
+- [sbt-github-release](https://github.com/ohnosequences/sbt-github-release):
   publish Github releases. <!-- 22 stars -->
 - [sbt-hadoop](https://github.com/Tapad/sbt-hadoop-oss): publish artifacts
   to the [Hadoop](https://hadoop.apache.org) Distributed File System (HDFS).
@@ -90,9 +89,10 @@ your plugin to the list.
 
 ### IDE integration plugins
 
+- [Metals](https://scalameta.org/metals/docs/build-tools/sbt/): Scala language server. <!-- 2300 stars -->
 - [sbt-structure](https://github.com/JetBrains/sbt-structure): extract project
   structure in XML for IntelliJ Scala plugin. <!-- 74 stars -->
-- [Metals](https://scalameta.org/metals/docs/build-tools/sbt/): Scala language server.
+- [sbt-eclipse](https://github.com/sbt/sbt-eclipse): create Eclipse project definition. <!-- 712 stars -->
 
 ### Test plugins
 
@@ -104,9 +104,9 @@ your plugin to the list.
   tests from Scaladoc comments. <!-- 120 stars -->
 - [snapshot4s](https://siriusxm.github.io/snapshot4s/): snapshot testing <!-- 66 stars -->
 - [sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-interface): test interface for JUnit 5. <!-- 35 stars -->
-- [test-times-reporter](https://github.com/xuwei-k/test-times-reporter): report slow tests. <!-- 3 stars -->
 - [sbt-scalaprops](https://github.com/scalaprops/sbt-scalaprops): scalaprops
   property-based testing integration. <!-- 10 stars -->
+- [test-times-reporter](https://github.com/xuwei-k/test-times-reporter): report slow tests. <!-- 3 stars -->
 - [sbt-cached-ci](https://github.com/OlegYch/sbt-cached-ci): Incremental sbt builds for CI environments. <!-- 0 stars -->
 
 <div style="display: none;">
@@ -125,8 +125,13 @@ your plugin to the list.
 
 ### Library dependency plugins
 
+- [sbt-updates](https://github.com/rtimush/sbt-updates): list updated versions
+  of dependencies. <!-- 361 stars -->
 - [sbt-license-report](https://github.com/sbt/sbt-license-report): generate
   reports of licenses used by dependencies. <!-- 88 stars -->
+- [sbt-gcs-resolver](https://github.com/abdolence/sbt-gcs-resolver): for Google Cloud Storage (GCS) and Google Artifact Registry with Coursier support. <!-- 30 stars -->
+- [sbt-dependency-check](https://github.com/nMoncho/sbt-dependency-check):
+  check dependencies for known vulnerabilities/CVEs. <!-- 25 stars -->
 - [sbt-dependency-submission](https://github.com/scalacenter/sbt-dependency-submission): Dependency Submission API integration. <!-- 16 stars -->
 - [sbt-conflict-classes](https://github.com/xuwei-k/sbt-conflict-classes): show conflict classes in the classpath. <!-- 16 stars -->
 - [sbt-akka-version-check](https://github.com/johanandren/sbt-akka-version-check): detect Akka module mismatches and fail build. <!-- 10 stars -->
@@ -134,10 +139,6 @@ your plugin to the list.
 - [sbt-pekko-version-check](https://github.com/philippus/sbt-pekko-version-check): check if the Apache Pekko modules match. <!-- 5 stars -->
 - [sbt-jackson-version-check](https://github.com/philippus/sbt-jackson-version-check): check if the Jackson modules match. <!-- 3 stars -->
 - [sbt-dependency-rules](https://github.com/evolution-gaming/sbt-dependency-rules-plugin): enforce user-defined rules on project dependencies. <!-- 3 stars -->
-- [sbt-updates](https://github.com/rtimush/sbt-updates): list updated versions
-  of dependencies. <!-- 361 stars -->
-- [sbt-dependency-check](https://github.com/nMoncho/sbt-dependency-check):
-  check dependencies for known vulnerabilities/CVEs. <!-- 25 stars -->
 
 <div style="display: none;">
 
@@ -151,7 +152,7 @@ your plugin to the list.
 - [sbt-trace](https://github.com/delprks/sbt-trace): find traces of the client or library usage in other projects. <!-- 3 stars -->
 - [safety-plugin](https://github.com/leobenkel/safety_plugin): Enforce the use of specified versions of dependencies across your company
 - [sbt-dependency-lock](https://stringbean.github.io/sbt-dependency-lock):
-generate dependency lockfiles and check for changes at build time.
+  generate dependency lockfiles and check for changes at build time.
 - [sbt-unzip](https://github.com/djice/sbt-unzip-plugin): Extract zip dependencies where you want in your project.
 
 </div>
@@ -174,10 +175,10 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-contraband](https://github.com/sbt/contraband)
   ([docs](https://www.scala-sbt.org/contraband)): generate pseudo-case classes
   from GraphQL schemas. <!-- 67 stars -->
-- [sbt-openapi-generator](https://github.com/OpenAPITools/sbt-openapi-generator): OpenAPI generator.
-- [sbt-teavm](https://github.com/sbt-teavm/sbt-teavm): generate JavaScript and WebAssembly from Java bytecode <!-- 11 stars -->
+- [sbt-openapi-generator](https://github.com/OpenAPITools/sbt-openapi-generator): OpenAPI generator. <!-- 43 stars -->
 - [sbt-protoc](https://github.com/thesamet/sbt-protoc): protobuf code generator
   using protoc. <!-- 35 stars -->
+- [sbt-teavm](https://github.com/sbt-teavm/sbt-teavm): generate JavaScript and WebAssembly from Java bytecode <!-- 11 stars -->
 
 <div style="display: none;">
 
@@ -192,8 +193,8 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-i18n](https://github.com/ant8e/sbt-i18n):
   transform your i18n bundles into Scala code. <!-- 1 stars -->
 - [sbt-lit](https://github.com/earldouglas/sbt-lit): build literate code with sbt.
-- [sbt-embedded-files](https://github.com/yurique/embedded-files): 
-  generate Scala objects containing the contents of glob-specified files as strings or byte-arrays.
+- [sbt-embedded-files](https://github.com/yurique/embedded-files):
+generate Scala objects containing the contents of glob-specified files as strings or byte-arrays.
 </div>
 
 <div style="display: none;">
@@ -204,6 +205,8 @@ generate dependency lockfiles and check for changes at build time.
 
 ### Language support plugins
 
+- [Scala Native](https://scala-native.org/en/latest/): Scala compiler targeting native <!-- 4671 stars -->
+- [SN Bindgen](https://sn-bindgen.indoorvivants.com/): generate Scala Native bindings. <!-- 99 stars -->
 - [sbt-redacted](https://github.com/polentino/sbt-redacted): redacted compiler plugin. <!-- 2 stars -->
 
 <div style="display: none;">
@@ -215,33 +218,31 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-cc](https://github.com/tnakamot/sbt-cc): compile C and C++ source files with sbt.
 </div>
 
-
 ### Web and frontend development plugins
 
+- [Play Framework](https://www.playframework.com): reactive web framework for
+  Scala and Java. <!-- 9727 stars -->
+- [Scala.js](https://www.scala-js.org): Scala to JavaScript compiler.
+  <!-- 3113 stars -->
 - [sbt-war](https://github.com/earldouglas/sbt-war): package and run WAR files <!-- 381 stars -->
 - [sbt-web](https://github.com/sbt/sbt-web): library for building sbt plugins
   for the web. <!-- 314 stars -->
 - [sbt-js-engine](https://github.com/sbt/sbt-js-engine): support for sbt
   plugins that use JavaScript. <!-- 40 stars -->
+- [sbt-rjs](https://github.com/sbt/sbt-rjs): RequireJs optimizer. <!-- 37 stars -->
 - [sbt-less](https://github.com/sbt/sbt-less): Less CSS compilation support.
   <!-- 34 stars -->
-- [sbt-coffeescript](https://github.com/sbt/sbt-coffeescript): CoffeeScript support.
-  <!-- 14 stars -->
 - [sbt-digest](https://github.com/sbt/sbt-digest): generate checksums of
   assets. <!-- 18 stars -->
 - [sbt-gzip](https://github.com/sbt/sbt-gzip): gzip compressor for assets.
   <!-- 15 stars -->
+- [sbt-coffeescript](https://github.com/sbt/sbt-coffeescript): CoffeeScript support.
+  <!-- 14 stars -->
 - [sbt-stylus](https://github.com/sbt/sbt-stylus): Stylus stylesheet compiler.
   <!-- 2 stars -->
 
 <div style="display: none;">
 
-  - [Play Framework](https://www.playframework.com): reactive web framework for
-  Scala and Java. <!-- 9727 stars -->
-- [Scala.js](https://www.scala-js.org): Scala to JavaScript compiler.
-  <!-- 3113 stars -->
-- [sbt-war](https://github.com/earldouglas/sbt-war): Servlet
-  support. <!-- 379 stars -->
 - [sbt-web-scalajs](https://github.com/vmunier/sbt-web-scalajs): use Scala.js
   with any web server. <!-- 148 stars -->
 - [sbt-typescript](https://github.com/joost-de-vries/sbt-typescript):
@@ -300,28 +301,30 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-rewarn](https://github.com/rtimush/sbt-rewarn): always display compilation warnings,
   despite the incremental compilation. <!-- 11 stars -->
 - [sbt-jcheckstyle](https://github.com/xerial/sbt-jcheckstyle): Java code
-  style checking using Checkstyle. <!-- 6 stars -->
+style checking using Checkstyle. <!-- 6 stars -->
 </div>
 
 ### Utility and system plugins
 
 - [MiMa](https://github.com/lightbend/mima): binary
   compatibility management for Scala libraries. <!-- 471 stars -->
+- [sbt-conscript](https://github.com/foundweekends/conscript)
+  ([docs](https://www.foundweekends.org/conscript/)): distribute apps using
+  GitHub and Maven Central. <!-- 467 stars -->
+- [sbt-tpolecat](https://github.com/typelevel/sbt-tpolecat): scalac options for the enlightened <!-- 409 stars -->
 - [sbt-git](https://github.com/sbt/sbt-git): run git commands from sbt.
   <!-- 233 stars -->
 - [sbt-dotenv](https://github.com/philippus/sbt-dotenv): load environment variables from .env into the JVM System Environment for local development. <!-- 189 stars -->
 - [sbt-dynver](https://github.com/sbt/sbt-dynver): set project version
   dynamically from git metadata. <!-- 87 stars -->
+- [unused-code](https://github.com/xuwei-k/unused-code): remove unused Scala code. <!-- 77 stars -->
 - [sbt-javaagent](https://github.com/sbt/sbt-javaagent): add Java agents to
   projects. <!-- 58 stars -->
 - [sbt-nocomma](https://github.com/sbt/sbt-nocomma): reduce commas. <!-- 13 stars -->
 - [sbt-jshell](https://github.com/xuwei-k/sbt-jshell): Java REPL for sbt.
   <!-- 10 stars -->
-- [sbt-config](https://github.com/matejcerny/sbt-config): configures subproject via HOCON.
+- [sbt-config](https://github.com/matejcerny/sbt-config): configures subproject via HOCON. <!-- 6 stars -->
 - [sbt-vimquit](https://github.com/sbt/sbt-vimquit): adds `:q` command. <!-- 6 stars -->
-- [sbt-conscript](https://github.com/foundweekends/conscript)
-  ([docs](https://www.foundweekends.org/conscript/)): distribute apps using
-  GitHub and Maven Central. <!-- 467 stars -->
 
 <div style="display: none;">
 - [sbt-revolver](https://github.com/spray/sbt-revolver): auto-restart forked
@@ -359,14 +362,14 @@ generate dependency lockfiles and check for changes at build time.
 
 ### Documentation plugins
 
-- [mdoc](https://scalameta.org/mdoc/docs/installation.html#sbt): typechecked markdown documentation for Scala  <!-- 402 stars -->
+- [mdoc](https://scalameta.org/mdoc/docs/installation.html#sbt): typechecked markdown documentation for Scala <!-- 402 stars -->
 - [sbt-unidoc](https://github.com/sbt/sbt-unidoc): create unified API
   documentation across subprojects. <!-- 126 stars -->
 - [sbt-class-diagram](https://github.com/xuwei-k/sbt-class-diagram): generate
   class diagrams from Scala source code. <!-- 100 stars -->
-- [sbt-plantuml](https://github.com/cheleb/sbt-plantuml): generate PlantUML diagram.
 - [sbt-api-mappings](https://github.com/ThoughtWorksInc/sbt-api-mappings):
   generate Scaladoc `apiMappings` for common Scala libraries. <!-- 49 stars -->
+- [sbt-plantuml](https://github.com/cheleb/sbt-plantuml): generate PlantUML diagram. <!-- 3 stars -->
 
 <div style="display: none;">
 
@@ -420,6 +423,7 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-kind](https://github.com/tirithel/sbt-kind): load built docker images into a [kind](https://kind.sigs.k8s.io/) cluster.
 
 </div>
+
 <div style="display: none;">
 
 ### Framework-specific plugins
