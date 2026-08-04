@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-07-29T12:56:37-04:00\n"
+"POT-Creation-Date: 2026-08-04T14:37:00-04:00\n"
 "PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,9 +31,8 @@ msgid ""
 "[@adpi2](https://github.com/adpi2), and others."
 msgstr ""
 "**元构建中的 Scala 3**。sbt 2.x 的 build.sbt DSL 用于构建定义和插件，基于 "
-"Scala 3.x。（sbt 1.x 和 2.x 均能构建 Scala 2.x 和 3.x）"
-"由 [@eed3si9n](https://github.com/eed3si9n)、[@adpi2](https://github.com/"
-"adpi2) 等贡献。"
+"Scala 3.x。（sbt 1.x 和 2.x 均能构建 Scala 2.x 和 3.x）由 [@eed3si9n]"
+"(https://github.com/eed3si9n)、[@adpi2](https://github.com/adpi2) 等贡献。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:10
 msgid ""
@@ -144,15 +143,21 @@ msgstr ""
 "files)。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:21
-#, fuzzy
 msgid ""
 "In sbt 2.x `target` defaults to `target/out/jvm/scala-3.8.4/<subproject>/`, "
 "as opposed to `<subproject>/target/`."
 msgstr ""
-"在 sbt 2.x 中，`target` 默认为 `target/out/jvm/scala-3.8.1/<subproject>/`，而"
+"在 sbt 2.x 中，`target` 默认为 `target/out/jvm/scala-3.8.4/<subproject>/`，而"
 "非 `<subproject>/target/`。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:22
+msgid ""
+"`exportJars` defaults to `true`, which puts JAR files on the classpath "
+"during compilation or testing."
+msgstr ""
+"`exportJars` 默认为 `true`，在编译或测试时将 JAR 文件添加到类路径中。"
+
+#: src/reference/changes/sbt-2.0-change-summary.md:23
 msgid ""
 "sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n]"
 "(https://github.com/eed3si9n) in [\\#8211](https://github.com/sbt/sbt/pull/"
@@ -162,29 +167,28 @@ msgstr ""
 "github.com/eed3si9n) 在 [\\#8211](https://github.com/sbt/sbt/pull/8211) 中贡"
 "献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:23
-#, fuzzy
+#: src/reference/changes/sbt-2.0-change-summary.md:24
 msgid ""
 "sbt 2.x disables the delegation of scoped tasks in the sbt shell by "
 "[@eed3si9n](https://github.com/eed3si9n) in [\\#8539](https://github.com/sbt/"
 "sbt/pull/8539)"
 msgstr ""
-"sbt 2.x 插件以 `_sbt2_3` 后缀发布，由 [@eed3si9n](https://github.com/"
-"eed3si9n) 在 [\\#7671](https://github.com/sbt/sbt/pull/7671) 中贡献"
+"sbt 2.x 在 sbt shell 中禁用了作用域任务的委派，由 [@eed3si9n](https://"
+"github.com/eed3si9n) 在 [\\#8539](https://github.com/sbt/sbt/pull/8539) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:24
-#, fuzzy
+#: src/reference/changes/sbt-2.0-change-summary.md:25
 msgid ""
 "sbt 2.x enforces eviction error in `Test` configuration by [@calm329]"
 "(https://github.com/calm329) and [@zainab-ali](https://github.com/zainab-"
 "ali) in [\\#8451](https://github.com/sbt/sbt/pull/8451) + [\\#9102](https://"
 "github.com/sbt/sbt/pull/9102)"
 msgstr ""
-"详见 [Caching](../concepts/caching.md)。由 [@eed3si9n](https://github.com/"
-"eed3si9n) 在 [\\#7464](https://github.com/sbt/sbt/pull/7464) / [\\#7525]"
-"(https://github.com/sbt/sbt/pull/7525) 中贡献"
+"sbt 2.x 在 `Test` 配置中强制执行驱逐错误，由 [@calm329](https://github.com/"
+"calm329) 和 [@zainab-ali](https://github.com/zainab-ali) 在 [\\#8451](https://"
+"github.com/sbt/sbt/pull/8451) + [\\#9102](https://github.com/sbt/sbt/pull/"
+"9102) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:25
+#: src/reference/changes/sbt-2.0-change-summary.md:26
 msgid ""
 "In sbt 2.x, the global base directory follows directory standard. The "
 "default value on Windows is `%LOCALAPPDATA%/sbt/2`. Otherwise, it is "
@@ -196,10 +200,26 @@ msgstr ""
 "sbt/2`。详情请参阅 [sbt 参考](../reference/sbt.md#global-base-directory)。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:27
+msgid ""
+"Starting sbt 2.0.4, forked run runs in current directory, instead of the "
+"base directory of the subproject."
+msgstr ""
+"自 sbt 2.0.4 起，fork 运行在当前目录中执行，而非子项目的基础目录。"
+
+#: src/reference/changes/sbt-2.0-change-summary.md:28
+msgid ""
+"Starting sbt 2.0.5, `closeClassLoaders` setting defaults to `true` to close "
+"the in-process, adhoc test ClassLoaders in [\\#9538](https://github.com/sbt/"
+"sbt/pull/9538)"
+msgstr ""
+"自 sbt 2.0.5 起，`closeClassLoaders` 设置默认为 `true`，用于关闭进程内的临时"
+"测试 ClassLoader，见 [\\#9538](https://github.com/sbt/sbt/pull/9538)"
+
+#: src/reference/changes/sbt-2.0-change-summary.md:30
 msgid "Dropped dreprecations"
 msgstr "已移除的弃用项"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:29
+#: src/reference/changes/sbt-2.0-change-summary.md:32
 msgid ""
 "Removed `IntegrationTest` configuration in [\\#8184](https://github.com/sbt/"
 "sbt/pull/8184)"
@@ -207,7 +227,7 @@ msgstr ""
 "在 [\\#8184](https://github.com/sbt/sbt/pull/8184) 中移除了 "
 "`IntegrationTest` 配置"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:30
+#: src/reference/changes/sbt-2.0-change-summary.md:33
 msgid ""
 "Removed sbt 0.13 style shell syntax in [\\#7700](https://github.com/sbt/sbt/"
 "pull/7700)"
@@ -215,50 +235,48 @@ msgstr ""
 "在 [\\#7700](https://github.com/sbt/sbt/pull/7700) 中移除了 sbt 0.13 风格的 "
 "shell 语法"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:32
+#: src/reference/changes/sbt-2.0-change-summary.md:35
 msgid "Features"
 msgstr "功能"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:34
+#: src/reference/changes/sbt-2.0-change-summary.md:37
 msgid ""
 "**Project matrix**. Project matrix, which was available via plugin in sbt "
 "1.x, is in-sourced to provide parallel cross build support."
 msgstr ""
 "**项目矩阵**。项目矩阵在 sbt 1.x 中通过插件提供，现已内置以支持并行交叉构建。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:35
+#: src/reference/changes/sbt-2.0-change-summary.md:38
 msgid ""
 "**sbt query**. sbt 2.x extends the unified slash syntax to support query of "
 "subprojects. Details below."
 msgstr "**sbt query**。sbt 2.x 扩展了统一斜杠语法以支持子项目查询。详见下文。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:36
+#: src/reference/changes/sbt-2.0-change-summary.md:39
 msgid "**Local/remote cache system**. Details below"
 msgstr "**本地/远程缓存系统**。详见下文"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:37
+#: src/reference/changes/sbt-2.0-change-summary.md:40
 msgid "**Client-side run**. Details below."
 msgstr "**客户端运行**。详见下文。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:38
-#, fuzzy
+#: src/reference/changes/sbt-2.0-change-summary.md:41
 msgid "**Client-side console**. Details below."
-msgstr "**客户端运行**。详见下文。"
-
-#: src/reference/changes/sbt-2.0-change-summary.md:39
-#, fuzzy
-msgid "**rootProject and autoAggregate**. Details below"
-msgstr "**本地/远程缓存系统**。详见下文"
-
-#: src/reference/changes/sbt-2.0-change-summary.md:40
-msgid "**Maven BOM (Bill of Materials) usage**. Details below"
-msgstr ""
+msgstr "**客户端控制台**。详见下文。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:42
+msgid "**rootProject and autoAggregate**. Details below"
+msgstr "**rootProject 和 autoAggregate**。详见下文"
+
+#: src/reference/changes/sbt-2.0-change-summary.md:43
+msgid "**Maven BOM (Bill of Materials) usage**. Details below"
+msgstr "**Maven BOM（材料清单）的使用**。详见下文"
+
+#: src/reference/changes/sbt-2.0-change-summary.md:45
 msgid "Common settings"
 msgstr "通用设置"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:44
+#: src/reference/changes/sbt-2.0-change-summary.md:47
 msgid ""
 "In sbt 2.x, the bare settings in `build.sbt` are interpreted to be common "
 "settings, and are injected to all subprojects. This means we can now set "
@@ -267,25 +285,25 @@ msgstr ""
 "在 sbt 2.x 中，`build.sbt` 中的裸设置被解释为通用设置，并注入到所有子项目中。"
 "这意味着我们现在可以在不使用 `ThisBuild` 作用域的情况下设置 `scalaVersion`："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:47
+#: src/reference/changes/sbt-2.0-change-summary.md:50
 msgid "\"3.8.4\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:50
+#: src/reference/changes/sbt-2.0-change-summary.md:53
 msgid "This also fixes the so-called dynamic dispatch problem:"
 msgstr "这也修复了所谓的动态分派问题："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:53
+#: src/reference/changes/sbt-2.0-change-summary.md:56
 msgid "\"\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:54
-#: src/reference/changes/sbt-2.0-change-summary.md:107
-#: src/reference/changes/sbt-2.0-change-summary.md:120
+#: src/reference/changes/sbt-2.0-change-summary.md:57
+#: src/reference/changes/sbt-2.0-change-summary.md:110
+#: src/reference/changes/sbt-2.0-change-summary.md:123
 msgid "\"!\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:57
+#: src/reference/changes/sbt-2.0-change-summary.md:60
 msgid ""
 "In sbt 1.x `hi` task will capture the name of the root project, but in sbt "
 "2.x it will return the `name` of each subproject with `!`:"
@@ -293,7 +311,7 @@ msgstr ""
 "在 sbt 1.x 中，`hi` 任务会捕获根项目的名称，而在 sbt 2.x 中，它会返回每个子项"
 "目的 `name` 并加上 `!`："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:70
+#: src/reference/changes/sbt-2.0-change-summary.md:73
 msgid ""
 "Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#6746](https://"
 "github.com/sbt/sbt/pull/6746)"
@@ -301,19 +319,19 @@ msgstr ""
 "由 [@eed3si9n](https://github.com/eed3si9n) 在 [\\#6746](https://github.com/"
 "sbt/sbt/pull/6746) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:72
+#: src/reference/changes/sbt-2.0-change-summary.md:75
 msgid "sbt query"
 msgstr "sbt query"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:74
+#: src/reference/changes/sbt-2.0-change-summary.md:77
 msgid "To filter down the subprojects, sbt 2.x introduces sbt query."
 msgstr "为筛选子项目，sbt 2.x 引入了 sbt query。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:80
+#: src/reference/changes/sbt-2.0-change-summary.md:83
 msgid "The above runs all subprojects that begins with `foo`."
 msgstr "以上命令运行所有以 `foo` 开头的子项目。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:86
+#: src/reference/changes/sbt-2.0-change-summary.md:89
 msgid ""
 "The above runs all subprojects whose `scalaBinaryVersion` is `3`. "
 "Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#7699](https://"
@@ -323,18 +341,18 @@ msgstr ""
 "(https://github.com/eed3si9n) 在 [\\#7699](https://github.com/sbt/sbt/pull/"
 "7699) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:88
+#: src/reference/changes/sbt-2.0-change-summary.md:91
 msgid "Incremental test"
 msgstr "增量测试"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:90
+#: src/reference/changes/sbt-2.0-change-summary.md:93
 msgid ""
 "In sbt 2.x, `test` task became an input task that accept arguments that can "
 "filter the test suites to run:"
 msgstr ""
 "在 sbt 2.x 中，`test` 任务已成为接受可筛选要运行的测试套件的参数的输入任务："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:96
+#: src/reference/changes/sbt-2.0-change-summary.md:99
 msgid ""
 "In addition, `test` is incremental and cached. This means, the test will not "
 "run unless it previously failed or something changed since the last run."
@@ -342,15 +360,15 @@ msgstr ""
 "此外，`test` 是增量且缓存的。这意味着，除非之前失败或自上次运行以来有所变更，"
 "否则测试不会运行。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:98
+#: src/reference/changes/sbt-2.0-change-summary.md:101
 msgid "See [test](../reference/sbt-test.md) for details."
 msgstr "详见 [test](../reference/sbt-test.md)。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:100
+#: src/reference/changes/sbt-2.0-change-summary.md:103
 msgid "Local/remote cache system"
 msgstr "本地/远程缓存系统"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:102
+#: src/reference/changes/sbt-2.0-change-summary.md:105
 msgid ""
 "sbt 2.x implements cached task by default, which can automatically cache the "
 "task results to local disk and Bazel-compatible remote cache."
@@ -358,12 +376,12 @@ msgstr ""
 "sbt 2.x 默认实现缓存任务，可自动将任务结果缓存到本地磁盘和与 Bazel 兼容的远程"
 "缓存。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:105
-#: src/reference/changes/sbt-2.0-change-summary.md:113
+#: src/reference/changes/sbt-2.0-change-summary.md:108
+#: src/reference/changes/sbt-2.0-change-summary.md:116
 msgid "\"doc for task1\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:110
+#: src/reference/changes/sbt-2.0-change-summary.md:113
 msgid ""
 "This tracks the inputs into the `task1` and creates a machine-wide disk "
 "cache, which can also be configured to also use a remote cache. Since it's "
@@ -373,7 +391,7 @@ msgstr ""
 "这会跟踪 `task1` 的输入并创建机器范围内的磁盘缓存，也可配置为使用远程缓存。由"
 "于 sbt 任务通常还会产生文件，我们还提供了缓存文件内容的机制："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:124
+#: src/reference/changes/sbt-2.0-change-summary.md:127
 msgid ""
 "See [Caching](../concepts/caching.md) for details. Contributed by [@eed3si9n]"
 "(https://github.com/eed3si9n) in [\\#7464](https://github.com/sbt/sbt/pull/"
@@ -383,21 +401,19 @@ msgstr ""
 "eed3si9n) 在 [\\#7464](https://github.com/sbt/sbt/pull/7464) / [\\#7525]"
 "(https://github.com/sbt/sbt/pull/7525) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:126
+#: src/reference/changes/sbt-2.0-change-summary.md:129
 msgid "Client-side run"
 msgstr "客户端运行"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:128
-#, fuzzy
+#: src/reference/changes/sbt-2.0-change-summary.md:131
 msgid ""
 "In sbt 2.0, sbt server sends the `run` task back to sbtn, which will fork a "
 "fresh JVM. All you have to do is:"
 msgstr ""
-"sbt runner 1.10.10 及更高版本的脚本默认对 sbt 2.x 使用 sbtn（GraalVM native-"
-"image 客户端）。在 sbt 2.0 中，sbt server 将 `run` 任务发回 sbtn，sbtn 将 "
-"fork 一个新的 JVM。您只需执行："
+"在 sbt 2.0 中，sbt server 将 `run` 任务发回 sbtn，后者将 fork 一个新的 JVM。"
+"您只需执行："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:134
+#: src/reference/changes/sbt-2.0-change-summary.md:137
 msgid ""
 "This avoids blocking the sbt server, and you can have multiple runs. "
 "Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#8060](https://"
@@ -408,18 +424,19 @@ msgstr ""
 "github.com/eed3si9n) 在 [\\#8060](https://github.com/sbt/sbt/pull/8060) 中贡"
 "献。另请参阅 [run](../reference/sbt-run.md) 文档。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:136
-#, fuzzy
+#: src/reference/changes/sbt-2.0-change-summary.md:139
 msgid "Client-side console"
-msgstr "客户端运行"
+msgstr "客户端控制台"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:138
+#: src/reference/changes/sbt-2.0-change-summary.md:141
 msgid ""
 "Similar to the client-side run, sbt server sends `console` (Scala REPL) back "
 "to the sbtn, which forks a fresh JVM to run the REPL. All you have to do is:"
 msgstr ""
+"与客户端运行类似，sbt server 将 `console`（Scala REPL）发回 sbtn，后者 fork 一"
+"个新的 JVM 来运行 REPL。您只需执行："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:144
+#: src/reference/changes/sbt-2.0-change-summary.md:147
 msgid ""
 "This avoids blocking the sbt server. This was contributed by [@eed3si9n]"
 "(https://github.com/eed3si9n) and [@calm329](https://github.com/calm329) in "
@@ -428,91 +445,101 @@ msgid ""
 "8677), [\\#8705](https://github.com/sbt/sbt/pull/8705), [\\#8722](https://"
 "github.com/sbt/sbt/pull/8722)."
 msgstr ""
+"这避免了阻塞 sbt server。由 [@eed3si9n](https://github.com/eed3si9n) 和 "
+"[@calm329](https://github.com/calm329) 在 [\\#8018](https://github.com/sbt/"
+"sbt/pull/8018)、[\\#8604](https://github.com/sbt/sbt/pull/8604)、[\\#8677]"
+"(https://github.com/sbt/sbt/pull/8677)、[\\#8705](https://github.com/sbt/sbt/"
+"pull/8705)、[\\#8722](https://github.com/sbt/sbt/pull/8722) 中贡献。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:146
+#: src/reference/changes/sbt-2.0-change-summary.md:149
 msgid "rootProject and autoAggregate"
-msgstr ""
+msgstr "rootProject 和 autoAggregate"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:148
+#: src/reference/changes/sbt-2.0-change-summary.md:151
 msgid "sbt 2.0 adds `rootProject` macro:"
-msgstr ""
+msgstr "sbt 2.0 添加了 `rootProject` 宏："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:154
+#: src/reference/changes/sbt-2.0-change-summary.md:157
 msgid ""
 "This is a shortcut for `(project in file(\".\"))`, which tends to be a "
 "boilerplate in `build.sbt`."
 msgstr ""
+"这是 `(project in file(\".\"))` 的快捷方式，在 `build.sbt` 中往往是样板代码。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:161
+#: src/reference/changes/sbt-2.0-change-summary.md:164
 msgid ""
 "sbt 2.0 also adds `autoAggregate` method, which at the loading time expands "
 "to local subprojects."
 msgstr ""
+"sbt 2.0 还添加了 `autoAggregate` 方法，在加载时扩展为本地子项目。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:163
+#: src/reference/changes/sbt-2.0-change-summary.md:166
 msgid "Maven BOM (Bill of Materials) usage"
-msgstr ""
+msgstr "Maven BOM（材料清单）的使用"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:165
+#: src/reference/changes/sbt-2.0-change-summary.md:168
 msgid ""
 "sbt 2.0 adds Maven BOM (Bill of Materials) usage support. Subprojects can "
 "depend on published BOM artifacts using `.pomOnly()`:"
 msgstr ""
+"sbt 2.0 添加了 Maven BOM（材料清单）的使用支持。子项目可以使用 `.pomOnly()` "
+"依赖已发布的 BOM 工件："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:168
+#: src/reference/changes/sbt-2.0-change-summary.md:171
 msgid "\"com.fasterxml.jackson\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:168
+#: src/reference/changes/sbt-2.0-change-summary.md:171
 msgid "\"jackson-bom\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:168
+#: src/reference/changes/sbt-2.0-change-summary.md:171
 msgid "\"2.21.0\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:171
+#: src/reference/changes/sbt-2.0-change-summary.md:174
 msgid ""
 "These bill of materials are forwarded to Coursier via via Resolve.addBom(), "
 "which should introduce version constraints for specific libraries (such as "
 "Jackson). You can use `\"*\"` to declare versionless dependency:"
 msgstr ""
+"这些材料清单通过 Resolve.addBom() 转发给 Coursier，为特定库（如 Jackson）引入"
+"版本约束。您可以使用 `\"*\"` 声明无版本依赖："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:174
+#: src/reference/changes/sbt-2.0-change-summary.md:177
 msgid "\"com.fasterxml.jackson.core\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:174
+#: src/reference/changes/sbt-2.0-change-summary.md:177
 msgid "\"jackson-core\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:174
+#: src/reference/changes/sbt-2.0-change-summary.md:177
 msgid "\"*\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:177
-#, fuzzy
+#: src/reference/changes/sbt-2.0-change-summary.md:180
 msgid ""
 "This will let Coursier automatically fill in the version based on the bill "
 "of material constraints (in this case `\"2.21.0\"`). Contributed by [@bitloi]"
 "(https://github.com/bitloi) in [\\#8675](https://github.com/sbt/sbt/pull/"
 "8675)."
 msgstr ""
-"以上命令运行所有 `scalaBinaryVersion` 为 `3` 的子项目。由 [@eed3si9n]"
-"(https://github.com/eed3si9n) 在 [\\#7699](https://github.com/sbt/sbt/pull/"
-"7699) 中贡献"
+"这将让 Coursier 根据材料清单约束自动填入版本（此例中为 `\"2.21.0\"`）。由 "
+"[@bitloi](https://github.com/bitloi) 在 [\\#8675](https://github.com/sbt/sbt/"
+"pull/8675) 中贡献。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:179
+#: src/reference/changes/sbt-2.0-change-summary.md:182
 msgid "Performance improvements"
 msgstr "性能改进"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:181
+#: src/reference/changes/sbt-2.0-change-summary.md:184
 msgid ""
 "Adrien Piquerez contributed a series of changes to improve performance while "
 "he was at Scala Center."
 msgstr "Adrien Piquerez 在 Scala Center 期间贡献了一系列性能改进。"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:183
+#: src/reference/changes/sbt-2.0-change-summary.md:186
 msgid ""
 "perf: Reduces number of long-living instances to speed up startup by 20% "
 "relative to 2.0.0-M2 by [@adpi2](https://github.com/adpi2) in [\\#7866]"
@@ -522,8 +549,7 @@ msgstr ""
 "(https://github.com/adpi2) 在 [\\#7866](https://github.com/sbt/sbt/pull/"
 "7866) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:184
-#, fuzzy
+#: src/reference/changes/sbt-2.0-change-summary.md:187
 msgid ""
 "perf: Reduces creation of `Setting` and `Initialize` by [@adpi2](https://"
 "github.com/adpi2) in [\\#7880](https://github.com/sbt/sbt/pull/7880)"
@@ -531,7 +557,7 @@ msgstr ""
 "perf：减少 `Setting` 和 `Initialize` 的创建，由 [@adpi2](https://github.com/"
 "adpi2) 在 [\\#7880](https://github.com/sbt/sbt/pull/7880) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:185
+#: src/reference/changes/sbt-2.0-change-summary.md:188
 msgid ""
 "perf: Refactors `Settings` and optimize indexing of aggregate keys by "
 "[@adpi2](https://github.com/adpi2) in [\\#7879](https://github.com/sbt/sbt/"
@@ -540,7 +566,7 @@ msgstr ""
 "perf：重构 `Settings` 并优化聚合键的索引，由 [@adpi2](https://github.com/"
 "adpi2) 在 [\\#7879](https://github.com/sbt/sbt/pull/7879) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:186
+#: src/reference/changes/sbt-2.0-change-summary.md:189
 msgid ""
 "perf: Removes instances of `Info` and `BasicAttributeMap` by [@adpi2]"
 "(https://github.com/adpi2) in [\\#7882](https://github.com/sbt/sbt/pull/7882)"
@@ -548,15 +574,15 @@ msgstr ""
 "perf：移除 `Info` 和 `BasicAttributeMap` 的实例，由 [@adpi2](https://"
 "github.com/adpi2) 在 [\\#7882](https://github.com/sbt/sbt/pull/7882) 中贡献"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:188
+#: src/reference/changes/sbt-2.0-change-summary.md:191
 msgid "Previously on sbt"
 msgstr "sbt 以往版本"
 
-#: src/reference/changes/sbt-2.0-change-summary.md:190
+#: src/reference/changes/sbt-2.0-change-summary.md:193
 msgid "See also:"
 msgstr "另请参阅："
 
-#: src/reference/changes/sbt-2.0-change-summary.md:192
+#: src/reference/changes/sbt-2.0-change-summary.md:195
 msgid ""
 "[sbt 1.0 changes](https://www.scala-sbt.org/1.x/docs/sbt-1.0-Release-"
 "Notes.html)"

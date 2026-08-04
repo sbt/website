@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-08-03T20:04:19-04:00\n"
+"POT-Creation-Date: 2026-08-04T14:36:54-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -86,7 +86,7 @@ msgstr ""
 #: src/reference/changes/migrating-from-sbt-1.x.md:30
 #: src/reference/changes/migrating-from-sbt-1.x.md:37
 #: src/reference/changes/migrating-from-sbt-1.x.md:49
-#: src/reference/changes/migrating-from-sbt-1.x.md:244
+#: src/reference/changes/migrating-from-sbt-1.x.md:276
 msgid "\"com.github.sbt\""
 msgstr ""
 
@@ -124,8 +124,8 @@ msgid "\"0.1.0\""
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:56
-#: src/reference/changes/migrating-from-sbt-1.x.md:130
-#: src/reference/changes/migrating-from-sbt-1.x.md:142
+#: src/reference/changes/migrating-from-sbt-1.x.md:141
+#: src/reference/changes/migrating-from-sbt-1.x.md:153
 msgid "\"3.8.4\""
 msgstr ""
 
@@ -198,27 +198,43 @@ msgstr "`exportJars` の変更点"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:83
 msgid ""
-"`exportJars` defaults to `true`, was `false`. This might break "
-"`getResource(\"/\")` and `resource.toURI`. Set `exportJars := false` if this "
-"logic is broken in your build, producing `NullPointerException`s and "
-"`FileSystemNotFoundException`s. Set `exportJars := false` in your build if "
-"you want to keep the old behavior. The change was introduced by [sbt/"
-"sbt#7464](https://github.com/sbt/sbt/pull/7464), see also [blog](https://"
-"eed3si9n.com/sbt-remote-cache/)."
+"`exportJars` defaults to `true`, was `false`, which puts JAR files on the "
+"classpath during compilation or testing. This will reduce the number of "
+"files on the classpath and reduce the hashing overhead."
 msgstr ""
-"`exportJars` のデフォルト値は `false` から `true` に変更された。これは "
-"`getResource(\"/\")` や `resource.toURI` を壊す可能性がある。ビルドでこのロ"
-"ジックが壊れ、`NullPointerException` や `FileSystemNotFoundException` が発生"
-"する場合は `exportJars := false` を設定する。古い振る舞いを維持したい場合は "
-"`exportJars := false` をビルドに設定する。この変更は [sbt/sbt#7464](https://"
-"github.com/sbt/sbt/pull/7464) によって導入された。[ブログ](https://"
-"eed3si9n.com/sbt-remote-cache/) も参照。"
+"`exportJars` のデフォルトが `false` から `true` に変更され、コンパイルやテスト"
+"時に JAR ファイルがクラスパスに追加されるようになった。これにより、クラスパス"
+"上のファイル数が減り、ハッシュ化のオーバーヘッドが削減される。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:85
+msgid ""
+"As a side effect, this might break conversion from the resource URI to Path "
+"if you were calling `Path.of(...)`. We recommend migrating the code as "
+"follows:"
+msgstr ""
+"副作用として、`Path.of(...)` を呼び出していた場合、リソース URI から Path への"
+"変換が壊れる可能性がある。以下のようにコードをマイグレーションすることを推奨"
+"する:"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:89
+msgid "\"/test-resource.txt\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:93
+msgid ""
+"Opt out by changing `exportJars` back to `false`. The change was introduced "
+"in [\\#7464](https://github.com/sbt/sbt/pull/7464). See also [blog](https://"
+"eed3si9n.com/sbt-remote-cache/)."
+msgstr ""
+"`exportJars` を `false` に戻すことでオプトアウトできる。この変更は "
+"[\\#7464](https://github.com/sbt/sbt/pull/7464) で導入された。[ブログ](https://"
+"eed3si9n.com/sbt-remote-cache/) も参照。"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:96
 msgid "Migrating to cached tasks"
 msgstr "キャッシュ・タスクへのマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:87
+#: src/reference/changes/migrating-from-sbt-1.x.md:98
 msgid ""
 "In sbt 2.x, all tasks are cached by default. To participate in caching, the "
 "task result type must provide a given for `sjsonnew.JsonFormat`. Any task "
@@ -232,7 +248,7 @@ msgstr ""
 "`Seq[PathMapping]` 等の複合オブジェクトや関数型など) タスクは sbt 2 において"
 "ビルドのロード時に失敗する。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:89
+#: src/reference/changes/migrating-from-sbt-1.x.md:100
 msgid ""
 "If you don't want to define the given, the easiest way to migrate is to wrap "
 "the tasks with `Def.uncached(...)` so sbt 2 skips caching and always re-"
@@ -242,11 +258,11 @@ msgstr ""
 "`Def.uncached(...)` でラップして sbt 2 がキャッシュをスキップして常に再実行す"
 "るようにすることだ:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:93
+#: src/reference/changes/migrating-from-sbt-1.x.md:104
 msgid "// task body returning a non-serializable type"
 msgstr "// シリアライズ不可能な型を返すタスク本体"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:97
+#: src/reference/changes/migrating-from-sbt-1.x.md:108
 msgid ""
 "When considering caching for a task, watch out for side-effecting tasks. "
 "When sbt 2 restores a task result from its disk cache, it returns the cached "
@@ -261,7 +277,7 @@ msgstr ""
 "など) はサイレントにスキップされる。タスクが毎回副作用を生じることを意図して"
 "いる場合、`Def.uncached(...)` でラップして sbt 2 が常に再実行するようにする。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:99
+#: src/reference/changes/migrating-from-sbt-1.x.md:110
 msgid ""
 "The [sbt2-compat](https://github.com/sbt/sbt2-compat) plugin provides "
 "`Def.uncached` as a compatibility shim on sbt 1.x (where it is a no-op). See "
@@ -273,11 +289,11 @@ msgstr ""
 "でのオプトアウトの方法などの詳細は [キャッシュ・タスク](../reference/cached-"
 "task.md) リファレンスを参照。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:101
+#: src/reference/changes/migrating-from-sbt-1.x.md:112
 msgid "Migration away from IntegrationTest"
 msgstr "IntegrationTest の廃止"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:103
+#: src/reference/changes/migrating-from-sbt-1.x.md:114
 msgid ""
 "To migrate away from the `IntegrationTest` configuration, create a separate "
 "subproject and implement it as normal test."
@@ -285,11 +301,11 @@ msgstr ""
 "`IntegrationTest` コンフィギュレーションの廃止に対応するためには、別のサブプ"
 "ロジェクトを定義して、普通のテストとして実装するのが推奨される。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:105
+#: src/reference/changes/migrating-from-sbt-1.x.md:116
 msgid "Migrating to slash syntax"
 msgstr "スラッシュ構文へのマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:107
+#: src/reference/changes/migrating-from-sbt-1.x.md:118
 msgid ""
 "sbt 1.x supported both the sbt 0.13 style syntax and the slash syntax. sbt "
 "2.x removes the support for the sbt 0.13 syntax, so use the slash syntax for "
@@ -299,7 +315,7 @@ msgstr ""
 "2.x で sbt 0.13 構文のサポートが無くなるので、sbt シェルと `build.sbt` の両方"
 "で統一スラッシュ構文を使う:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:113
+#: src/reference/changes/migrating-from-sbt-1.x.md:124
 msgid ""
 "For example, `test:compile` will no longer work on the shell. Use `Test/"
 "compile` instead. See [syntactic Scalafix rule for unified slash syntax]"
@@ -311,11 +327,11 @@ msgstr ""
 "[統一スラッシュ構文のための syntactic Scalafix rule](https://eed3si9n.com/ja/"
 "syntactic-scalafix-rule-for-unified-slash-syntax/) 参照。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:119
+#: src/reference/changes/migrating-from-sbt-1.x.md:130
 msgid "Cross building sbt plugins"
 msgstr "sbt プラグインのクロスビルド"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:121
+#: src/reference/changes/migrating-from-sbt-1.x.md:132
 msgid ""
 "In sbt 2.x, if you cross build an sbt plugin with Scala 3.x and 2.12.x, it "
 "will automatically cross build against sbt 1.x and sbt 2.x:"
@@ -323,26 +339,26 @@ msgstr ""
 "sbt 2.x では、sbt プラグインを Scala 3.x と 2.12.x に対してクロスビルドすると"
 "自動的に sbt 1.x 向けと sbt 2.x 向けにクロスビルドするようになっている。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:124
+#: src/reference/changes/migrating-from-sbt-1.x.md:135
 msgid "// using sbt 2.x"
 msgstr "// sbt 2.x を使った場合"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:125
-#: src/reference/changes/migrating-from-sbt-1.x.md:145
+#: src/reference/changes/migrating-from-sbt-1.x.md:136
+#: src/reference/changes/migrating-from-sbt-1.x.md:156
 msgid "\"plugin\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:128
-#: src/reference/changes/migrating-from-sbt-1.x.md:148
+#: src/reference/changes/migrating-from-sbt-1.x.md:139
+#: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "\"sbt-vimquit\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:130
 #: src/reference/changes/migrating-from-sbt-1.x.md:141
+#: src/reference/changes/migrating-from-sbt-1.x.md:152
 msgid "\"2.12.20\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:133
+#: src/reference/changes/migrating-from-sbt-1.x.md:144
 msgid ""
 "If you use `projectMatrix`, make sure to move the plugin to a subdirectory "
 "like `plugin/`. Otherwise, the synthetic root project will also pick up the "
@@ -352,35 +368,35 @@ msgstr ""
 "に移動させる必要がある。そうしないと、デフォルトのルートプロジェクトも `src/"
 "` を拾ってしまうからだ。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:135
+#: src/reference/changes/migrating-from-sbt-1.x.md:146
 msgid "Cross building sbt plugin with sbt 1.x"
 msgstr "sbt 1.x を使った sbt プラグインのクロスビルド"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:137
+#: src/reference/changes/migrating-from-sbt-1.x.md:148
 msgid "Use sbt 1.10.2 or later, if you want to cross build using sbt 1.x."
 msgstr "sbt 1.x を使ってクロスビルドする場合 sbt 1.10.2 以降を使う必要がある。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:140
+#: src/reference/changes/migrating-from-sbt-1.x.md:151
 msgid "// using sbt 1.x"
 msgstr "// sbt 1.x を使った場合"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:151
+#: src/reference/changes/migrating-from-sbt-1.x.md:162
 msgid "\"2.12\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:151
+#: src/reference/changes/migrating-from-sbt-1.x.md:162
 msgid "\"1.5.8\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:152
+#: src/reference/changes/migrating-from-sbt-1.x.md:163
 msgid "\"2.0.5\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:158
+#: src/reference/changes/migrating-from-sbt-1.x.md:169
 msgid "Changes to `%%`"
 msgstr "`%%` の変更点"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:160
+#: src/reference/changes/migrating-from-sbt-1.x.md:171
 msgid ""
 "In sbt 2.x, `ModuleID`'s `%%` operator has become platform-aware. For JVM "
 "subprojects, `%%` works as before, encoding Scala suffix (for example `_3`) "
@@ -390,11 +406,11 @@ msgstr ""
 "になった。JVM系のサブプロジェクトは、`%%` は以前同様に Maven リポジトリにおけ"
 "る (`_3` のような) Scala バージョンの接尾辞をエンコードする。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:162
+#: src/reference/changes/migrating-from-sbt-1.x.md:173
 msgid "Migrating `%%%` operator"
 msgstr "`%%%` 演算子のマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:164
+#: src/reference/changes/migrating-from-sbt-1.x.md:175
 msgid ""
 "When Scala.JS or Scala Native becomes available on sbt 2.x, `%%` will encode "
 "both the Scala version (such as `_3`) and the platform suffix (`_sjs1` etc). "
@@ -405,27 +421,27 @@ msgstr ""
 "をエンコードできるようになっている。そのため、`%%%` は `%%` に置き換えれるよ"
 "うになるはずだ:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:167
+#: src/reference/changes/migrating-from-sbt-1.x.md:178
 msgid "\"org.scala-js\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:167
+#: src/reference/changes/migrating-from-sbt-1.x.md:178
 msgid "\"scalajs-dom\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:167
+#: src/reference/changes/migrating-from-sbt-1.x.md:178
 msgid "\"2.8.0\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:170
+#: src/reference/changes/migrating-from-sbt-1.x.md:181
 msgid "Use `.platform(Platform.jvm)` in case where JVM libraries are needed."
 msgstr "JVM ライブラリが必要な場合は `.platform(Platform.jvm)` を使う。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:172
+#: src/reference/changes/migrating-from-sbt-1.x.md:183
 msgid "Changes to `target`"
 msgstr "`target` に関する変更"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:174
+#: src/reference/changes/migrating-from-sbt-1.x.md:185
 msgid ""
 "In sbt 2.x, the `target` directory is unified to be a single `target/` "
 "directory in the working directory, and each subproject creates a "
@@ -439,19 +455,19 @@ msgstr ""
 "に、`exists`、`absent`、`delete` のコマンドは glob式 `**` および `||` をサ"
 "ポートする。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:177
+#: src/reference/changes/migrating-from-sbt-1.x.md:188
 msgid "# before\n"
 msgstr "# 変更前\n"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:180
+#: src/reference/changes/migrating-from-sbt-1.x.md:191
 msgid "# after\n"
 msgstr "# 変更後\n"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:184
+#: src/reference/changes/migrating-from-sbt-1.x.md:195
 msgid "# either is ok\n"
 msgstr "# どちらでも ok\n"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:189
+#: src/reference/changes/migrating-from-sbt-1.x.md:200
 msgid ""
 "In sbt 1.x, `target.value` resolves to the project root `target/` directory. "
 "In sbt 2.x, it resolves to `target/out/jvm/scala-<ver>/<project-name>` "
@@ -461,19 +477,67 @@ msgstr ""
 "指す。sbt 2.x では代わりに `target/out/jvm/scala-<ver>/<project-name>` を指"
 "す。プラグインのマイグレーション時にこの変更点に注意する必要がある。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:191
+#: src/reference/changes/migrating-from-sbt-1.x.md:202
+msgid "Forked run working directory"
+msgstr "フォーク・ランのワーキングディレクトリ"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:204
+msgid ""
+"Starting sbt 2.0.4, the working directory for forked run changed to the "
+"build's working directory instead of the subproject's `baseDirectory`. This "
+"is intended to make the client-side run behave similar to sbt 1.x's in-"
+"process `run` task."
+msgstr ""
+"sbt 2.0.4 より、フォーク・ランのワーキングディレクトリがサブプロジェクトの "
+"`baseDirectory` ではなく、ビルドのワーキングディレクトリに変更された。これは"
+"クライアントサイド実行を sbt 1.x のインプロセス `run` タスクと同様の振る舞い"
+"にするためだ。"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:206
+msgid ""
+"You can use `Compile / run / baseDirectory` to move this back to "
+"`baseDirectory`:"
+msgstr ""
+"`Compile / run / baseDirectory` を使って元の `baseDirectory` に戻すことができ"
+"る:"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:212
+msgid "Test classloader"
+msgstr "テスト ClassLoader"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:214
+msgid ""
+"Starting sbt 2.0.5, `closeClassLoaders` setting defaults to `true` to close "
+"the in-process, adhoc test ClassLoaders. This is intended to fix "
+"`AccessDeniedException`s observed on Windows. While closing the adhoc test "
+"ClassLoader should work in many cases, some tests or libraries that do not "
+"close all threads priror to the completion of the test task may experience "
+"runtime errors like `ClassNotFound`."
+msgstr ""
+"sbt 2.0.5 より、インプロセスのアドホックなテスト ClassLoader をクローズする"
+"ため、`closeClassLoaders` セッティングのデフォルトが `true` になった。これは "
+"Windows で観察された `AccessDeniedException` を修正することを意図している。"
+"アドホックなテスト ClassLoader をクローズしても多くの場合は問題無いが、テスト"
+"タスクの完了前に全スレッドをクローズしないテストやライブラリによっては "
+"`ClassNotFound` のような実行時エラーが発生する可能性がある。"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:217
+msgid "To workaround the issue, you can fork the test as follows:"
+msgstr "この問題を回避するには、以下のようにテストをフォークする:"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:223
 msgid "Migrating CI pipelines"
 msgstr "CI パイプラインのマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:193
+#: src/reference/changes/migrating-from-sbt-1.x.md:225
 msgid "There are some behavior changes that may affect CI pipelines."
 msgstr "CI パイプラインに影響する可能性のある振る舞いの変更点がいくつかある。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:195
+#: src/reference/changes/migrating-from-sbt-1.x.md:227
 msgid "Running a sequence of commands"
 msgstr "コマンドを連続して実行する"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:197
+#: src/reference/changes/migrating-from-sbt-1.x.md:229
 msgid ""
 "A sequence of commands must now be supplied as a quoted string separated by "
 "semicolons:"
@@ -481,11 +545,11 @@ msgstr ""
 "コマンドの連続実行はセミコロンで区切られたクォートされた文字列として指定する"
 "ようになった:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:201
+#: src/reference/changes/migrating-from-sbt-1.x.md:233
 msgid "\"clean ; compile ; test\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:204
+#: src/reference/changes/migrating-from-sbt-1.x.md:236
 msgid ""
 "Previously, you could write `sbt clean compile test`. That now produces the "
 "error \"Expected whitespace character\"."
@@ -493,11 +557,11 @@ msgstr ""
 "以前は `sbt clean compile test` と書くことができたが、現在では \"Expected "
 "whitespace character\" というエラーが発生する。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:207
+#: src/reference/changes/migrating-from-sbt-1.x.md:239
 msgid "sbt server with multiple steps"
 msgstr "複数のステップを持つ sbt サーバー"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:209
+#: src/reference/changes/migrating-from-sbt-1.x.md:241
 msgid ""
 "If a CI pipeline contains multiple steps that run `sbt`, later steps reuse "
 "the sbt server started by the first invocation instead of starting a new "
@@ -509,7 +573,7 @@ msgstr ""
 "たサーバーを再利用する。その結果、後続のステップは最初のセッションに渡された"
 "環境変数を引き続き使用する。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:214
+#: src/reference/changes/migrating-from-sbt-1.x.md:246
 msgid ""
 "If your pipeline relies on passing different environment variables (such as "
 "`JAVA_OPTS`) to each session, you must either provide all variables at the "
@@ -521,11 +585,11 @@ msgstr ""
 "数を提供するか、各ステップの後またはステップ間で `sbt` をシャットダウンする必"
 "要がある。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:219
+#: src/reference/changes/migrating-from-sbt-1.x.md:251
 msgid "\"clean ; compile ; test ; shutdown\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:222
+#: src/reference/changes/migrating-from-sbt-1.x.md:254
 msgid ""
 "Note that this applies whether you run `sbt` directly or through a third-"
 "party action such as `sbt-dependency-submission` that invokes `sbt` "
@@ -535,11 +599,11 @@ msgstr ""
 "dependency-submission` のようなサードパーティーのアクションを通じて実行する場"
 "合でも適用される点に注意。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:225
+#: src/reference/changes/migrating-from-sbt-1.x.md:257
 msgid "Test artifacts"
 msgstr "テスト成果物"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:227
+#: src/reference/changes/migrating-from-sbt-1.x.md:259
 msgid ""
 "Output artifacts such as test results are now stored in subdirectories "
 "beneath `target/out` so you may need to update the paths used for test "
@@ -549,19 +613,19 @@ msgstr ""
 "ようになったため、テストパブリッシュや成果物のアーカイブに使用されるパスを更"
 "新する必要があるかもしれない:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:232
+#: src/reference/changes/migrating-from-sbt-1.x.md:264
 msgid "path"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:232
+#: src/reference/changes/migrating-from-sbt-1.x.md:264
 msgid "target/out/**/test-reports/*.xml"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:235
+#: src/reference/changes/migrating-from-sbt-1.x.md:267
 msgid "Change of global base directory"
 msgstr "グローバルベースディレクトリの変更"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:237
+#: src/reference/changes/migrating-from-sbt-1.x.md:269
 msgid ""
 "In sbt 2.x, the global base directory follows directory standard. The "
 "default value on Windows is `%LOCALAPPDATA%/sbt/2`. Otherwise, it is "
@@ -573,11 +637,11 @@ msgstr ""
 "`$XDG_CONFIG_HOME/sbt/2` もしくは `$HOME/.config/sbt/2` だ。詳細は [sbt リ"
 "ファレンス](../reference/sbt.md#グローバルベースディレクトリ) を参照。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:239
+#: src/reference/changes/migrating-from-sbt-1.x.md:271
 msgid "The PluginCompat technique"
 msgstr "PluginCompat 技法"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:241
+#: src/reference/changes/migrating-from-sbt-1.x.md:273
 msgid ""
 "To use the same `*.scala` source but target both sbt 1.x and 2.x, we can "
 "create a shim, for example an object named `PluginCompat` in both `src/main/"
@@ -593,23 +657,23 @@ msgstr ""
 "グインに抽象化されており、手動で shim を作成することを避けるために使用でき"
 "る。sbt プラグインで使用するには、sbt プラグインの `build.sbt` に追加する:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:244
+#: src/reference/changes/migrating-from-sbt-1.x.md:276
 msgid "\"sbt2-compat\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:244
+#: src/reference/changes/migrating-from-sbt-1.x.md:276
 msgid "\"<version>\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:247
+#: src/reference/changes/migrating-from-sbt-1.x.md:279
 msgid "And import and use the conversion methods in your shared source:"
 msgstr "そして共有ソース内で変換メソッドをインポートして使用する:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:251
+#: src/reference/changes/migrating-from-sbt-1.x.md:283
 msgid "// Use the conversion methods here"
 msgstr "// 変換メソッドをここで使用する"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:255
+#: src/reference/changes/migrating-from-sbt-1.x.md:287
 msgid ""
 "You can read more about `sbt2-compat`, the `PluginCompat` pattern and how to "
 "use them the following blog article: [Migrating sbt plugins to sbt 2 with "
@@ -620,11 +684,11 @@ msgstr ""
 "下のブログ記事を参照: [Migrating sbt plugins to sbt 2 with sbt2-compat "
 "plugin](https://www.scala-lang.org/blog/2026/03/02/sbt2-compat.html)。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:257
+#: src/reference/changes/migrating-from-sbt-1.x.md:289
 msgid "Migrating Classpath type"
 msgstr "Classpath 型のマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:259
+#: src/reference/changes/migrating-from-sbt-1.x.md:291
 msgid ""
 "sbt 2.x changed the `Classpath` type to be an alias of "
 "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` instead of "
@@ -639,11 +703,11 @@ msgstr ""
 "グインはこれらの参照を変換する必要がある。上記のように `sbt2-compat` を追加し"
 "てインポートした場合、`toNioPaths` と `toFiles` を使う。例:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:268
+#: src/reference/changes/migrating-from-sbt-1.x.md:300
 msgid "// ..."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:272
+#: src/reference/changes/migrating-from-sbt-1.x.md:304
 msgid ""
 "`sbt2-compat` also provides `toNioPath`, `toFile`, `toFileRefsMapping`, "
 "`Def.uncached` and other convenience methods to be used in the shared "
@@ -655,11 +719,11 @@ msgstr ""
 "ンが提供する API の最新ドキュメントは [sbt2-compat README](https://"
 "github.com/sbt/sbt2-compat) を参照。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:274
+#: src/reference/changes/migrating-from-sbt-1.x.md:306
 msgid "Defining your own PluginCompat shims"
 msgstr "独自の PluginCompat shim の定義"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:276
+#: src/reference/changes/migrating-from-sbt-1.x.md:308
 msgid ""
 "For the APIs broken between sbt 1.x and 2.x that are not covered by `sbt2-"
 "compat`, you can define your own `PluginCompat` shims by creating separate "
@@ -671,22 +735,39 @@ msgstr ""
 "PluginCompat.scala` に別々のソースファイルを作成することで独自の "
 "`PluginCompat` shim を定義することができる。例:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:279
+#: src/reference/changes/migrating-from-sbt-1.x.md:311
 msgid "// src/main/scala-2.12/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:292
+#: src/reference/changes/migrating-from-sbt-1.x.md:324
 msgid "// src/main/scala-3/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:304
+#: src/reference/changes/migrating-from-sbt-1.x.md:336
 msgid "Then use your own `PluginCompat` shims in your sbt plugin:"
 msgstr "そして sbt プラグインで独自の `PluginCompat` shim を使用する:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:314
+#: src/reference/changes/migrating-from-sbt-1.x.md:346
 msgid ""
 "This pattern is compatible with `sbt2-compat` and can be used alongside it "
 "to absorb the differences between sbt 1.x and 2.x."
 msgstr ""
 "このパターンは `sbt2-compat` と互換性があり、sbt 1.x と 2.x の違いを吸収する"
 "ために併用することができる。"
+
+#~ msgid ""
+#~ "`exportJars` defaults to `true`, was `false`. This might break "
+#~ "`getResource(\"/\")` and `resource.toURI`. Set `exportJars := false` if "
+#~ "this logic is broken in your build, producing `NullPointerException`s and "
+#~ "`FileSystemNotFoundException`s. Set `exportJars := false` in your build "
+#~ "if you want to keep the old behavior. The change was introduced by [sbt/"
+#~ "sbt#7464](https://github.com/sbt/sbt/pull/7464), see also [blog](https://"
+#~ "eed3si9n.com/sbt-remote-cache/)."
+#~ msgstr ""
+#~ "`exportJars` のデフォルト値は `false` から `true` に変更された。これは "
+#~ "`getResource(\"/\")` や `resource.toURI` を壊す可能性がある。ビルドでこの"
+#~ "ロジックが壊れ、`NullPointerException` や `FileSystemNotFoundException` が"
+#~ "発生する場合は `exportJars := false` を設定する。古い振る舞いを維持したい"
+#~ "場合は `exportJars := false` をビルドに設定する。この変更は [sbt/sbt#7464]"
+#~ "(https://github.com/sbt/sbt/pull/7464) によって導入された。[ブログ]"
+#~ "(https://eed3si9n.com/sbt-remote-cache/) も参照。"
