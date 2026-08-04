@@ -19,10 +19,13 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - Dropped `useCoursier` setting so Coursier cannot be opted out, by [@eed3si9n][@eed3si9n] in [#7712][7712]
 - `Key.Classpath` is changed to be an alias of the `Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of `Seq[Attributed[File]]`. Similarly, some task keys that used to return `File` have changed to return `HashedVirtualFileRef` instead. See [Caching Files].
 - In sbt 2.x `target` defaults to `target/out/jvm/scala-3.8.4/<subproject>/`, as opposed to `<subproject>/target/`.
+- `exportJars` defaults to `true`, which puts JAR files on the classpath during compilation or testing.
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
 - sbt 2.x disables the delegation of scoped tasks in the sbt shell by [@eed3si9n][@eed3si9n] in [#8539][8539]
 - sbt 2.x enforces eviction error in `Test` configuration by [@calm329][@calm329] and [@zainab-ali][@zainab-ali] in [#8451](https://github.com/sbt/sbt/pull/8451) + [#9102](https://github.com/sbt/sbt/pull/9102)
 - In sbt 2.x, the global base directory follows directory standard. The default value on Windows is `%LOCALAPPDATA%/sbt/2`. Otherwise, it is `$XDG_CONFIG_HOME/sbt/2` or `$HOME/.config/sbt/2`. See [sbt reference](../reference/sbt.md#global-base-directory) for details.
+- Starting sbt 2.0.4, forked run runs in current directory, instead of the base directory of the subproject.
+- Starting sbt 2.0.5, `closeClassLoaders` setting defaults to `true` to close the in-process, adhoc test ClassLoaders in [#9538][9538]
 
 ### Dropped dreprecations
 
@@ -204,6 +207,7 @@ See also:
   [8211]: https://github.com/sbt/sbt/pull/8211
   [8290]: https://github.com/sbt/sbt/pull/8290
   [8539]: https://github.com/sbt/sbt/pull/8539
+  [9538]: https://github.com/sbt/sbt/pull/9538
   [@eed3si9n]: https://github.com/eed3si9n
   [@adpi2]: https://github.com/adpi2
   [@bitloi]: https://github.com/bitloi

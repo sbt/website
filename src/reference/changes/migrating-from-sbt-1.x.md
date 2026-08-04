@@ -80,7 +80,18 @@ In sbt 2.x, bare settings settings should no longer be scoped to `ThisBuild`. On
 
 ## Changes to `exportJars`
 
-`exportJars` defaults to `true`, was `false`. This might break `getResource("/")` and `resource.toURI`. Set `exportJars := false` if this logic is broken in your build, producing `NullPointerException`s and `FileSystemNotFoundException`s. Set `exportJars := false` in your build if you want to keep the old behavior. The change was introduced by [sbt/sbt#7464](https://github.com/sbt/sbt/pull/7464), see also [blog](https://eed3si9n.com/sbt-remote-cache/).
+`exportJars` defaults to `true`, was `false`, which puts JAR files on the classpath during compilation or testing. This will reduce the number of files on the classpath and reduce the hashing overhead.
+
+As a side effect, this might break conversion from the resource URI to Path if you were calling `Path.of(...)`. We recommend migrating the code as follows:
+
+```scala
+val str = new String(
+  getClass.getResourceAsStream("/test-resource.txt").readAllBytes()
+)
+```
+
+Opt out by changing `exportJars` back to `false`.
+The change was introduced in [#7464](https://github.com/sbt/sbt/pull/7464). See also [blog](https://eed3si9n.com/sbt-remote-cache/).
 
 ## Migrating to cached tasks
 
@@ -187,6 +198,27 @@ $ exists target/**/proj/src_managed/bar.txt || proj/target/**/src_managed/bar.tx
 ```
 
 In sbt 1.x, `target.value` resolves to the project root `target/` directory. In sbt 2.x, it resolves to `target/out/jvm/scala-<ver>/<project-name>` instead. Plugins should be aware of this change during migration.
+
+## Forked run working directory
+
+Starting sbt 2.0.4, the working directory for forked run changed to the build's working directory instead of the subproject's `baseDirectory`. This is intended to make the client-side run behave similar to sbt 1.x's in-process `run` task.
+
+You can use `Compile / run / baseDirectory` to move this back to `baseDirectory`:
+
+```scala
+Compile / run / baseDirectory := baseDirectory.value
+```
+
+## Test classloader
+
+Starting sbt 2.0.5, `closeClassLoaders` setting defaults to `true` to close the in-process, adhoc test ClassLoaders.
+This is intended to fix `AccessDeniedException`s observed on Windows. While closing the adhoc test ClassLoader should work in many cases, some tests or libraries that do not close all threads priror to the completion of the test task may experience runtime errors like `ClassNotFound`.
+
+To workaround the issue, you can fork the test as follows:
+
+```scala
+Test / fork := true
+```
 
 ## Migrating CI pipelines
 
