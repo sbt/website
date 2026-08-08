@@ -23,24 +23,22 @@ Using Sonatype
 
 Publishing to the Central Repository is easy!
 
-#### Central Portal and Legacy OSSRH
+#### Publishing to the Central Repository
 
-The Central Repository (aka Maven Central) has long been the pillar of the JVM ecosystem,
-including Scala. The mechanism to publish libraries to the Central has been hosted by Sonatype
-as OSS Repository Hosting (OSSRH) via `HTTP PUT`; however, in March 2025 it was
-[announced][20250326_ossrh_sunset] that the endpoint will be sunset on June 30th, 2025
-in favor of the Central Portal at <https://central.sonatype.com/>.
+In March 2025, Sonatype [announced][20250326_ossrh_sunset] that its Legacy OSSRH HTTP endpoints to publish to the Central Repository (aka Maven Central) would be sunset in favor of the Central Portal at <https://central.sonatype.com/>.
 
 <table style="border: 1px solid gray; width: 80%;">
 <tr><th>&nbsp;</th><th>Central Portal</th> <th>Legacy OSSRH</th></tr>
-<tr><td>sbt version</td> <td>Use sbt <b>1.11.0-RC2</b>+</td> <td>Any sbt 1.x version</td></tr>
-<tr><td>Availability</td> <td>Available</td> <td>Sunset on 2025-06-30</td></tr>
+<tr><td>Availability</td> <td>✅ Available</td> <td>❌ Sunset on 2025-06-30</td></tr>
+<tr><td>sbt version</td> <td>Use sbt <b>1.12.15</b>+</td> <td>n/a<td></tr>
+<tr><td>Command</td> <td><b><pre>+publishSigned; sonaRelease</pre></b></td> <td><pre>+publishSigned</pre><td></tr>
 </table>
 <br>
 
-Publishing to the Central Portal is built into sbt, for sbt 1.11.0-RC2 and above.
-The rest of this page will document the publishing process for Central Portal,
-but there are some notes at the end for the Legacy OSSRH publishing.
+**⚠️ Note**: Note that with the new setup, `publishSigned` will only release to the staging directory. Run `sonaUpload` or `sonaRelease` command additionally to release the staged artifacts.
+
+When sbt 1.11.0 was released, sbt incorporated the Sonatype's publishing API.
+The rest of this page will document the publishing process for Central Portal, step by step.
 
 #### Central Portal registration
 
@@ -276,55 +274,3 @@ releaseStepCommand("publishSigned"),
 releaseStepCommand("sonaRelease"),
 ...
 ```
-
-<a id="ossrh"></a>
-### Publishing to the Legacy OSSRH
-
-#### Credentials for the Legacy OSSRH
-
-The credentials for your OSSRH account need to be stored
-somewhere safe (*e.g. NOT in the repository*). Common convention is a
-`$global_base$/sonatype.sbt` file, with the following:
-
-```scala
-credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
-```
-
-Next create a file `~/.sbt/sonatype_credentials`:
-
-```
-realm=Sonatype Nexus Repository Manager
-host=oss.sonatype.org
-user=<your username>
-password=<your password>
-```
-
-> *Note:* The first two strings must be `"Sonatype Nexus Repository Manager"`
-> and `"oss.sonatype.org"` for Coursier to use the credentials. If you are using
-> an OSSRH account created between February 2021 and May 2025, use `"s01.oss.sonatype.org"`
-> instead of `"oss.sonatype.org"`
-
-#### sbt setup for the Legacy OSSRH
-
-```scala
-ThisBuild / publishTo := {
-  // For accounts created after Feb 2021:
-  // val nexus = "https://s01.oss.sonatype.org/"
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
-```
-
-#### The Legacy OSSRH publishing step
-
-From sbt shell run:
-
-```
-> publishSigned
-```
-
-Check the published artifacts in the [Nexus Repository Manager][sonatype-nexus]
-(same login as Sonatype's Jira account).
-Close the staging repository and promote the release to central, by hitting
-"Close" button, then "Release" button.
