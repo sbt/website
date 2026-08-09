@@ -1,5 +1,5 @@
-The Book of sbt (Draft)
-=======================
+The Book of sbt
+===============
 
 **Languages**:
 - [English](https://www.scala-sbt.org/2.x/docs/en/)
