@@ -48,28 +48,6 @@ $ npm run build
 
 This generates static content into `landing/_site/`.
 
-### Full setup
-
-The PDF generation is optional, and requires the following additional steps to install
-[TeX Live](https://www.tug.org/texlive/) and [Pandoc](https://pandoc.org/).
-
-#### On Ubuntu
-
-```bash
-$ sudo apt-get install pandoc latex-cjk-all texlive-full
-```
-
-#### On Mac
-
-These steps are derived from Haruhiko Okumura's instructions at
-[TeX Live/Mac](https://texwiki.texjp.org/?TeX%20Live%2FMac#bcb0d462 (in Japanese).
-
-- install [MacTEX](http://www.tug.org/mactex), either via 
-  [downloaded pkg](http://www.tug.org/mactex/mactex-download.html) or 
-  [homebrew mactex formulae](https://formulae.brew.sh/cask/mactex)
-- update TeX Live package manager with `sudo tlmgr update --self --all` (this may take a while)
-- `brew install pandoc`
-
 ## Usage
 
 To make the site locally, from sbt shell:
