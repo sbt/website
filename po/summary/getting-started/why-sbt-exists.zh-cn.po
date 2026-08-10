@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-09-15T01:45:13-04:00\n"
+"POT-Creation-Date: 2026-08-10T18:08:06-04:00\n"
 "PO-Revision-Date: 2025-09-16 02:11-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -68,21 +68,31 @@ msgstr ""
 #: src/reference/guide/why-sbt-exists.md:29
 msgid ""
 "_sbt_ is a simple build tool created for Scala and Java. It lets us declare "
-"subprojects and their various dependencies and custom tasks to ensure that "
-"we'll always get a fast, repeatable build."
+"subprojects, their various dependencies, and custom tasks in a configuration "
+"file to ensure that we'll always get a fast, repeatable build. Instead of "
+"downloading the compiler yourself, you can write:"
 msgstr ""
 "_sbt_ 是为 Scala 和 Java 创建的简单构建工具。它允许我们声明子项目及其各种依赖"
-"项和自定义任务，以确保我们始终能获得快速，可重复的构建。"
+"项和自定义任务，以确保我们始终能获得快速、可重复的构建。您无需自行下载编译"
+"器，只需写下："
 
-#: src/reference/guide/why-sbt-exists.md:32
+#: src/reference/guide/why-sbt-exists.md:33
+msgid "\"3.8.4\""
+msgstr ""
+
+#: src/reference/guide/why-sbt-exists.md:36
+msgid "and sbt will download the compiler for you."
+msgstr "sbt 就会自动为您下载编译器。"
+
+#: src/reference/guide/why-sbt-exists.md:38
 msgid "To accomplish this goal, sbt does several things:"
 msgstr "为了实现这一目标，sbt 做了几件事:"
 
-#: src/reference/guide/why-sbt-exists.md:34
+#: src/reference/guide/why-sbt-exists.md:40
 msgid "The version of sbt itself is tracked in `project/build.properties`."
 msgstr "sbt 本身的版本记录在 `project/build.properties` 中。"
 
-#: src/reference/guide/why-sbt-exists.md:35
+#: src/reference/guide/why-sbt-exists.md:41
 msgid ""
 "Defines a domain-specific language (DSL) called **build.sbt DSL** that can "
 "declare the Scala version and other subproject information in `build.sbt`."
@@ -90,19 +100,19 @@ msgstr ""
 "定义了一种称为 **build.sbt DSL** 的领域特定语言，可以在 `build.sbt` 中声明 "
 "Scala 版本和其他子项目信息。"
 
-#: src/reference/guide/why-sbt-exists.md:36
+#: src/reference/guide/why-sbt-exists.md:42
 msgid "Uses Coursier to fetch subprojects dependencies and their dependencies."
 msgstr "使用 Coursier 获取子项目依赖及其依赖项。"
 
-#: src/reference/guide/why-sbt-exists.md:37
+#: src/reference/guide/why-sbt-exists.md:43
 msgid "Invokes Zinc to incrementally compile Scala and Java sources."
 msgstr "调用 Zinc 增量编译 Scala 和 Java 源代码。"
 
-#: src/reference/guide/why-sbt-exists.md:38
+#: src/reference/guide/why-sbt-exists.md:44
 msgid "Automatically runs tasks in parallel whenever possible."
 msgstr "在可能的情况下自动并行运行任务。"
 
-#: src/reference/guide/why-sbt-exists.md:39
+#: src/reference/guide/why-sbt-exists.md:45
 msgid ""
 "Defines conventions on how packages are published to Maven repositories to "
 "interoperate with the wider JVM ecosystem."
@@ -110,17 +120,17 @@ msgstr ""
 "定义了如何将包发布到 Maven 仓库的约定，以便与更广泛的 JVM 生态系统进行互操"
 "作。"
 
-#: src/reference/guide/why-sbt-exists.md:41
+#: src/reference/guide/why-sbt-exists.md:47
 msgid ""
 "To a large extent, sbt standardizes the commands needed to build a given "
 "program or library."
 msgstr "在很大程度上，sbt 标准化了构建给定程序或库所需的命令。"
 
-#: src/reference/guide/why-sbt-exists.md:43
+#: src/reference/guide/why-sbt-exists.md:49
 msgid "Why build.sbt DSL?"
 msgstr "build.sbt DSL 的必要性"
 
-#: src/reference/guide/why-sbt-exists.md:46
+#: src/reference/guide/why-sbt-exists.md:52
 msgid ""
 "sbt adopts Scala-based build.sbt DSL to declare the subproject and task "
 "graph. Nowadays, using a DSL as opposed to configuration formats like YAML "
@@ -132,7 +142,7 @@ msgstr ""
 "非 YAML 和 XML 等配置格式几乎不再是 sbt 的独特之处。许多构建工具，如 Gradle，"
 "Google 的 Bazel，Meta 的 Buck 以及 Apple 的 SwiftPM 都使用 DSL 来定义子项目。"
 
-#: src/reference/guide/why-sbt-exists.md:48
+#: src/reference/guide/why-sbt-exists.md:54
 msgid ""
 "`build.sbt` can start almost like a YAML file, declaring just `scalaVersion` "
 "and `libraryDependencies`, but it can scale as your need for the build "
@@ -141,20 +151,20 @@ msgstr ""
 "`build.sbt` 最初几乎可以像 YAML 文件一样，仅声明 `scalaVersion` 和 "
 "`libraryDependencies`，但随着您对构建系统需求的增长，它可以进行扩展:"
 
-#: src/reference/guide/why-sbt-exists.md:51
+#: src/reference/guide/why-sbt-exists.md:57
 msgid ""
 "To avoid repeating the same information, like the version number for a "
 "library, `build.sbt` can declare variables using `val`."
 msgstr ""
 "为了避免重复相同的信息，例如库的版本号，`build.sbt` 可以使用 `val` 声明变量。"
 
-#: src/reference/guide/why-sbt-exists.md:52
+#: src/reference/guide/why-sbt-exists.md:58
 msgid ""
 "Uses Scala language constructs like `if` to define settings and tasks, when "
 "needed."
 msgstr "在需要时使用 Scala 语言结构（如 `if`）来定义设置和任务。"
 
-#: src/reference/guide/why-sbt-exists.md:53
+#: src/reference/guide/why-sbt-exists.md:59
 msgid ""
 "Statically typed settings and tasks, to catch typos and type errors before "
 "the build starts. The type also helps passing data from one task from "
@@ -163,7 +173,7 @@ msgstr ""
 "静态类型的设置和任务，可在构建开始前捕获拼写错误和类型错误。类型还有助于将数"
 "据从一个任务传递到另一个任务。"
 
-#: src/reference/guide/why-sbt-exists.md:54
+#: src/reference/guide/why-sbt-exists.md:60
 msgid ""
 "Provides **structured concurrency** via `Initialized[Task[A]]`. The DSL uses "
 "_direct style_ `.value` syntax to concisely define task graphs."
@@ -171,7 +181,7 @@ msgstr ""
 "通过 `Initialized[Task[A]]` 提供**结构化并发**。DSL 使用所谓的**直接风格** "
 "`.value` 语法来简洁地定义任务图。"
 
-#: src/reference/guide/why-sbt-exists.md:55
+#: src/reference/guide/why-sbt-exists.md:61
 msgid ""
 "Enpowers the community to extend sbt with plugins that provide custom tasks "
 "or language extensions like Scala.JS."
