@@ -27,7 +27,13 @@ sbt
 ---
 
 *sbt* is a simple build tool created for Scala and Java.
-It lets us declare subprojects and their various dependencies and custom tasks to ensure that we'll always get a fast, repeatable build.
+It lets us declare subprojects, their various dependencies, and custom tasks in a configuration file to ensure that we'll always get a fast, repeatable build. Instead of downloading the compiler yourself, you can write:
+
+```scala
+scalaVersion := "{{scala3_example_version}}"
+```
+
+and sbt will download the compiler for you.
 
 To accomplish this goal, sbt does several things:
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-09-15T01:45:08-04:00\n"
+"POT-Creation-Date: 2026-08-10T18:08:01-04:00\n"
 "PO-Revision-Date: 2025-09-15 03:29-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -71,22 +71,32 @@ msgstr ""
 #: src/reference/guide/why-sbt-exists.md:29
 msgid ""
 "_sbt_ is a simple build tool created for Scala and Java. It lets us declare "
-"subprojects and their various dependencies and custom tasks to ensure that "
-"we'll always get a fast, repeatable build."
+"subprojects, their various dependencies, and custom tasks in a configuration "
+"file to ensure that we'll always get a fast, repeatable build. Instead of "
+"downloading the compiler yourself, you can write:"
 msgstr ""
 "**sbt** は主に Scala と Java のためのシンプルなビルド・ツールだ。sbt を使うこ"
-"とで、サブプロジェクトおよびそれらの依存性、カスタム・タスクを宣言することが"
+"とで、サブプロジェクトおよびそれらの依存性、カスタム・タスクを設定ファイルに宣言することが"
 "でき、高速かつ再現性のあるビルドを得ることができる。"
+"コンパイラを自分でダウンロードする代わりに以下のように書くことができる:"
 
-#: src/reference/guide/why-sbt-exists.md:32
+#: src/reference/guide/why-sbt-exists.md:33
+msgid "\"3.8.4\""
+msgstr ""
+
+#: src/reference/guide/why-sbt-exists.md:36
+msgid "and sbt will download the compiler for you."
+msgstr "sbt は、これに従ってコンパイラをダウンロードしてくれる。"
+
+#: src/reference/guide/why-sbt-exists.md:38
 msgid "To accomplish this goal, sbt does several things:"
 msgstr "この目標のため、sbt はいくつかのことを行う:"
 
-#: src/reference/guide/why-sbt-exists.md:34
+#: src/reference/guide/why-sbt-exists.md:40
 msgid "The version of sbt itself is tracked in `project/build.properties`."
 msgstr "sbt 自身のバージョンは `project/build.properties` にて指定される。"
 
-#: src/reference/guide/why-sbt-exists.md:35
+#: src/reference/guide/why-sbt-exists.md:41
 msgid ""
 "Defines a domain-specific language (DSL) called **build.sbt DSL** that can "
 "declare the Scala version and other subproject information in `build.sbt`."
@@ -94,20 +104,20 @@ msgstr ""
 "**build.sbt DSL** という DSL (ドメイン特定言語) を定義し、`build.sbt` にて "
 "Scala バージョンその他のサブプロジェクトに関する情報を宣言できるようにする。"
 
-#: src/reference/guide/why-sbt-exists.md:36
+#: src/reference/guide/why-sbt-exists.md:42
 msgid "Uses Coursier to fetch subprojects dependencies and their dependencies."
 msgstr ""
 "Cousier を用いてサブプロジェクトのライブラリ依存性や間接的依存性を取得する。"
 
-#: src/reference/guide/why-sbt-exists.md:37
+#: src/reference/guide/why-sbt-exists.md:43
 msgid "Invokes Zinc to incrementally compile Scala and Java sources."
 msgstr "Zinc を呼び出して Scala や Java ソースの差分コンパイルを行う。"
 
-#: src/reference/guide/why-sbt-exists.md:38
+#: src/reference/guide/why-sbt-exists.md:44
 msgid "Automatically runs tasks in parallel whenever possible."
 msgstr "可能な限り、タスクを並列実行する。"
 
-#: src/reference/guide/why-sbt-exists.md:39
+#: src/reference/guide/why-sbt-exists.md:45
 msgid ""
 "Defines conventions on how packages are published to Maven repositories to "
 "interoperate with the wider JVM ecosystem."
@@ -115,7 +125,7 @@ msgstr ""
 "JVM エコシステム全般と相互乗り入れが可能なように、パッケージが Maven リポジト"
 "リにどのように公開されるべきかの慣習を定義する。"
 
-#: src/reference/guide/why-sbt-exists.md:41
+#: src/reference/guide/why-sbt-exists.md:47
 msgid ""
 "To a large extent, sbt standardizes the commands needed to build a given "
 "program or library."
@@ -123,11 +133,11 @@ msgstr ""
 "sbt は、プログラムやライブラリのビルドに必要なコマンド実装の大部分を標準化し"
 "ていると言っても過言ではない。"
 
-#: src/reference/guide/why-sbt-exists.md:43
+#: src/reference/guide/why-sbt-exists.md:49
 msgid "Why build.sbt DSL?"
 msgstr "build.sbt DSL の必要性"
 
-#: src/reference/guide/why-sbt-exists.md:46
+#: src/reference/guide/why-sbt-exists.md:52
 msgid ""
 "sbt adopts Scala-based build.sbt DSL to declare the subproject and task "
 "graph. Nowadays, using a DSL as opposed to configuration formats like YAML "
@@ -141,7 +151,7 @@ msgstr ""
 "Buck、Apple の SwiftPM など多くのビルドツールが DSL を用いてサブプロジェクト"
 "を定義する。"
 
-#: src/reference/guide/why-sbt-exists.md:48
+#: src/reference/guide/why-sbt-exists.md:54
 msgid ""
 "`build.sbt` can start almost like a YAML file, declaring just `scalaVersion` "
 "and `libraryDependencies`, but it can scale as your need for the build "
@@ -151,7 +161,7 @@ msgstr ""
 "かも YAML ファイルのように始めることができるが、ビルドシステムへの要求が高度"
 "になってもスケールすることができる。"
 
-#: src/reference/guide/why-sbt-exists.md:51
+#: src/reference/guide/why-sbt-exists.md:57
 msgid ""
 "To avoid repeating the same information, like the version number for a "
 "library, `build.sbt` can declare variables using `val`."
@@ -159,7 +169,7 @@ msgstr ""
 "ライブラリのためのバージョン番号など同じ情報の繰り返しを回避するため、"
 "`build.sbt` は `val` を使って変数を宣言できる。"
 
-#: src/reference/guide/why-sbt-exists.md:52
+#: src/reference/guide/why-sbt-exists.md:58
 msgid ""
 "Uses Scala language constructs like `if` to define settings and tasks, when "
 "needed."
@@ -167,7 +177,7 @@ msgstr ""
 "セッティングやタスクの定義内で必要に応じて `if` のような Scala 言語の言語構文"
 "を使うことができる。"
 
-#: src/reference/guide/why-sbt-exists.md:53
+#: src/reference/guide/why-sbt-exists.md:59
 msgid ""
 "Statically typed settings and tasks, to catch typos and type errors before "
 "the build starts. The type also helps passing data from one task from "
@@ -177,7 +187,7 @@ msgstr ""
 "や型の間違いなどをキャッチできる。型は、タスク間でのデータの受け渡しにも役立"
 "つ。"
 
-#: src/reference/guide/why-sbt-exists.md:54
+#: src/reference/guide/why-sbt-exists.md:60
 msgid ""
 "Provides **structured concurrency** via `Initialized[Task[A]]`. The DSL uses "
 "_direct style_ `.value` syntax to concisely define task graphs."
@@ -186,7 +196,7 @@ msgstr ""
 "る「直接スタイル」な `.value` 構文を用いて簡潔にタスクグラフを定義することが"
 "できる。"
 
-#: src/reference/guide/why-sbt-exists.md:55
+#: src/reference/guide/why-sbt-exists.md:61
 msgid ""
 "Enpowers the community to extend sbt with plugins that provide custom tasks "
 "or language extensions like Scala.JS."
