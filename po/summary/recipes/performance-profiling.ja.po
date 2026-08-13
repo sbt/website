@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-08-08T22:17:42-04:00\n"
+"PO-Revision-Date: 2025-10-03 01:33-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
+
+#: src/reference/recipes/performance-profiling.md:1
+msgid "Performance profiling"
+msgstr "プロファイリング"
+
+#: src/reference/recipes/performance-profiling.md:4
+msgid ""
+"```admonish note\n"
+"The recipe section of the documentation focuses on the objectives\n"
+"with minimal explanations about the basics.\n"
+"```"
+msgstr ""
+"```admonish note\n"
+"このドキュメントのレシピ・セクションは、基礎についての説明を最小限にとどめ、目標に焦点を当てている。\n"
+"```"
+
+#: src/reference/recipes/performance-profiling.md:9
+msgid "Objective"
+msgstr "目標"
+
+#: src/reference/recipes/performance-profiling.md:12
+msgid "I want to profile sbt to understand what it spent time on."
+msgstr "sbt が何に時間を費やしているかを理解するためにプロファイリングを行いたい。"
+
+#: src/reference/recipes/performance-profiling.md:14
+msgid "Solution: traces"
+msgstr "解決策: トレース"
+
+#: src/reference/recipes/performance-profiling.md:17
+#: src/reference/recipes/performance-profiling.md:34
+msgid "Shutdown an existing server if any: `sbt shutdown`"
+msgstr "既存のサーバーがあればシャットダウンする: `sbt shutdown`"
+
+#: src/reference/recipes/performance-profiling.md:18
+msgid "Run a command with `--server --traces`"
+msgstr "`--server --traces` を付けてコマンドを実行する"
+
+#: src/reference/recipes/performance-profiling.md:27
+msgid ""
+"This produces a Chrome tracing file `target/traces/build.trace`, which can "
+"be viewed using [Perfetto](https://ui.perfetto.dev/), shows how long each "
+"task took."
+msgstr ""
+"これにより Chrome トレースファイル `target/traces/build.trace` が生成される。"
+"[Perfetto](https://ui.perfetto.dev/) で開くことができ、各タスクにかかった時間を確認できる。"
+
+#: src/reference/recipes/performance-profiling.md:31
+msgid "Solution: timings"
+msgstr "解決策: タイミング"
+
+#: src/reference/recipes/performance-profiling.md:35
+msgid "Run a command with `--server --timings`"
+msgstr "`--server --timings` を付けてコマンドを実行する"
+
+#: src/reference/recipes/performance-profiling.md:45
+msgid "This outputs task timing information on the terminal."
+msgstr "タスクのタイミング情報をターミナルに出力する。"
+
+#: src/reference/recipes/performance-profiling.md:47
+msgid "Solution: flame graph"
+msgstr "解決策: フレームグラフ"
+
+#: src/reference/recipes/performance-profiling.md:50
+msgid ""
+"Install [async-profiler](https://github.com/async-profiler/async-profiler) "
+"by putting `asprof` and `jfrconv` on your `PATH`:"
+msgstr ""
+"[async-profiler](https://github.com/async-profiler/async-profiler) をインストールし、"
+"`asprof` と `jfrconv` を `PATH` に追加する:"
+
+#: src/reference/recipes/performance-profiling.md:58
+msgid ""
+"Close anything that may affect the profiling, and run sbt in one terminal"
+msgstr "プロファイリングに影響する可能性のあるものを閉じ、1つのターミナルで sbt を実行する"
+
+#: src/reference/recipes/performance-profiling.md:59
+msgid "In another terminal run `jps` to identify the process ID of sbt"
+msgstr "別のターミナルで `jps` を実行して sbt のプロセス ID を確認する"
+
+#: src/reference/recipes/performance-profiling.md:66
+msgid "Run `asprof` with the duration flag. `-d 60` means 60s:"
+msgstr "継続時間フラグを付けて `asprof` を実行する。`-d 60` は 60秒を意味する:"
+
+#: src/reference/recipes/performance-profiling.md:71
+msgid "This produces a JFR (Java Flight Recorder) file."
+msgstr "これにより JFR (Java Flight Recorder) ファイルが生成される。"
+
+#: src/reference/recipes/performance-profiling.md:72
+msgid "Run `jfrconv` as follows to convert the `*.jfr` file to a flame graph:"
+msgstr "`*.jfr` ファイルをフレームグラフに変換するため、以下のように `jfrconv` を実行する:"
+
+#: src/reference/recipes/performance-profiling.md:78
+msgid "Alternative: JVM profiling"
+msgstr "代替手段: JVM プロファイリング"
+
+#: src/reference/recipes/performance-profiling.md:81
+msgid ""
+"You can use a profiler like [VisualVM](https://visualvm.github.io/) to "
+"identify implementation-level timings."
+msgstr ""
+"[VisualVM](https://visualvm.github.io/) のようなプロファイラーを使って、実装レベルのタイミングを特定することができる。"
+
+#: src/reference/recipes/performance-profiling.md:83
+msgid "Shutdown all existing servers if any: `sbt shutdownall`"
+msgstr "既存のサーバーを全てシャットダウンする: `sbt shutdownall`"
+
+#: src/reference/recipes/performance-profiling.md:84
+msgid "Start an sbt session with `--server`"
+msgstr "`--server` を付けて sbt セッションを開始する"
+
+#: src/reference/recipes/performance-profiling.md:85
+msgid "Launch VisualVM, and double-click on `xsbt.boot.Boot`"
+msgstr "VisualVM を起動して、`xsbt.boot.Boot` をダブルクリックする"
+
+#: src/reference/recipes/performance-profiling.md:86
+msgid "Go to Sampler tab, and click CPU"
+msgstr "Sampler タブに移動して、CPU をクリックする"
+
+#: src/reference/recipes/performance-profiling.md:87
+msgid "Run a command inside the sbt shell"
+msgstr "sbt シェル内でコマンドを実行する"
+
+#: src/reference/recipes/performance-profiling.md:88
+msgid "Click on the Stop button in Sampler tab"
+msgstr "Sampler タブの Stop ボタンをクリックする"
+
+#: src/reference/recipes/performance-profiling.md:90
+msgid "The threads named pool-n-thread-m are the task threads."
+msgstr "`pool-n-thread-m` という名前のスレッドがタスクスレッドだ。"
