@@ -6,7 +6,7 @@ module.exports = function (eleventyConfig) {
     "node_modules/@docsearch/css/dist/style.css": "assets/docsearch.css",
   });
   eleventyConfig.addPassthroughCopy({
-    "node_modules/@docsearch/js/dist/umd/index.js": "assets/docsearch.js",
+    "node_modules/@docsearch/js/dist/umd/docsearch.js": "assets/docsearch.js",
   });
 
   eleventyConfig.addFilter("downloadUrl", (tagVersion, version, ext) => {
