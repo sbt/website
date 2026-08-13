@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-08-08T22:17:47-04:00\n"
+"PO-Revision-Date: 2025-09-16 00:34-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
+
+#: src/reference/recipes/performance-profiling.md:1
+msgid "Performance profiling"
+msgstr "性能分析"
+
+#: src/reference/recipes/performance-profiling.md:4
+msgid ""
+"```admonish note\n"
+"The recipe section of the documentation focuses on the objectives\n"
+"with minimal explanations about the basics.\n"
+"```"
+msgstr ""
+"```admonish note\n"
+"文档的配方部分以目标为核心，尽量减少对基础知识的说明。\n"
+"```"
+
+#: src/reference/recipes/performance-profiling.md:9
+msgid "Objective"
+msgstr "目标"
+
+#: src/reference/recipes/performance-profiling.md:12
+msgid "I want to profile sbt to understand what it spent time on."
+msgstr "我想对 sbt 进行性能分析，以了解它将时间花在了哪里。"
+
+#: src/reference/recipes/performance-profiling.md:14
+msgid "Solution: traces"
+msgstr "解决方案：追踪"
+
+#: src/reference/recipes/performance-profiling.md:17
+#: src/reference/recipes/performance-profiling.md:34
+msgid "Shutdown an existing server if any: `sbt shutdown`"
+msgstr "如有现有服务器，先将其关闭：`sbt shutdown`"
+
+#: src/reference/recipes/performance-profiling.md:18
+msgid "Run a command with `--server --traces`"
+msgstr "使用 `--server --traces` 运行命令"
+
+#: src/reference/recipes/performance-profiling.md:27
+msgid ""
+"This produces a Chrome tracing file `target/traces/build.trace`, which can "
+"be viewed using [Perfetto](https://ui.perfetto.dev/), shows how long each "
+"task took."
+msgstr ""
+"这会生成 Chrome 追踪文件 `target/traces/build.trace`，可使用 "
+"[Perfetto](https://ui.perfetto.dev/) 查看，显示每个任务所耗费的时间。"
+
+#: src/reference/recipes/performance-profiling.md:31
+msgid "Solution: timings"
+msgstr "解决方案：计时"
+
+#: src/reference/recipes/performance-profiling.md:35
+msgid "Run a command with `--server --timings`"
+msgstr "使用 `--server --timings` 运行命令"
+
+#: src/reference/recipes/performance-profiling.md:45
+msgid "This outputs task timing information on the terminal."
+msgstr "这会在终端输出任务计时信息。"
+
+#: src/reference/recipes/performance-profiling.md:47
+msgid "Solution: flame graph"
+msgstr "解决方案：火焰图"
+
+#: src/reference/recipes/performance-profiling.md:50
+msgid ""
+"Install [async-profiler](https://github.com/async-profiler/async-profiler) "
+"by putting `asprof` and `jfrconv` on your `PATH`:"
+msgstr ""
+"安装 [async-profiler](https://github.com/async-profiler/async-profiler)，将 "
+"`asprof` 和 `jfrconv` 添加到 `PATH` 中："
+
+#: src/reference/recipes/performance-profiling.md:58
+msgid ""
+"Close anything that may affect the profiling, and run sbt in one terminal"
+msgstr "关闭所有可能影响性能分析的程序，并在一个终端中运行 sbt"
+
+#: src/reference/recipes/performance-profiling.md:59
+msgid "In another terminal run `jps` to identify the process ID of sbt"
+msgstr "在另一个终端运行 `jps`，确认 sbt 的进程 ID"
+
+#: src/reference/recipes/performance-profiling.md:66
+msgid "Run `asprof` with the duration flag. `-d 60` means 60s:"
+msgstr "使用持续时间标志运行 `asprof`，`-d 60` 表示 60 秒："
+
+#: src/reference/recipes/performance-profiling.md:71
+msgid "This produces a JFR (Java Flight Recorder) file."
+msgstr "这会生成一个 JFR（Java Flight Recorder）文件。"
+
+#: src/reference/recipes/performance-profiling.md:72
+msgid "Run `jfrconv` as follows to convert the `*.jfr` file to a flame graph:"
+msgstr "按如下方式运行 `jfrconv`，将 `*.jfr` 文件转换为火焰图："
+
+#: src/reference/recipes/performance-profiling.md:78
+msgid "Alternative: JVM profiling"
+msgstr "进阶：JVM 分析"
+
+#: src/reference/recipes/performance-profiling.md:81
+msgid ""
+"You can use a profiler like [VisualVM](https://visualvm.github.io/) to "
+"identify implementation-level timings."
+msgstr ""
+"您可以使用 [VisualVM](https://visualvm.github.io/) 等性能分析器来识别实现层面的"
+"计时信息。"
+
+#: src/reference/recipes/performance-profiling.md:83
+msgid "Shutdown all existing servers if any: `sbt shutdownall`"
+msgstr "如有现有服务器，全部关闭：`sbt shutdownall`"
+
+#: src/reference/recipes/performance-profiling.md:84
+msgid "Start an sbt session with `--server`"
+msgstr "使用 `--server` 启动 sbt 会话"
+
+#: src/reference/recipes/performance-profiling.md:85
+msgid "Launch VisualVM, and double-click on `xsbt.boot.Boot`"
+msgstr "启动 VisualVM，双击 `xsbt.boot.Boot`"
+
+#: src/reference/recipes/performance-profiling.md:86
+msgid "Go to Sampler tab, and click CPU"
+msgstr "切换到 Sampler 标签页，点击 CPU"
+
+#: src/reference/recipes/performance-profiling.md:87
+msgid "Run a command inside the sbt shell"
+msgstr "在 sbt shell 中运行命令"
+
+#: src/reference/recipes/performance-profiling.md:88
+msgid "Click on the Stop button in Sampler tab"
+msgstr "点击 Sampler 标签页中的 Stop 按钮"
+
+#: src/reference/recipes/performance-profiling.md:90
+msgid "The threads named pool-n-thread-m are the task threads."
+msgstr "名为 pool-n-thread-m 的线程即为任务线程。"
