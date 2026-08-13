@@ -52,5 +52,6 @@
   - [Source dependency plugin](recipes/source-dependency-plugin.md)
   - [Cross building on a virtual axis](recipes/virtual-axis.md)
   - [Getting user inputs](recipes/console-interaction.md)
+  - [Performance profiling](recipes/performance-profiling.md)
 - [Appendix: Glossary](appendix/glossary.md)
 - [Appendix: Setup notes](appendix/setup-notes.md)
