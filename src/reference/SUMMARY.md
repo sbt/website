@@ -53,5 +53,6 @@
   - [Cross building on a virtual axis](recipes/virtual-axis.md)
   - [Getting user inputs](recipes/console-interaction.md)
   - [Performance profiling](recipes/performance-profiling.md)
+  - [Isolate plugin classpath](recipes/plugin-isolation.md)
 - [Appendix: Glossary](appendix/glossary.md)
 - [Appendix: Setup notes](appendix/setup-notes.md)
