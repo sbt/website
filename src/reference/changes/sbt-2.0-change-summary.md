@@ -7,6 +7,7 @@
 See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
 - **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3. (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
+- **Client-server by default**. sbt 2.x uses sbtn by default for faster startup.
 - **Common settings**. Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
 - **Incremental test**. `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
 - **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
@@ -41,6 +42,21 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - **Client-side console**. Details below.
 - **rootProject and autoAggregate**. Details below
 - **Maven BOM (Bill of Materials) usage**. Details below
+
+### Client-server by default
+
+In the client-server mode, sbt server is launched as a daemon process, and the `sbt` runner script delegates to sbtn (native client) to connect to an sbt session. This was available in sbt 1.x under the `--client` flag, and in sbt 2.x it's the default mode.
+
+1. The primary motivation of the client-server mode is to avoid the JVM startup, JIT warmup, and build loading for each command. sbt has traditionally avoided the startup cost by implementing its own shell, which works for interactive sessions, but it's limited to a single user. Once the server process is started, sbtn can connect to it in under a second.
+2. The client-server mode enables safe cooperation between build users, IDEs, and AI agents.
+3. With sbtn, users can use either the sbt shell or the system shell like Bash and Zsh.
+4. sbtn can execute some tasks client-side.
+
+To use the server-only mode instead, use the `--server` flag:
+
+```bash
+$ sbt --server test
+```
 
 ### Common settings
 
