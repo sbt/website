@@ -250,6 +250,8 @@ per project.
 
 #### Integration Tests
 
+> **Note**:  `IntegrationTest` configuration is [deprecated](https://eed3si9n.com/sbt-1.9.0#deprecation-of-integrationtest-configuration).
+
 The following full build configuration demonstrates integration tests.
 
 ```scala
