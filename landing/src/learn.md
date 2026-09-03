@@ -9,7 +9,8 @@ permalink: /learn/
 ## Documentation
 
 - [sbt by Example](https://www.scala-sbt.org/1.x/docs/sbt-by-example.html) inspired by William Narmontas's tutorial
-- [sbt documentation](https://www.scala-sbt.org/1.x/docs/) ([pdf](https://www.scala-sbt.org/1.x/docs/sbt-reference.pdf))
+- [sbt 1.x documentation](https://www.scala-sbt.org/1.x/docs/)
+- [sbt 2.x documentation](https://www.scala-sbt.org/2.x/docs/en/)
 - <a href="https://www.scala-sbt.org/{{ versions.sbtVersion }}/api/sbt/index.html">sbt API</a>
 
 ## Talks
