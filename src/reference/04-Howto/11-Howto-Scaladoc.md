@@ -107,3 +107,16 @@ apiURL := Some(url("https://example.org/api/"))
 
 This information will get included in a property of the published
 `pom.xml`, where it can be automatically consumed by sbt.
+
+
+<a name="disable-scaladoc"></a>
+
+### Disable scaladoc
+
+If you don't need the Scaladocs to be generated, you can empty 
+the `sources` for `doc` task. This operation is known to improve 
+the build times for projects with a significant number of sources.
+
+```scala
+Compile / doc / sources := List.empty
+```
