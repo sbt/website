@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-10-11T04:17:27-04:00\n"
+"POT-Creation-Date: 2026-09-06T17:33:26-04:00\n"
 "PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -24,7 +24,8 @@ msgid ""
 "`sbt` \\[_query_ / \\] `test` \\[_testname1_ _testname2_\\] \\[ -- _options_ "
 "\\]"
 msgstr ""
-"`sbt` \\[_query_ / \\] `test` \\[_testname1_ _testname2_\\] \\[ -- _options_ \\]"
+"`sbt` \\[_query_ / \\] `test` \\[_testname1_ _testname2_\\] \\[ -- _options_ "
+"\\]"
 
 #: src/reference/reference/sbt-test.md:9
 msgid "Description"
@@ -32,68 +33,63 @@ msgstr "描述"
 
 #: src/reference/reference/sbt-test.md:12
 msgid "The `test` task provides a means for compiling and running the tests."
-msgstr ""
-"`test` 任务提供编译和运行测试的方式。"
+msgstr "`test` 任务提供编译和运行测试的方式。"
 
 #: src/reference/reference/sbt-test.md:14
 msgid "By default, the `test` task in sbt 2.x:"
-msgstr ""
-"默认情况下，sbt 2.x 中的 `test` 任务："
+msgstr "默认情况下，sbt 2.x 中的 `test` 任务："
 
 #: src/reference/reference/sbt-test.md:16
 msgid ""
 "**Subproject parallelism**. Performs compilation of the relevant subprojects "
 "in parallel, specified by the [query](../concepts/sbt-query.md)."
 msgstr ""
-"**子项目并行**。并行编译由 [query](../concepts/sbt-query.md) 指定的相关子项目。"
+"**子项目并行**。并行编译由 [query](../concepts/sbt-query.md) 指定的相关子项"
+"目。"
 
 #: src/reference/reference/sbt-test.md:17
 msgid ""
 "**Test suite parallelism**. Maps discovered test suites, to tasks and "
 "executes them in parallel."
-msgstr ""
-"**测试套件并行**。将发现的测试套件映射为任务并并行执行。"
+msgstr "**测试套件并行**。将发现的测试套件映射为任务并并行执行。"
 
 #: src/reference/reference/sbt-test.md:18
 msgid ""
 "**Incremental test**. Runs only the tests that either failed in the previous "
 "run, never run, or if sbt detects changes in the test or its dependencies."
 msgstr ""
-"**增量测试**。仅运行上次失败、从未运行，或 sbt 检测到测试或其依赖有变更的测试。"
+"**增量测试**。仅运行上次失败、从未运行，或 sbt 检测到测试或其依赖有变更的测"
+"试。"
 
 #: src/reference/reference/sbt-test.md:19
 msgid ""
 "**Cached**. The test result is cached machine-wide, and optionally remote "
 "cached."
-msgstr ""
-"**缓存**。测试结果在机器范围内缓存，并可选择远程缓存。"
+msgstr "**缓存**。测试结果在机器范围内缓存，并可选择远程缓存。"
 
 #: src/reference/reference/sbt-test.md:21
 msgid "The standard source locations for testing are:"
-msgstr ""
-"测试的标准源位置为："
+msgstr "测试的标准源位置为："
 
 #: src/reference/reference/sbt-test.md:23
 msgid "Scala sources in `src/test/scala/`"
-msgstr ""
-"`src/test/scala/` 中的 Scala 源"
+msgstr "`src/test/scala/` 中的 Scala 源"
 
 #: src/reference/reference/sbt-test.md:24
 msgid "Java sources in `src/test/java/`"
-msgstr ""
-"`src/test/java/` 中的 Java 源"
+msgstr "`src/test/java/` 中的 Java 源"
 
 #: src/reference/reference/sbt-test.md:25
 msgid "Resources for the test classpath in `src/test/resources/`"
-msgstr ""
-"`src/test/resources/` 中用于测试 classpath 的资源"
+msgstr "`src/test/resources/` 中用于测试 classpath 的资源"
 
 #: src/reference/reference/sbt-test.md:27
 msgid ""
 "The resources may be accessed from tests by using the `getResource` methods "
 "of `java.lang.Class` or `java.lang.ClassLoader`."
 msgstr ""
-"测试中可通过 `java.lang.Class` 或 `java.lang.ClassLoader` 的 `getResource` 方法访问资源。"
+"测试中可通过 `java.lang.Class` 或 `java.lang.ClassLoader` 的 `getResource` 方"
+"法访问资源。"
 
 #: src/reference/reference/sbt-test.md:30
 msgid "Test interfaces"
@@ -112,13 +108,15 @@ msgid ""
 "framework to the classpath to work with sbt. For example, MUnit may be used "
 "by declaring it as a `libraryDependency`:"
 msgstr ""
-"sbt 为基于 JVM 的测试框架定义了通用接口，支持自动发现测试套件和并行执行。默认情况下 "
-"sbt 与 [MUnit](https://scalameta.org/munit/)、[ScalaTest](https://www.scalatest.org/)、"
-"[Hedgehog](https://hedgehogqa.github.io/scala-hedgehog/)、[ScalaCheck](https://scalacheck.org/)、"
-"[Specs2](https://etorreborre.github.io/specs2/)、[Weaver](https://typelevel.org/weaver-test/)、"
-"[ZIO Test](https://zio.dev/reference/test/) 和 [JUnit 4](https://github.com/sbt/junit-interface) "
-"集成；这意味着您只需将测试框架添加到 classpath 即可与 sbt 配合使用。例如，可通过将其声明为 "
-"`libraryDependency` 使用 MUnit："
+"sbt 为基于 JVM 的测试框架定义了通用接口，支持自动发现测试套件和并行执行。默认"
+"情况下 sbt 与 [MUnit](https://scalameta.org/munit/)、[ScalaTest](https://"
+"www.scalatest.org/)、[Hedgehog](https://hedgehogqa.github.io/scala-"
+"hedgehog/)、[ScalaCheck](https://scalacheck.org/)、[Specs2](https://"
+"etorreborre.github.io/specs2/)、[Weaver](https://typelevel.org/weaver-"
+"test/)、[ZIO Test](https://zio.dev/reference/test/) 和 [JUnit 4](https://"
+"github.com/sbt/junit-interface) 集成；这意味着您只需将测试框架添加到 "
+"classpath 即可与 sbt 配合使用。例如，可通过将其声明为 `libraryDependency` 使"
+"用 MUnit："
 
 #: src/reference/reference/sbt-test.md:35
 msgid "\"org.scalameta\""
@@ -137,7 +135,8 @@ msgid ""
 "In the above, `Test` denotes the `Test` configuration, and means that MUnit "
 "will only be on the test classpath and it isn't needed by the main sources."
 msgstr ""
-"上述中，`Test` 表示 `Test` 配置，意味着 MUnit 仅出现在测试 classpath 中，主源不需要它。"
+"上述中，`Test` 表示 `Test` 配置，意味着 MUnit 仅出现在测试 classpath 中，主源"
+"不需要它。"
 
 #: src/reference/reference/sbt-test.md:43
 msgid "JUnit"
@@ -150,8 +149,9 @@ msgid ""
 "your project, add the jupiter-interface dependency in your project's main "
 "build.sbt file."
 msgstr ""
-"JUnit 5 支持由 [sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-interface) "
-"提供。要为项目添加 JUnit Jupiter 支持，请在项目主 `build.sbt` 文件中添加 jupiter-interface 依赖。"
+"JUnit 5 支持由 [sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-"
+"interface) 提供。要为项目添加 JUnit Jupiter 支持，请在项目主 `build.sbt` 文件"
+"中添加 jupiter-interface 依赖。"
 
 #: src/reference/reference/sbt-test.md:51
 #: src/reference/reference/sbt-test.md:57
@@ -169,8 +169,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:54
 msgid "and the sbt-jupiter-interface plugin to your `project/plugins.sbt`:"
-msgstr ""
-"并将 sbt-jupiter-interface 插件添加到 `project/plugins.sbt`："
+msgstr "并将 sbt-jupiter-interface 插件添加到 `project/plugins.sbt`："
 
 #: src/reference/reference/sbt-test.md:57
 msgid "\"sbt-jupiter-interface\""
@@ -182,8 +181,8 @@ msgid ""
 "junit-interface). Add the junit-interface dependency in your project's main "
 "build.sbt file."
 msgstr ""
-"JUnit 4 支持由 [junit-interface](https://github.com/sbt/junit-interface) 提供。"
-"请在项目主 `build.sbt` 文件中添加 junit-interface 依赖。"
+"JUnit 4 支持由 [junit-interface](https://github.com/sbt/junit-interface) 提"
+"供。请在项目主 `build.sbt` 文件中添加 junit-interface 依赖。"
 
 #: src/reference/reference/sbt-test.md:65
 msgid "\"com.github.sbt\""
@@ -205,164 +204,157 @@ msgstr "测试过滤"
 msgid ""
 "In sbt 2.x, the `test` task accepts a whitespace separated list of test "
 "names to run. For example:"
-msgstr ""
-"在 sbt 2.x 中，`test` 任务接受以空格分隔的测试名称列表。例如："
+msgstr "在 sbt 2.x 中，`test` 任务接受以空格分隔的测试名称列表。例如："
 
 #: src/reference/reference/sbt-test.md:77
 msgid "Here's an example output:"
-msgstr ""
-"示例输出："
+msgstr "示例输出："
 
 #: src/reference/reference/sbt-test.md:91
-msgid "It supports wildcards as well:"
-msgstr ""
-"也支持通配符："
+msgid "It supports wildcards (`...`, `*`, `**`) as well:"
+msgstr "也支持通配符（`...`、`*`、`**`）："
 
 #: src/reference/reference/sbt-test.md:97
+msgid "The filter can be used to exclude the tests using minus (`-`):"
+msgstr "也可使用减号（`-`）通过过滤器排除测试："
+
+#: src/reference/reference/sbt-test.md:103
 msgid "Incremental testing"
 msgstr "增量测试"
 
-#: src/reference/reference/sbt-test.md:99
+#: src/reference/reference/sbt-test.md:105
 msgid ""
 "In addition to the explicit filter, the `test` task runs only the tests that "
 "satisfy one of the following conditions are run:"
-msgstr ""
-"除显式过滤外，`test` 任务仅运行满足以下条件之一的测试："
+msgstr "除显式过滤外，`test` 任务仅运行满足以下条件之一的测试："
 
-#: src/reference/reference/sbt-test.md:102
+#: src/reference/reference/sbt-test.md:108
 msgid "The tests that failed in the previous run"
-msgstr ""
-"上次运行失败的测试"
+msgstr "上次运行失败的测试"
 
-#: src/reference/reference/sbt-test.md:103
+#: src/reference/reference/sbt-test.md:109
 msgid "The tests that were not run before"
-msgstr ""
-"之前未运行过的测试"
+msgstr "之前未运行过的测试"
 
-#: src/reference/reference/sbt-test.md:104
+#: src/reference/reference/sbt-test.md:110
 msgid ""
 "The tests that have one or more transitive dependencies, maybe in a "
 "different project, recompiled."
-msgstr ""
-"有一个或多个传递依赖（可能在不同项目中）被重新编译的测试。"
+msgstr "有一个或多个传递依赖（可能在不同项目中）被重新编译的测试。"
 
-#: src/reference/reference/sbt-test.md:107
+#: src/reference/reference/sbt-test.md:113
 msgid "Full testing"
 msgstr "完整测试"
 
-#: src/reference/reference/sbt-test.md:109
+#: src/reference/reference/sbt-test.md:115
 msgid "To run, uncached full tests, like sbt 1.x, use the `testFull` task."
-msgstr ""
-"要运行未缓存的完整测试（如 sbt 1.x），请使用 `testFull` 任务。"
+msgstr "要运行未缓存的完整测试（如 sbt 1.x），请使用 `testFull` 任务。"
 
-#: src/reference/reference/sbt-test.md:121
+#: src/reference/reference/sbt-test.md:127
 msgid "Other tasks"
 msgstr "其他任务"
 
-#: src/reference/reference/sbt-test.md:123
+#: src/reference/reference/sbt-test.md:129
 msgid ""
 "Tasks that are available for main sources are generally available for test "
 "sources, but are prefixed with `Test /` on the command line and are "
 "referenced in Scala code with `Test /` as well. These tasks include:"
 msgstr ""
-"主源可用的任务通常也可用于测试源，但在命令行中需加 `Test /` 前缀，在 Scala 代码中"
-"也以 `Test /` 引用。这些任务包括："
+"主源可用的任务通常也可用于测试源，但在命令行中需加 `Test /` 前缀，在 Scala 代"
+"码中也以 `Test /` 引用。这些任务包括："
 
-#: src/reference/reference/sbt-test.md:127
+#: src/reference/reference/sbt-test.md:133
 msgid "`Test / compile`"
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:128
+#: src/reference/reference/sbt-test.md:134
 msgid "`Test / console`"
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:129
+#: src/reference/reference/sbt-test.md:135
 msgid "`Test / consoleQuick`"
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:130
+#: src/reference/reference/sbt-test.md:136
 msgid "`Test / run`"
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:131
+#: src/reference/reference/sbt-test.md:137
 msgid "`Test / runMain`"
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:133
+#: src/reference/reference/sbt-test.md:139
 msgid "See [sbt run](./sbt-run.md) for details on these tasks."
-msgstr ""
-"详见 [sbt run](./sbt-run.md) 了解这些任务。"
+msgstr "详见 [sbt run](./sbt-run.md) 了解这些任务。"
 
-#: src/reference/reference/sbt-test.md:135
+#: src/reference/reference/sbt-test.md:141
 msgid "Output"
 msgstr "输出"
 
-#: src/reference/reference/sbt-test.md:137
+#: src/reference/reference/sbt-test.md:143
 msgid ""
 "By default, logging is buffered for each test source file until all tests "
 "for that file complete. This can be disabled by setting `logBuffered`:"
 msgstr ""
-"默认情况下，每个测试源文件的日志会缓冲到该文件所有测试完成。可通过设置 `logBuffered` 禁用："
+"默认情况下，每个测试源文件的日志会缓冲到该文件所有测试完成。可通过设置 "
+"`logBuffered` 禁用："
 
-#: src/reference/reference/sbt-test.md:145
+#: src/reference/reference/sbt-test.md:151
 msgid "Test Reports"
 msgstr "测试报告"
 
-#: src/reference/reference/sbt-test.md:147
+#: src/reference/reference/sbt-test.md:153
 msgid ""
 "By default, sbt will generate JUnit XML test reports for all tests in the "
 "build, located in the `target/test-reports` directory for a project. This "
 "can be disabled by disabling the `JUnitXmlReportPlugin`"
 msgstr ""
-"默认情况下，sbt 会为构建中所有测试生成 JUnit XML 测试报告，位于项目的 `target/test-reports` "
-"目录。可通过禁用 `JUnitXmlReportPlugin` 来禁用此功能。"
+"默认情况下，sbt 会为构建中所有测试生成 JUnit XML 测试报告，位于项目的 "
+"`target/test-reports` 目录。可通过禁用 `JUnitXmlReportPlugin` 来禁用此功能。"
 
-#: src/reference/reference/sbt-test.md:152
+#: src/reference/reference/sbt-test.md:158
 msgid "\".\""
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:155
+#: src/reference/reference/sbt-test.md:161
 msgid "Options"
 msgstr "选项"
 
-#: src/reference/reference/sbt-test.md:157
+#: src/reference/reference/sbt-test.md:163
 msgid "Test framework arguments"
 msgstr "测试框架参数"
 
-#: src/reference/reference/sbt-test.md:159
+#: src/reference/reference/sbt-test.md:165
 msgid ""
 "Arguments to the test framework may be provided on the command line to the "
 "`test` tasks following a `--` separator. For example:"
-msgstr ""
-"测试框架参数可在命令行中通过 `--` 分隔符传递给 `test` 任务。例如："
+msgstr "测试框架参数可在命令行中通过 `--` 分隔符传递给 `test` 任务。例如："
 
-#: src/reference/reference/sbt-test.md:166
+#: src/reference/reference/sbt-test.md:172
 msgid ""
 "To specify test framework arguments as part of the build, add options "
 "constructed by `Tests.Argument`:"
-msgstr ""
-"要在构建中指定测试框架参数，添加由 `Tests.Argument` 构造的选项："
+msgstr "要在构建中指定测试框架参数，添加由 `Tests.Argument` 构造的选项："
 
-#: src/reference/reference/sbt-test.md:170
 #: src/reference/reference/sbt-test.md:176
+#: src/reference/reference/sbt-test.md:182
 msgid "\"-verbosity\""
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:170
 #: src/reference/reference/sbt-test.md:176
+#: src/reference/reference/sbt-test.md:182
 msgid "\"1\""
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:173
-msgid "To specify them for a specific test framework only:"
-msgstr ""
-"要仅为特定测试框架指定："
-
 #: src/reference/reference/sbt-test.md:179
+msgid "To specify them for a specific test framework only:"
+msgstr "要仅为特定测试框架指定："
+
+#: src/reference/reference/sbt-test.md:185
 msgid "Setup and Cleanup"
 msgstr "设置与清理"
 
-#: src/reference/reference/sbt-test.md:181
+#: src/reference/reference/sbt-test.md:187
 msgid ""
 "Specify setup and cleanup actions using `Tests.Setup` and `Tests.Cleanup`. "
 "These accept either a function of type `() => Unit` or a function of type "
@@ -370,11 +362,11 @@ msgid ""
 "class loader that is (or was) used for running the tests. It provides access "
 "to the test classes as well as the test framework classes."
 msgstr ""
-"使用 `Tests.Setup` 和 `Tests.Cleanup` 指定设置和清理操作。它们接受 `() => Unit` 类型"
-"或 `ClassLoader => Unit` 类型的函数。接受 ClassLoader 的变体会接收用于运行测试的"
-"（或曾用于运行测试的）类加载器，可访问测试类和测试框架类。"
+"使用 `Tests.Setup` 和 `Tests.Cleanup` 指定设置和清理操作。它们接受 `() => "
+"Unit` 类型或 `ClassLoader => Unit` 类型的函数。接受 ClassLoader 的变体会接收"
+"用于运行测试的（或曾用于运行测试的）类加载器，可访问测试类和测试框架类。"
 
-#: src/reference/reference/sbt-test.md:188
+#: src/reference/reference/sbt-test.md:194
 msgid ""
 "```admonish note\n"
 "When forking, the `ClassLoader` containing the test classes cannot be\n"
@@ -387,62 +379,58 @@ msgstr ""
 "此情况下仅使用 `() => Unit` 变体。\n"
 "```"
 
-#: src/reference/reference/sbt-test.md:194
+#: src/reference/reference/sbt-test.md:200
 msgid "Examples:"
-msgstr ""
-"示例："
+msgstr "示例："
 
-#: src/reference/reference/sbt-test.md:197
+#: src/reference/reference/sbt-test.md:203
 msgid "\"Setup\""
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:198
+#: src/reference/reference/sbt-test.md:204
 msgid "\"Cleanup\""
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:203
+#: src/reference/reference/sbt-test.md:209
 msgid "Disable parallel execution of test suites"
 msgstr "禁用测试套件并行执行"
 
-#: src/reference/reference/sbt-test.md:205
+#: src/reference/reference/sbt-test.md:211
 msgid ""
 "By default, sbt runs all tasks in parallel and within the same JVM as sbt "
 "itself. Because each test suite is mapped to a task, tests are also run in "
 "parallel by default. To make tests within a given project execute serially:"
 msgstr ""
-"默认情况下，sbt 在与自身相同的 JVM 中并行运行所有任务。由于每个测试套件映射为一个任务，"
-"测试默认也并行运行。要使给定项目内的测试串行执行："
+"默认情况下，sbt 在与自身相同的 JVM 中并行运行所有任务。由于每个测试套件映射为"
+"一个任务，测试默认也并行运行。要使给定项目内的测试串行执行："
 
-#: src/reference/reference/sbt-test.md:213
+#: src/reference/reference/sbt-test.md:219
 msgid "Note that tests from different projects may still execute concurrently."
-msgstr ""
-"注意，不同项目的测试仍可能并发执行。"
+msgstr "注意，不同项目的测试仍可能并发执行。"
 
-#: src/reference/reference/sbt-test.md:216
+#: src/reference/reference/sbt-test.md:222
 msgid "Filter classes"
 msgstr "过滤类"
 
-#: src/reference/reference/sbt-test.md:218
+#: src/reference/reference/sbt-test.md:224
 msgid ""
 "If you want to only run test classes whose name ends with \"Test\", use "
 "`Tests.Filter`:"
-msgstr ""
-"若您只想运行名称以 \"Test\" 结尾的测试类，使用 `Tests.Filter`："
+msgstr "若您只想运行名称以 \"Test\" 结尾的测试类，使用 `Tests.Filter`："
 
-#: src/reference/reference/sbt-test.md:222
+#: src/reference/reference/sbt-test.md:228
 msgid "\"Test\""
 msgstr ""
 
-#: src/reference/reference/sbt-test.md:225
+#: src/reference/reference/sbt-test.md:231
 msgid "Forking tests"
 msgstr "Fork 测试"
 
-#: src/reference/reference/sbt-test.md:227
-msgid "The setting:"
-msgstr ""
-"该设置："
-
 #: src/reference/reference/sbt-test.md:233
+msgid "The setting:"
+msgstr "该设置："
+
+#: src/reference/reference/sbt-test.md:239
 msgid ""
 "specifies that all tests will be executed in a single external JVM. <!-- "
 "See\n"
@@ -450,22 +438,22 @@ msgid ""
 "By default,\n"
 "tests executed in a forked JVM are executed *sequentially*.\n"
 "-->"
-msgstr ""
-"指定所有测试将在单个外部 JVM 中执行。"
+msgstr "指定所有测试将在单个外部 JVM 中执行。"
 
-#: src/reference/reference/sbt-test.md:239
+#: src/reference/reference/sbt-test.md:245
 msgid ""
 "More control over how tests are assigned to JVMs and what options to pass to "
 "those is available with `testGrouping` key."
 msgstr ""
 "可通过 `testGrouping` 键更精细控制测试如何分配到 JVM 以及传递哪些选项。"
 
-#: src/reference/reference/sbt-test.md:264
+#: src/reference/reference/sbt-test.md:270
 msgid ""
 "Control the number of forked JVMs allowed to run at the same time by setting "
 "the limit on `Tags.ForkedTestGroup` tag, which is 1 by default. `Setup` and "
 "`Cleanup` actions cannot be provided with the actual test class loader when "
 "a group is forked."
 msgstr ""
-"通过设置 `Tags.ForkedTestGroup` 标签的限制可控制同时运行的 fork JVM 数量，默认为 1。"
-"当组被 fork 时，无法为 `Setup` 和 `Cleanup` 操作提供实际测试类加载器。"
+"通过设置 `Tags.ForkedTestGroup` 标签的限制可控制同时运行的 fork JVM 数量，默"
+"认为 1。当组被 fork 时，无法为 `Setup` 和 `Cleanup` 操作提供实际测试类加载"
+"器。"
