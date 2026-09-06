@@ -88,10 +88,16 @@ example.ExampleSuite2:
 [success] elapsed time: 3 s, cache 49%, 25 disk cache hits, 26 onsite tasks
 ```
 
-It supports wildcards as well:
+It supports wildcards (`...`, `*`, `**`) as well:
 
+```bash
+> test ...Example...
 ```
-> test *Example*
+
+The filter can be used to exclude the tests using minus (`-`):
+
+```bash
+> test -...Example...
 ```
 
 ### Incremental testing
