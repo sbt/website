@@ -1,14 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-10-20T12:28:43-04:00\n"
+"PO-Revision-Date: 2026-10-20T12:28:43-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/guide/scope-basics.md:8
 msgid "Scope basics"
-msgstr ""
+msgstr "作用域基础"
 
 #: src/reference/guide/scope-basics.md:11
 msgid "This page describes scopes."
-msgstr ""
+msgstr "本页介绍作用域。"
 
 #: src/reference/guide/scope-basics.md:13
 msgid "The whole story about keys"
-msgstr ""
+msgstr "关于键的完整说明"
 
 #: src/reference/guide/scope-basics.md:15
 msgid ""
@@ -17,22 +30,27 @@ msgid ""
 "simplification. In the real builds, each key can have an associated value in "
 "more than one context, called a _scope._"
 msgstr ""
+"[前面](build-definition-basics.md)我们假设像 `name` 这样的键对应 sbt 键值对映"
+"射中的一个条目。这是一种简化。在实际构建中，每个键可以在多个上下文中各自关联一"
+"个值，这些上下文称为**作用域**。"
 
 #: src/reference/guide/scope-basics.md:20
 msgid "Some concrete examples:"
-msgstr ""
+msgstr "一些具体示例："
 
 #: src/reference/guide/scope-basics.md:22
 msgid ""
 "if you have multiple subprojects in your build definition, a key can have a "
 "different value in each project."
-msgstr ""
+msgstr "如果构建定义中有多个子项目，同一个键在每个子项目中可以有不同的值。"
 
 #: src/reference/guide/scope-basics.md:24
 msgid ""
 "the `compile` key may have a different value for your main sources and your "
 "test sources, if you want to compile them differently."
 msgstr ""
+"如果您希望以不同方式编译主源代码和测试源代码，`compile` 键可以为两者分别设置不"
+"同的值。"
 
 #: src/reference/guide/scope-basics.md:26
 msgid ""
@@ -40,30 +58,32 @@ msgid ""
 "different values when compiling class files (`compile`) or running the REPL "
 "(`console`)."
 msgstr ""
+"`scalacOptions` 键（包含 Scala 编译器选项）在编译类文件（`compile`）和运行 "
+"REPL（`console`）时可以有不同的值。"
 
 #: src/reference/guide/scope-basics.md:29
 msgid "Unified slash syntax"
-msgstr ""
+msgstr "统一斜杠语法"
 
 #: src/reference/guide/scope-basics.md:31
 msgid "A full scope in sbt is described using the _unified slash syntax_:"
-msgstr ""
+msgstr "sbt 中完整的作用域使用**统一斜杠语法**来描述："
 
 #: src/reference/guide/scope-basics.md:37
 msgid "These represent the three level of scoping:"
-msgstr ""
+msgstr "它们表示三个层级的作用域划分："
 
 #: src/reference/guide/scope-basics.md:39
 msgid "The subproject scoping"
-msgstr ""
+msgstr "子项目作用域"
 
 #: src/reference/guide/scope-basics.md:40
 msgid "The dependency configuration scoping"
-msgstr ""
+msgstr "依赖配置作用域"
 
 #: src/reference/guide/scope-basics.md:41
 msgid "The task scoping"
-msgstr ""
+msgstr "任务作用域"
 
 #: src/reference/guide/scope-basics.md:43
 msgid ""
@@ -72,10 +92,13 @@ msgid ""
 "the sbt shell and in `build.sbt`.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"统一斜杠语法于 sbt 1.1 引入，可同时用于 sbt shell 和 `build.sbt`。\n"
+"```"
 
 #: src/reference/guide/scope-basics.md:48
 msgid "Scoping by the subproject"
-msgstr ""
+msgstr "按子项目划分作用域"
 
 #: src/reference/guide/scope-basics.md:50
 msgid ""
@@ -83,10 +106,12 @@ msgid ""
 "basics.md), each subproject needs its own settings. From the sbt shell, you "
 "can compile a specific subproject as follows:"
 msgstr ""
+"如果您[在一个构建中放置多个子项目](multi-project-basics.md)，每个子项目都需要"
+"各自的设置。在 sbt shell 中，可以按如下方式编译特定的子项目："
 
 #: src/reference/guide/scope-basics.md:58
 msgid "Scoping by the dependency configuration"
-msgstr ""
+msgstr "按依赖配置划分作用域"
 
 #: src/reference/guide/scope-basics.md:60
 msgid ""
@@ -94,42 +119,46 @@ msgid ""
 "library dependencies, potentially with its own classpath, sources, generated "
 "packages, etc."
 msgstr ""
+"依赖配置（简称**配置**）定义了一个库依赖图，并可能拥有自己的类路径、源代码、生"
+"成的包等。"
 
 #: src/reference/guide/scope-basics.md:64
 msgid "Some configurations you'll see in sbt:"
-msgstr ""
+msgstr "sbt 中常见的一些配置："
 
 #: src/reference/guide/scope-basics.md:66
 msgid "`Compile` which defines the main code (`src/main/scala`)."
-msgstr ""
+msgstr "`Compile`：定义主代码（`src/main/scala`）。"
 
 #: src/reference/guide/scope-basics.md:67
 msgid "`Test` which defines how to compile tests (`src/test/scala`)."
-msgstr ""
+msgstr "`Test`：定义如何编译测试（`src/test/scala`）。"
 
 #: src/reference/guide/scope-basics.md:68
 msgid "`Runtime` which defines the classpath for the `run` task."
-msgstr ""
+msgstr "`Runtime`：定义 `run` 任务的类路径。"
 
 #: src/reference/guide/scope-basics.md:70
 msgid ""
 "From the sbt shell, you can compile the test code as follows, which would "
 "also compile the main code:"
-msgstr ""
+msgstr "在 sbt shell 中，可以按如下方式编译测试代码，这同时也会编译主代码："
 
 #: src/reference/guide/scope-basics.md:76
 msgid "In `build.sbt`, you can specify the tests to be forked as follows:"
-msgstr ""
+msgstr "在 `build.sbt` 中，可以按如下方式指定以 fork 方式运行测试："
 
 #: src/reference/guide/scope-basics.md:82
 msgid "Scoping by task"
-msgstr ""
+msgstr "按任务划分作用域"
 
 #: src/reference/guide/scope-basics.md:84
 msgid ""
 "Settings can affect how a task works. For example, the `compile` task is "
 "affected by the `scalacOptions` setting."
 msgstr ""
+"设置可以影响任务的工作方式。例如，`compile` 任务会受到 `scalacOptions` 设置的"
+"影响。"
 
 #: src/reference/guide/scope-basics.md:87
 msgid ""
@@ -138,6 +167,9 @@ msgid ""
 "(`compile`, `console`, `doc`) can share keys related to compilation such as "
 "`scalacOptions`. Those keys can have distinct values."
 msgstr ""
+"为此，任务键（如 `compile`）可以作为另一个键（如 `scalacOptions`）的作用域。调"
+"用 Scala 编译器的各种任务（`compile`、`console`、`doc`）可以共享 "
+"`scalacOptions` 等与编译相关的键，并且这些键在各任务中可以有不同的值。"
 
 #: src/reference/guide/scope-basics.md:93
 msgid "\"3.9.0\""
@@ -159,16 +191,18 @@ msgstr ""
 
 #: src/reference/guide/scope-basics.md:98
 msgid "Inspecting scopes"
-msgstr ""
+msgstr "检查作用域"
 
 #: src/reference/guide/scope-basics.md:100
 msgid ""
 "In sbt shell, you can use the `inspect` command to understand keys and their "
 "scopes. Try `inspect Test / fullClasspath`:"
 msgstr ""
+"在 sbt shell 中，可以使用 `inspect` 命令来了解键及其作用域。试试 `inspect "
+"Test / fullClasspath`："
 
 #: src/reference/guide/scope-basics.md:127
 msgid ""
 "For more details, see [sbt inspect](../reference/sbt-inspect.md) reference "
 "guide."
-msgstr ""
+msgstr "更多详情，请参阅 [sbt inspect](../reference/sbt-inspect.md) 参考指南。"

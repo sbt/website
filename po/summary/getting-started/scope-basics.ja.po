@@ -1,14 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-10-20T12:28:39-04:00\n"
+"PO-Revision-Date: 2026-10-20T12:28:39-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/guide/scope-basics.md:8
 msgid "Scope basics"
-msgstr ""
+msgstr "スコープの基本"
 
 #: src/reference/guide/scope-basics.md:11
 msgid "This page describes scopes."
-msgstr ""
+msgstr "このページではスコープについて説明する。"
 
 #: src/reference/guide/scope-basics.md:13
 msgid "The whole story about keys"
-msgstr ""
+msgstr "キーに関する本当の話"
 
 #: src/reference/guide/scope-basics.md:15
 msgid ""
@@ -17,22 +30,30 @@ msgid ""
 "simplification. In the real builds, each key can have an associated value in "
 "more than one context, called a _scope._"
 msgstr ""
+"[以前のページ](build-definition-basics.md)では、`name` のようなキーは sbt の"
+"キーと値のペアから成るマップの 1つのエントリーに対応するかのように説明した。"
+"これは単純化したものだった。実際のビルドでは、各キーは**スコープ**と呼ばれる"
+"複数の文脈において、それぞれ値を持つことができる。"
 
 #: src/reference/guide/scope-basics.md:20
 msgid "Some concrete examples:"
-msgstr ""
+msgstr "具体例をいくつか挙げる:"
 
 #: src/reference/guide/scope-basics.md:22
 msgid ""
 "if you have multiple subprojects in your build definition, a key can have a "
 "different value in each project."
 msgstr ""
+"ビルド定義に複数のサブプロジェクトがある場合、キーはサブプロジェクトごとに異"
+"なる値を持つことができる。"
 
 #: src/reference/guide/scope-basics.md:24
 msgid ""
 "the `compile` key may have a different value for your main sources and your "
 "test sources, if you want to compile them differently."
 msgstr ""
+"メインのソースとテストのソースを異なる方法でコンパイルしたい場合、`compile` "
+"キーはそれぞれに対して異なる値を持つことができる。"
 
 #: src/reference/guide/scope-basics.md:26
 msgid ""
@@ -40,30 +61,33 @@ msgid ""
 "different values when compiling class files (`compile`) or running the REPL "
 "(`console`)."
 msgstr ""
+"(Scala コンパイラのオプションを保持する) `scalacOptions` キーは、クラスファイ"
+"ルをコンパイルする時 (`compile`) と REPL を実行する時 (`console`) とで異なる"
+"値を持つことができる。"
 
 #: src/reference/guide/scope-basics.md:29
 msgid "Unified slash syntax"
-msgstr ""
+msgstr "統一スラッシュ構文"
 
 #: src/reference/guide/scope-basics.md:31
 msgid "A full scope in sbt is described using the _unified slash syntax_:"
-msgstr ""
+msgstr "sbt における完全なスコープは**統一スラッシュ構文**を用いて記述される:"
 
 #: src/reference/guide/scope-basics.md:37
 msgid "These represent the three level of scoping:"
-msgstr ""
+msgstr "これらは 3つのレベルのスコープ付けを表す:"
 
 #: src/reference/guide/scope-basics.md:39
 msgid "The subproject scoping"
-msgstr ""
+msgstr "サブプロジェクトによるスコープ付け"
 
 #: src/reference/guide/scope-basics.md:40
 msgid "The dependency configuration scoping"
-msgstr ""
+msgstr "依存性コンフィギュレーションによるスコープ付け"
 
 #: src/reference/guide/scope-basics.md:41
 msgid "The task scoping"
-msgstr ""
+msgstr "タスクによるスコープ付け"
 
 #: src/reference/guide/scope-basics.md:43
 msgid ""
@@ -72,10 +96,14 @@ msgid ""
 "the sbt shell and in `build.sbt`.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"sbt 1.1 で導入された統一スラッシュ構文は、sbt シェルと `build.sbt` の両方で\n"
+"使うことができる。\n"
+"```"
 
 #: src/reference/guide/scope-basics.md:48
 msgid "Scoping by the subproject"
-msgstr ""
+msgstr "サブプロジェクトによるスコープ付け"
 
 #: src/reference/guide/scope-basics.md:50
 msgid ""
@@ -83,10 +111,13 @@ msgid ""
 "basics.md), each subproject needs its own settings. From the sbt shell, you "
 "can compile a specific subproject as follows:"
 msgstr ""
+"[1つのビルドに複数のサブプロジェクトを置く](multi-project-basics.md)場合、各"
+"サブプロジェクトはそれぞれのセッティングを必要とする。sbt シェルからは、以下"
+"のようにして特定のサブプロジェクトをコンパイルできる:"
 
 #: src/reference/guide/scope-basics.md:58
 msgid "Scoping by the dependency configuration"
-msgstr ""
+msgstr "依存性コンフィギュレーションによるスコープ付け"
 
 #: src/reference/guide/scope-basics.md:60
 msgid ""
@@ -94,42 +125,49 @@ msgid ""
 "library dependencies, potentially with its own classpath, sources, generated "
 "packages, etc."
 msgstr ""
+"依存性コンフィギュレーション (通称「コンフィギュレーション」) は、ライブラリ"
+"依存性のグラフを定義し、独自のクラスパス、ソース、生成パッケージなどを持つこ"
+"とがある。"
 
 #: src/reference/guide/scope-basics.md:64
 msgid "Some configurations you'll see in sbt:"
-msgstr ""
+msgstr "sbt でよく見かけるコンフィギュレーションには以下がある:"
 
 #: src/reference/guide/scope-basics.md:66
 msgid "`Compile` which defines the main code (`src/main/scala`)."
-msgstr ""
+msgstr "`Compile`: メインのコード (`src/main/scala`) を定義する。"
 
 #: src/reference/guide/scope-basics.md:67
 msgid "`Test` which defines how to compile tests (`src/test/scala`)."
-msgstr ""
+msgstr "`Test`: テスト (`src/test/scala`) のコンパイル方法を定義する。"
 
 #: src/reference/guide/scope-basics.md:68
 msgid "`Runtime` which defines the classpath for the `run` task."
-msgstr ""
+msgstr "`Runtime`: `run` タスクのクラスパスを定義する。"
 
 #: src/reference/guide/scope-basics.md:70
 msgid ""
 "From the sbt shell, you can compile the test code as follows, which would "
 "also compile the main code:"
 msgstr ""
+"sbt シェルからは、以下のようにしてテストコードをコンパイルできる。この時メイ"
+"ンのコードもコンパイルされる:"
 
 #: src/reference/guide/scope-basics.md:76
 msgid "In `build.sbt`, you can specify the tests to be forked as follows:"
-msgstr ""
+msgstr "`build.sbt` では、以下のようにしてテストをフォークするよう指定できる:"
 
 #: src/reference/guide/scope-basics.md:82
 msgid "Scoping by task"
-msgstr ""
+msgstr "タスクによるスコープ付け"
 
 #: src/reference/guide/scope-basics.md:84
 msgid ""
 "Settings can affect how a task works. For example, the `compile` task is "
 "affected by the `scalacOptions` setting."
 msgstr ""
+"セッティングはタスクの動作に影響を与えることができる。例えば、`compile` タス"
+"クは `scalacOptions` セッティングの影響を受ける。"
 
 #: src/reference/guide/scope-basics.md:87
 msgid ""
@@ -138,6 +176,11 @@ msgid ""
 "(`compile`, `console`, `doc`) can share keys related to compilation such as "
 "`scalacOptions`. Those keys can have distinct values."
 msgstr ""
+"これをサポートするために、(`compile` のような) タスクキーは (`scalacOptions` "
+"のような) 他のキーのスコープとなることができる。Scala コンパイラを呼び出す様"
+"々なタスク (`compile`、`console`、`doc`) は、`scalacOptions` のようなコンパイ"
+"ル関連のキーを共有することができ、それらのキーはタスクごとに異なる値を持つこ"
+"とができる。"
 
 #: src/reference/guide/scope-basics.md:93
 msgid "\"3.9.0\""
@@ -159,16 +202,19 @@ msgstr ""
 
 #: src/reference/guide/scope-basics.md:98
 msgid "Inspecting scopes"
-msgstr ""
+msgstr "スコープの検査"
 
 #: src/reference/guide/scope-basics.md:100
 msgid ""
 "In sbt shell, you can use the `inspect` command to understand keys and their "
 "scopes. Try `inspect Test / fullClasspath`:"
 msgstr ""
+"sbt シェルでは、`inspect` コマンドを使ってキーとそのスコープを調べることがで"
+"きる。`inspect Test / fullClasspath` を試してみよう:"
 
 #: src/reference/guide/scope-basics.md:127
 msgid ""
 "For more details, see [sbt inspect](../reference/sbt-inspect.md) reference "
 "guide."
 msgstr ""
+"詳細は [sbt inspect](../reference/sbt-inspect.md) のリファレンスを参照。"
