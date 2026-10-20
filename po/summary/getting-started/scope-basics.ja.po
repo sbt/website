@@ -1,0 +1,174 @@
+#: src/reference/guide/scope-basics.md:8
+msgid "Scope basics"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:11
+msgid "This page describes scopes."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:13
+msgid "The whole story about keys"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:15
+msgid ""
+"[Previously](build-definition-basics.md) we pretended that a key like `name` "
+"corresponded to one entry in sbt's map of key-value pairs. This was a "
+"simplification. In the real builds, each key can have an associated value in "
+"more than one context, called a _scope._"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:20
+msgid "Some concrete examples:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:22
+msgid ""
+"if you have multiple subprojects in your build definition, a key can have a "
+"different value in each project."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:24
+msgid ""
+"the `compile` key may have a different value for your main sources and your "
+"test sources, if you want to compile them differently."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:26
+msgid ""
+"the `scalacOptions` key (which contains Scala compiler options) may have "
+"different values when compiling class files (`compile`) or running the REPL "
+"(`console`)."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:29
+msgid "Unified slash syntax"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:31
+msgid "A full scope in sbt is described using the _unified slash syntax_:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:37
+msgid "These represent the three level of scoping:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:39
+msgid "The subproject scoping"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:40
+msgid "The dependency configuration scoping"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:41
+msgid "The task scoping"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:43
+msgid ""
+"```admonish note\n"
+"Introduced in sbt 1.1, the unified slash syntax can be used in both\n"
+"the sbt shell and in `build.sbt`.\n"
+"```"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:48
+msgid "Scoping by the subproject"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:50
+msgid ""
+"If you [put multiple subprojects in a single build](multi-project-"
+"basics.md), each subproject needs its own settings. From the sbt shell, you "
+"can compile a specific subproject as follows:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:58
+msgid "Scoping by the dependency configuration"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:60
+msgid ""
+"A dependency configuration (or _configuration_ for short) defines a graph of "
+"library dependencies, potentially with its own classpath, sources, generated "
+"packages, etc."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:64
+msgid "Some configurations you'll see in sbt:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:66
+msgid "`Compile` which defines the main code (`src/main/scala`)."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:67
+msgid "`Test` which defines how to compile tests (`src/test/scala`)."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:68
+msgid "`Runtime` which defines the classpath for the `run` task."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:70
+msgid ""
+"From the sbt shell, you can compile the test code as follows, which would "
+"also compile the main code:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:76
+msgid "In `build.sbt`, you can specify the tests to be forked as follows:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:82
+msgid "Scoping by task"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:84
+msgid ""
+"Settings can affect how a task works. For example, the `compile` task is "
+"affected by the `scalacOptions` setting."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:87
+msgid ""
+"To support this, a task key (such as `compile`) can be a scope for another "
+"key (such as `scalacOptions`). Various tasks that invoke the Scala compiler "
+"(`compile`, `console`, `doc`) can share keys related to compilation such as "
+"`scalacOptions`. Those keys can have distinct values."
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:93
+msgid "\"3.9.0\""
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:94
+msgid "\"-deprecation\""
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:94
+#: src/reference/guide/scope-basics.md:95
+msgid "\"-Werror\""
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:94
+#: src/reference/guide/scope-basics.md:95
+msgid "\"-Wunused:imports\""
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:98
+msgid "Inspecting scopes"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:100
+msgid ""
+"In sbt shell, you can use the `inspect` command to understand keys and their "
+"scopes. Try `inspect Test / fullClasspath`:"
+msgstr ""
+
+#: src/reference/guide/scope-basics.md:127
+msgid ""
+"For more details, see [sbt inspect](../reference/sbt-inspect.md) reference "
+"guide."
+msgstr ""
