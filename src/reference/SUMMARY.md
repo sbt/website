@@ -10,6 +10,7 @@
   - [sbt components](guide/sbt-components.md)
   - [Basic tasks](guide/basic-tasks.md)
   - [Build definition basics](guide/build-definition-basics.md)
+  - [Scope basics](guide/scope-basics.md)
   - [Library dependency basics](guide/library-dependency-basics.md)
   - [Multi project basics](guide/multi-project-basics.md)
   - [Plugin basics](guide/plugin-basics.md)

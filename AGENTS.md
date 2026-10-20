@@ -34,6 +34,13 @@ msgid "\"-Dfile.encoding=Cp1252\""
 msgstr ""
 ```
 
+When translating to Japanese or Chinese, do not use italics (`_..._` or `*...*`). Use bold (`**...**`) for emphasis instead, even when the original uses italics, since oblique text doesn't read well in Asian fonts. For example:
+
+```
+msgid "A full scope in sbt is described using the _unified slash syntax_:"
+msgstr "sbt における完全なスコープは**統一スラッシュ構文**を用いて記述される:"
+```
+
 Tips for Japanese translation
 -----------------------------
 
