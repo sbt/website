@@ -235,6 +235,16 @@ A different location for the repositories file may be specified by the
 final step is to set `sbt.override.build.repos` to true to use these
 repositories for dependency resolution and retrieval.
 
+If a repository requires authentication for plugin or build dependency resolution,
+set `credentials` in an `.sbt` file at the root of the sbt 2
+[global base directory](sbt.md#global-base-directory). For example, on Linux and
+macOS with the default global base directory, put this setting in
+`~/.config/sbt/2/credential.sbt`:
+
+```scala
+credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
+```
+
 ### Exclude Transitive Dependencies
 
 In certain cases a transitive dependency should be excluded from
