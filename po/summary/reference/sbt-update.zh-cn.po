@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-07-18T22:01:34-04:00\n"
+"POT-Creation-Date: 2026-11-19T23:09:11-05:00\n"
 "PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -207,8 +207,8 @@ msgid ""
 "sbt 2 supports Maven BOM (Bill of Materials) usage. Subprojects can depend "
 "on published BOM artifacts using `.pomOnly()`:"
 msgstr ""
-"sbt 2 支持 Maven BOM（物料清单）的使用。子项目可以使用 `.pomOnly()` 依赖已发布"
-"的 BOM 构件："
+"sbt 2 支持 Maven BOM（物料清单）的使用。子项目可以使用 `.pomOnly()` 依赖已发"
+"布的 BOM 构件："
 
 #: src/reference/reference/sbt-update.md:148
 msgid "\"com.fasterxml.jackson\""
@@ -384,10 +384,27 @@ msgstr ""
 "解析和获取。"
 
 #: src/reference/reference/sbt-update.md:238
+msgid ""
+"If a repository requires authentication for plugin or build dependency "
+"resolution, set `credentials` in an `.sbt` file at the root of the sbt 2 "
+"[global base directory](sbt.md#global-base-directory). For example, on Linux "
+"and macOS with the default global base directory, put this setting in "
+"`~/.config/sbt/2/credential.sbt`:"
+msgstr ""
+
+#: src/reference/reference/sbt-update.md:245
+msgid "\".sbt\""
+msgstr ""
+
+#: src/reference/reference/sbt-update.md:245
+msgid "\".credentials\""
+msgstr ""
+
+#: src/reference/reference/sbt-update.md:248
 msgid "Exclude Transitive Dependencies"
 msgstr "排除传递依赖"
 
-#: src/reference/reference/sbt-update.md:240
+#: src/reference/reference/sbt-update.md:250
 msgid ""
 "In certain cases a transitive dependency should be excluded from all "
 "dependencies. This can be achieved by setting up `ExclusionRules` in "
@@ -396,15 +413,15 @@ msgstr ""
 "某些情况下需从所有依赖中排除传递依赖。可通过在 `excludeDependencies` 中设置 "
 "`ExclusionRules` 实现。"
 
-#: src/reference/reference/sbt-update.md:246
+#: src/reference/reference/sbt-update.md:256
 msgid "// commons-logging is replaced by jcl-over-slf4j"
 msgstr "// commons-logging 由 jcl-over-slf4j 替代"
 
-#: src/reference/reference/sbt-update.md:247
+#: src/reference/reference/sbt-update.md:257
 msgid "\"commons-logging\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:251
+#: src/reference/reference/sbt-update.md:261
 msgid ""
 "To exclude certain transitive dependencies of a dependency, use the "
 "`excludeAll` or `exclude` methods. The `exclude` method should be used when "
@@ -414,45 +431,45 @@ msgstr ""
 "要排除依赖的某些传递依赖，使用 `excludeAll` 或 `exclude` 方法。当项目将发布 "
 "pom 时应使用 `exclude` 方法。需提供要排除的组织和模块名。例如："
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"log4j\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"1.2.15\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"javax.jms\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"jms\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:278
+#: src/reference/reference/sbt-update.md:288
 msgid "Explicit URL"
 msgstr "显式 URL"
 
-#: src/reference/reference/sbt-update.md:280
+#: src/reference/reference/sbt-update.md:290
 msgid ""
 "If your project requires a dependency that is not present in a repository, a "
 "direct URL to its jar can be specified as follows:"
 msgstr "若您的项目需要仓库中不存在的依赖，可按以下方式指定其 jar 的直接 URL："
 
-#: src/reference/reference/sbt-update.md:284
+#: src/reference/reference/sbt-update.md:294
 msgid "\"slinky\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:284
+#: src/reference/reference/sbt-update.md:294
 msgid "\"2.1\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:284
+#: src/reference/reference/sbt-update.md:294
 msgid "\"https://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:287
+#: src/reference/reference/sbt-update.md:297
 msgid ""
 "The URL is only used as a fallback if the dependency cannot be found through "
 "the configured repositories. Also, the explicit URL is not included in "
@@ -461,11 +478,11 @@ msgstr ""
 "仅当通过配置的仓库无法找到依赖时，才将 URL 用作后备。此外，显式 URL 不包含在"
 "发布的元数据（即 pom 或 ivy.xml）中。"
 
-#: src/reference/reference/sbt-update.md:291
+#: src/reference/reference/sbt-update.md:301
 msgid "Disable Transitivity"
 msgstr "禁用传递性"
 
-#: src/reference/reference/sbt-update.md:293
+#: src/reference/reference/sbt-update.md:303
 msgid ""
 "By default, these declarations fetch all project dependencies, transitively. "
 "In some instances, you may find that the dependencies listed for a project "
@@ -479,73 +496,73 @@ msgstr ""
 "编译和运行。使用 `intransitive()` 或 `notTransitive()` 避免获取构件依赖，如下"
 "例："
 
-#: src/reference/reference/sbt-update.md:301
-#: src/reference/reference/sbt-update.md:343
+#: src/reference/reference/sbt-update.md:311
+#: src/reference/reference/sbt-update.md:353
 msgid "\"org.apache.felix\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:301
-#: src/reference/reference/sbt-update.md:343
+#: src/reference/reference/sbt-update.md:311
+#: src/reference/reference/sbt-update.md:353
 msgid "\"org.apache.felix.framework\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:301
-#: src/reference/reference/sbt-update.md:343
+#: src/reference/reference/sbt-update.md:311
+#: src/reference/reference/sbt-update.md:353
 msgid "\"1.8.0\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:304
+#: src/reference/reference/sbt-update.md:314
 msgid "Classifiers"
 msgstr "分类器"
 
-#: src/reference/reference/sbt-update.md:306
+#: src/reference/reference/sbt-update.md:316
 msgid ""
 "You can specify the classifier for a dependency using the `classifier` "
 "method. For example, to get the jdk15 version of TestNG:"
 msgstr ""
 "您可使用 `classifier` 方法为依赖指定分类器。例如，获取 TestNG 的 jdk15 版本："
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"org.testng\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"testng\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"5.7\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"jdk15\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:313
+#: src/reference/reference/sbt-update.md:323
 msgid "For multiple classifiers, use multiple `classifier` calls:"
 msgstr "对于多个分类器，使用多次 `classifier` 调用："
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"org.lwjgl.lwjgl\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"lwjgl-platform\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"natives-windows\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"natives-linux\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"natives-osx\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:320
+#: src/reference/reference/sbt-update.md:330
 msgid ""
 "To obtain particular classifiers for all dependencies transitively, run the "
 "`updateClassifiers` task. By default, this resolves all artifacts with the "
@@ -557,15 +574,15 @@ msgstr ""
 "这会解析具有 `sources` 或 `javadoc` 分类器的所有构件。通过配置 "
 "`transitiveClassifiers` 设置选择要获取的分类器。例如，仅获取源码："
 
-#: src/reference/reference/sbt-update.md:327
+#: src/reference/reference/sbt-update.md:337
 msgid "\"sources\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:330
+#: src/reference/reference/sbt-update.md:340
 msgid "Download Sources"
 msgstr "下载源码"
 
-#: src/reference/reference/sbt-update.md:332
+#: src/reference/reference/sbt-update.md:342
 msgid ""
 "Downloading source and API documentation jars is usually handled by an IDE "
 "plugin. These plugins use the `updateClassifiers` and `updateSbtClassifiers` "
@@ -575,7 +592,7 @@ msgstr ""
 "`updateClassifiers` 和 `updateSbtClassifiers` 任务，生成引用这些 jar 的 "
 "`Update-Report`。"
 
-#: src/reference/reference/sbt-update.md:337
+#: src/reference/reference/sbt-update.md:347
 msgid ""
 "To have sbt download the dependency's sources without using an IDE plugin, "
 "add `withSources()` to the dependency definition. For API jars, add "
@@ -584,7 +601,7 @@ msgstr ""
 "要让 sbt 在不使用 IDE 插件的情况下下载依赖的源码，在依赖定义中添加 "
 "`withSources()`。对于 API jar，添加 `withJavadoc()`。例如："
 
-#: src/reference/reference/sbt-update.md:346
+#: src/reference/reference/sbt-update.md:356
 msgid ""
 "Note that this is not transitive. Use the `update*Classifiers` tasks for "
 "that."
