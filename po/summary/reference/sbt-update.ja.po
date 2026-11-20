@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-07-18T22:01:23-04:00\n"
+"POT-Creation-Date: 2026-11-19T23:09:05-05:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -218,8 +218,8 @@ msgid ""
 "sbt 2 supports Maven BOM (Bill of Materials) usage. Subprojects can depend "
 "on published BOM artifacts using `.pomOnly()`:"
 msgstr ""
-"sbt 2 は Maven BOM (Bill of Materials) の使用を追加する。サブプロジェ"
-"クトは `.pomOnly()` を使って公開された BOM アーティファクトに依存することができる:"
+"sbt 2 は Maven BOM (Bill of Materials) の使用を追加する。サブプロジェクトは "
+"`.pomOnly()` を使って公開された BOM アーティファクトに依存することができる:"
 
 #: src/reference/reference/sbt-update.md:148
 msgid "\"com.fasterxml.jackson\""
@@ -239,8 +239,9 @@ msgid ""
 "version constraints for specific libraries (such as Jackson). You can use "
 "`\"*\"` to declare versionless dependency:"
 msgstr ""
-"これらの部品表 (Bill of Materials) は Coursier に転送され、特定のライブラリ（Jackson など）にバー"
-"ジョン制約を導入する。`\"*\"` を使って無バージョンの依存性を宣言できる:"
+"これらの部品表 (Bill of Materials) は Coursier に転送され、特定のライブラリ"
+"（Jackson など）にバージョン制約を導入する。`\"*\"` を使って無バージョンの依"
+"存性を宣言できる:"
 
 #: src/reference/reference/sbt-update.md:154
 msgid "\"com.fasterxml.jackson.core\""
@@ -404,10 +405,32 @@ msgstr ""
 "のリポジトリを使用するには、`sbt.override.build.repos` を true に設定する。"
 
 #: src/reference/reference/sbt-update.md:238
+msgid ""
+"If a repository requires authentication for plugin or build dependency "
+"resolution, set `credentials` in an `.sbt` file at the root of the sbt 2 "
+"[global base directory](sbt.md#global-base-directory). For example, on Linux "
+"and macOS with the default global base directory, put this setting in "
+"`~/.config/sbt/2/credential.sbt`:"
+msgstr ""
+"プラグインやビルドのライブラリ依存性の解決にリポジトリの認証が必要な場合、sbt 2 の"
+"[グローバルベースディレクトリ](sbt.md#global-base-directory)直下の `.sbt` ファ"
+"イルで `credentials` を設定する。例えば、Linux と macOS でデフォルトのグローバ"
+"ルベースディレクトリを使っている場合は、このセッティングを "
+"`~/.config/sbt/2/credential.sbt` に書く:"
+
+#: src/reference/reference/sbt-update.md:245
+msgid "\".sbt\""
+msgstr ""
+
+#: src/reference/reference/sbt-update.md:245
+msgid "\".credentials\""
+msgstr ""
+
+#: src/reference/reference/sbt-update.md:248
 msgid "Exclude Transitive Dependencies"
 msgstr "間接依存ライブラリを除外する"
 
-#: src/reference/reference/sbt-update.md:240
+#: src/reference/reference/sbt-update.md:250
 msgid ""
 "In certain cases a transitive dependency should be excluded from all "
 "dependencies. This can be achieved by setting up `ExclusionRules` in "
@@ -417,15 +440,15 @@ msgstr ""
 "がある。`excludeDependencies` で `ExclusionRules` を設定することで実現でき"
 "る。"
 
-#: src/reference/reference/sbt-update.md:246
+#: src/reference/reference/sbt-update.md:256
 msgid "// commons-logging is replaced by jcl-over-slf4j"
 msgstr "// commons-logging は jcl-over-slf4j で置き換えられる"
 
-#: src/reference/reference/sbt-update.md:247
+#: src/reference/reference/sbt-update.md:257
 msgid "\"commons-logging\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:251
+#: src/reference/reference/sbt-update.md:261
 msgid ""
 "To exclude certain transitive dependencies of a dependency, use the "
 "`excludeAll` or `exclude` methods. The `exclude` method should be used when "
@@ -437,27 +460,27 @@ msgstr ""
 "`exclude` メソッドを使用する。除外するには組織名とモジュール名が必要である。"
 "例:"
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"log4j\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"1.2.15\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"javax.jms\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:258
+#: src/reference/reference/sbt-update.md:268
 msgid "\"jms\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:278
+#: src/reference/reference/sbt-update.md:288
 msgid "Explicit URL"
 msgstr "明示的な URL"
 
-#: src/reference/reference/sbt-update.md:280
+#: src/reference/reference/sbt-update.md:290
 msgid ""
 "If your project requires a dependency that is not present in a repository, a "
 "direct URL to its jar can be specified as follows:"
@@ -465,19 +488,19 @@ msgstr ""
 "プロジェクトにリポジトリに存在しないライブラリ依存性が必要な場合、その jar へ"
 "の直接 URL を以下のように指定できる:"
 
-#: src/reference/reference/sbt-update.md:284
+#: src/reference/reference/sbt-update.md:294
 msgid "\"slinky\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:284
+#: src/reference/reference/sbt-update.md:294
 msgid "\"2.1\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:284
+#: src/reference/reference/sbt-update.md:294
 msgid "\"https://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:287
+#: src/reference/reference/sbt-update.md:297
 msgid ""
 "The URL is only used as a fallback if the dependency cannot be found through "
 "the configured repositories. Also, the explicit URL is not included in "
@@ -487,11 +510,11 @@ msgstr ""
 "バックとしてのみ使用される。また、明示的な URL は公開メタデータ（pom や "
 "ivy.xml）には含まれない。"
 
-#: src/reference/reference/sbt-update.md:291
+#: src/reference/reference/sbt-update.md:301
 msgid "Disable Transitivity"
 msgstr "推移性を無効にする"
 
-#: src/reference/reference/sbt-update.md:293
+#: src/reference/reference/sbt-update.md:303
 msgid ""
 "By default, these declarations fetch all project dependencies, transitively. "
 "In some instances, you may find that the dependencies listed for a project "
@@ -507,26 +530,26 @@ msgstr ""
 "`intransitive()` または`notTransitive()` でアーティファクトのライブラリ依存性"
 "の取得を避ける:"
 
-#: src/reference/reference/sbt-update.md:301
-#: src/reference/reference/sbt-update.md:343
+#: src/reference/reference/sbt-update.md:311
+#: src/reference/reference/sbt-update.md:353
 msgid "\"org.apache.felix\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:301
-#: src/reference/reference/sbt-update.md:343
+#: src/reference/reference/sbt-update.md:311
+#: src/reference/reference/sbt-update.md:353
 msgid "\"org.apache.felix.framework\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:301
-#: src/reference/reference/sbt-update.md:343
+#: src/reference/reference/sbt-update.md:311
+#: src/reference/reference/sbt-update.md:353
 msgid "\"1.8.0\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:304
+#: src/reference/reference/sbt-update.md:314
 msgid "Classifiers"
 msgstr "クラシファイア"
 
-#: src/reference/reference/sbt-update.md:306
+#: src/reference/reference/sbt-update.md:316
 msgid ""
 "You can specify the classifier for a dependency using the `classifier` "
 "method. For example, to get the jdk15 version of TestNG:"
@@ -534,47 +557,47 @@ msgstr ""
 "`classifier` メソッドでライブラリ依存性のクラシファイアを指定できる。例えば、"
 "TestNG の jdk15 バージョンを取得するには:"
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"org.testng\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"testng\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"5.7\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:310
+#: src/reference/reference/sbt-update.md:320
 msgid "\"jdk15\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:313
+#: src/reference/reference/sbt-update.md:323
 msgid "For multiple classifiers, use multiple `classifier` calls:"
 msgstr "複数のクラシファイアには、複数回 `classifier` を呼び出す:"
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"org.lwjgl.lwjgl\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"lwjgl-platform\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"natives-windows\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"natives-linux\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:317
+#: src/reference/reference/sbt-update.md:327
 msgid "\"natives-osx\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:320
+#: src/reference/reference/sbt-update.md:330
 msgid ""
 "To obtain particular classifiers for all dependencies transitively, run the "
 "`updateClassifiers` task. By default, this resolves all artifacts with the "
@@ -588,15 +611,15 @@ msgstr ""
 "ファイアは `transitiveClassifiers` セッティングで選択する。例えば、ソースのみ"
 "を取得するには:"
 
-#: src/reference/reference/sbt-update.md:327
+#: src/reference/reference/sbt-update.md:337
 msgid "\"sources\""
 msgstr ""
 
-#: src/reference/reference/sbt-update.md:330
+#: src/reference/reference/sbt-update.md:340
 msgid "Download Sources"
 msgstr "ソースのダウンロード"
 
-#: src/reference/reference/sbt-update.md:332
+#: src/reference/reference/sbt-update.md:342
 msgid ""
 "Downloading source and API documentation jars is usually handled by an IDE "
 "plugin. These plugins use the `updateClassifiers` and `updateSbtClassifiers` "
@@ -606,7 +629,7 @@ msgstr ""
 "行う。これらのプラグインは `updateClassifiers` と `updateSbtClassifiers` タス"
 "クを使用し、これらの JAR を参照する `UpdateReport` を生成する。"
 
-#: src/reference/reference/sbt-update.md:337
+#: src/reference/reference/sbt-update.md:347
 msgid ""
 "To have sbt download the dependency's sources without using an IDE plugin, "
 "add `withSources()` to the dependency definition. For API jars, add "
@@ -616,7 +639,7 @@ msgstr ""
 "は、ライブラリ依存性の定義に `withSources()` を追加する。API JAR をダウンロー"
 "ドするには `withJavadoc()` を追加する。例:"
 
-#: src/reference/reference/sbt-update.md:346
+#: src/reference/reference/sbt-update.md:356
 msgid ""
 "Note that this is not transitive. Use the `update*Classifiers` tasks for "
 "that."
