@@ -1,8 +1,111 @@
 [Caching Files]: ../concepts/caching.md#caching-files
 
-# sbt 2.0 changes
+# sbt 2.x changes
 
-## Changes with compatibility implications
+<a id="2.1"></a>
+## sbt 2.1 changes
+
+Full release notes are available at <https://github.com/sbt/sbt/releases/tag/v2.1.0>.
+
+### Changes with compatibility implications (2.1)
+
+- **Scala 3.9 LTS in metabuild**.
+- Apache Ivy is removed from the dependency.
+- Forked tests are no longer exclusive.
+
+### Features (2.1)
+
+#### workerMaxInstances and testTopology
+
+sbt 2.1.0 adds new settings `workerMaxInstances` and `testTopology`
+to control test scheduling, especially of the forked tests.
+Use `Global / workerMaxInstances` to change the number of worker instances.
+The default is set to `2`:
+
+```scala
+// or sbt -Dsbt.worker_max_instances=2
+Global / workerMaxInstances := 2
+```
+
+Use the `testTopology` setting to control whether you want to split the test classes into multiple workers or keep them together.
+The default was changed to split to 2 groups:
+
+```scala
+Test / testTopology := TestTopology.subprojectSplit(2)
+```
+
+To keep all classes in a subproject on one worker instead, use:
+
+```scala
+Test / testTopology := TestTopology.subprojectExclusive
+```
+
+#### Test summary
+
+When tests are executed, sbt 2.1.0 displays a test summary at the end, listing the failed test suites as follows:
+
+```bash
+[error] Test summary (2 test tasks failed):
+[error]   a / Test / testQuick
+[error]         com.example.a.TestA     FAIL
+[error]   b / Test / testQuick
+[error]         com.example.b.TestB     FAIL
+[error]
+[error] failed: total 4, failed 2, errors 0, passed 2, cached 2
+```
+
+#### Test cache opt-out
+
+sbt 2.1.0 can let you opt out of test result caching:
+
+```bash
+$ sbt test --cache_test_result=false
+```
+
+#### Publishing
+
+sbt 2.1.0 removes Apache Ivy from its transitive dependency, which was previously used for publishing, and implements Ivyless publishing.
+
+#### clean task
+
+sbt 2.1.0 updates the clean task to act as a cache invalidator. Regardless of the cache state, running clean would invalidate the cache for the next command execution. This can be scoped to subproject or configuration.
+
+#### Task-level caching opt-out
+
+sbt 2.1.0 allows the build users to opt out of compilation caching or test caching:
+
+```scala
+// opt out of compilation cache
+Compile / compile / cacheStores := Nil
+Test / compile / cacheStores := Nil
+
+// opt out of test cache
+Test / test / cacheStores := Nil
+```
+
+#### Input-only cache
+
+sbt 2.1.0 introduces a new cache level `CacheLevelTag.InputOnly`:
+
+```scala
+@cacheLevel(include = Array(CacheLevelTag.InputOnly))
+val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
+```
+
+Similar to `Def.uncached(...)`, `scalacOptions` will evaluate each time, but `scalacOptions.value` will participate as an input to other cached task.
+
+#### HTTP Bazel cache
+
+sbt 2.1.0 adds support for HTTP Bazel cache, in addition to gPRC.
+
+```scala
+Global / remoteCache := Some(uri("http://127.0.0.1:8000"))
+```
+
+<a id="2.0"></a>
+## sbt 2.0 changes
+
+### Changes with compatibility implications (2.0)
 
 See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
@@ -33,7 +136,7 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - Removed `IntegrationTest` configuration in [#8184][8184]
 - Removed sbt 0.13 style shell syntax in [#7700][7700]
 
-## Features
+### Features (2.0)
 
 - **Project matrix**. Project matrix, which was available via plugin in sbt 1.x, is in-sourced to provide parallel cross build support.
 - **sbt query**. sbt 2.x extends the unified slash syntax to support query of subprojects. Details below.
@@ -43,7 +146,7 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - **rootProject and autoAggregate**. Details below
 - **Maven BOM (Bill of Materials) usage**. Details below
 
-### Client-server by default
+#### Client-server by default
 
 In the client-server mode, sbt server is launched as a daemon process, and the `sbt` runner script delegates to sbtn (native client) to connect to an sbt session. This was available in sbt 1.x under the `--client` flag, and in sbt 2.x it's the default mode.
 
@@ -58,7 +161,7 @@ To use the server-only mode instead, use the `--server` flag:
 $ sbt --server test
 ```
 
-### Common settings
+#### Common settings
 
 In sbt 2.x, the bare settings in `build.sbt` are interpreted to be common settings, and are injected to all subprojects. This means we can now set `scalaVersion` without using `ThisBuild` scoping:
 
@@ -104,7 +207,7 @@ $ sbt ...@scalaBinaryVersion=3/test
 
 The above runs all subprojects whose `scalaBinaryVersion` is `3`. Contributed by [@eed3si9n][@eed3si9n] in [#7699][7699]
 
-### Incremental test
+#### Incremental test
 
 In sbt 2.x, `test` task became an input task that accept arguments that can filter the test suites to run:
 
@@ -116,7 +219,7 @@ In addition, `test` is incremental and cached. This means, the test will not run
 
 See [test](../reference/sbt-test.md) for details.
 
-### Local/remote cache system
+#### Local/remote cache system
 
 sbt 2.x implements cached task by default, which can automatically cache the task results to local disk and Bazel-compatible remote cache.
 
@@ -142,7 +245,7 @@ task1 := {
 
 See [Caching](../concepts/caching.md) for details. Contributed by [@eed3si9n][@eed3si9n] in [#7464][7464] / [#7525][7525].
 
-### Client-side run
+#### Client-side run
 
 In sbt 2.0, sbt server sends the `run` task back to sbtn, which will fork a fresh JVM. All you have to do is:
 
@@ -152,7 +255,7 @@ sbt run
 
 This avoids blocking the sbt server, and you can have multiple runs. Contributed by [@eed3si9n][@eed3si9n] in [#8060](https://github.com/sbt/sbt/pull/8060). See also [run](../reference/sbt-run.md) documentation.
 
-### Client-side console
+#### Client-side console
 
 Similar to the client-side run, sbt server sends `console` (Scala REPL) back to the sbtn, which forks a fresh JVM to run the REPL. All you have to do is:
 
@@ -162,7 +265,7 @@ sbt console
 
 This avoids blocking the sbt server. This was contributed by [@eed3si9n][@eed3si9n] and [@calm329][@calm329] in [#8018](https://github.com/sbt/sbt/pull/8018), [#8604](https://github.com/sbt/sbt/pull/8604), [#8677](https://github.com/sbt/sbt/pull/8677), [#8705](https://github.com/sbt/sbt/pull/8705), [#8722](https://github.com/sbt/sbt/pull/8722).
 
-### rootProject and autoAggregate
+#### rootProject and autoAggregate
 
 sbt 2.0 adds `rootProject` macro:
 
@@ -179,7 +282,7 @@ lazy val root = rootProject
 
 sbt 2.0 also adds `autoAggregate` method, which at the loading time expands to local subprojects.
 
-### Maven BOM (Bill of Materials) usage
+#### Maven BOM (Bill of Materials) usage
 
 sbt 2.0 adds Maven BOM (Bill of Materials) usage support. Subprojects can depend on published BOM artifacts using `.pomOnly()`:
 
@@ -195,7 +298,7 @@ libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "*"
 
 This will let Coursier automatically fill in the version based on the bill of material constraints (in this case `"2.21.0"`). Contributed by [@bitloi][@bitloi] in [#8675](https://github.com/sbt/sbt/pull/8675).
 
-### Performance improvements
+#### Performance improvements
 
 Adrien Piquerez contributed a series of changes to improve performance while he was at Scala Center.
 

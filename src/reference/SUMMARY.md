@@ -17,7 +17,7 @@
   - [Build layout](guide/build-layout.md)
   - [sbt with IDEs](guide/IDE.md)
 - [Changes](changes/index.md)
-  - [sbt 2.0 changes](changes/sbt-2.0-change-summary.md)
+  - [sbt 2.x changes](changes/sbt-2.0-change-summary.md)
   - [Migrating from sbt 1.x](changes/migrating-from-sbt-1.x.md)
 - [Concepts](concepts/index.md)
   - [Command basics](concepts/command-basics.md)
