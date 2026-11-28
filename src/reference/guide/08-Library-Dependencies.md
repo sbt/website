@@ -190,7 +190,7 @@ with the special `at` between two strings.
 For example:
 
 ```scala
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "sonatype-central-maven-snapshots" at "https://central.sonatype.com/repository/maven-snapshots"
 ```
 
 The `resolvers` key is defined in

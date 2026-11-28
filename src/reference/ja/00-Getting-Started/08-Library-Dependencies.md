@@ -165,7 +165,7 @@ resolvers += name at location
 例えばこのようになる:
 
 ```scala
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "sonatype-central-maven-snapshots" at "https://central.sonatype.com/repository/maven-snapshots"
 ```
 
 [Keys][Keys] で定義されている `resolvers` キーは以下のようになっている:
