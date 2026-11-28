@@ -136,7 +136,7 @@ resolvers += name at location
 例如：
 
 ```scala
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "sonatype-central-maven-snapshots" at "https://central.sonatype.com/repository/maven-snapshots"
 ```
 
 `resolvers` key 在 [Keys](../../api/sbt/Keys\$.html#resolvers:sbt.SettingKey[Seq[sbt.librarymanagement.Resolver]]) 中像这样定义：

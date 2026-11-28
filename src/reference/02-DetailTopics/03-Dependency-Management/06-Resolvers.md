@@ -11,7 +11,7 @@ Resolvers for Maven repositories are added as follows:
 
 ```scala
 resolvers +=
-  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+  "sonatype-central-maven-snapshots" at "https://central.sonatype.com/repository/maven-snapshots"
 ```
 
 This is the most common kind of user-defined resolvers. The rest of this
@@ -40,8 +40,7 @@ A few predefined repositories are available and are listed below
     <https://repo1.maven.org/maven2/> and is included by default
 -   `JavaNet2Repository` This is the java.net Maven2 Repository at
     <https://maven.java.net/content/repositories/public/>
--   `Resolver.sonatypeOssRepos("public")` (or "snapshots", "staging", "releases") This is Sonatype OSS Maven Repository at
-    <https://oss.sonatype.org/content/repositories/public>, <https://s01.oss.sonatype.org/content/repositories>
+-	`Resolver.sonatypeCentralSnapshots` This is the Sonatype Central snapshots repo at <https://central.sonatype.com/repository/maven-snapshots>
 -   `Resolver.typesafeRepo("releases")` (or "snapshots") This is Typesafe Repository at
     <https://repo.typesafe.com/typesafe/releases>
 -   `Resolver.typesafeIvyRepo("releases")` (or "snapshots") This is Typesafe Ivy Repository at

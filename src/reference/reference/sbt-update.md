@@ -172,7 +172,7 @@ libraryDependencies ++= Seq(
     "org.specs" % "specs" % "1.6.1"
 )
 
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "sonatype-central-maven-snapshots" at "https://central.sonatype.com/repository/maven-snapshots"
 ```
 
 sbt can search your local Maven repository if you add it as a
@@ -195,11 +195,11 @@ control over repositories, set `externalResolvers` directly. To only
 specify repositories in addition to the usual defaults, configure
 `resolvers`.
 
-For example, to use the Sonatype OSS Snapshots repository in addition to
+For example, to use the Sonatype Central snapshots repository in addition to
 the default repositories,
 
 ```scala
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += Resolver.sonatypeCentralSnapshots
 ```
 
 To use the local repository, but not the Maven Central repository:

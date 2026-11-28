@@ -196,7 +196,7 @@ con el método especial `at` entre dos cadenas de caracteres.
 Por ejemplo:
 
 ```scala
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "sonatype-central-maven-snapshots" at "https://central.sonatype.com/repository/maven-snapshots"
 ```
 
 La clave `resolvers` está definida
